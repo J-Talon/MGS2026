@@ -285,6 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9e7f1a32f52be2499b2f1311d4ef6d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridManager
+  gridLevelData: {fileID: 11400000, guid: 75ead3c8202917d4abd54139289540e8, type: 2}
   gridSizeX: 8
   gridSizeY: 4
   gridCellPrefab: {fileID: 2800429038162672554, guid: 12b01ea3619369e479313225e4aa6763, type: 3}

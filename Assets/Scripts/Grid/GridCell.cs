@@ -6,9 +6,7 @@ using UnityEngine;
 
 public class GridCell : MonoBehaviour
 {
-    // Cell configuration and state
-    public int cellSizeX = 1;
-    public int cellSizeY = 1;
+
     public bool isOccupied = false;
     public bool isFriendly = false;
 
