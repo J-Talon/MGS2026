@@ -13,4 +13,8 @@ MonoBehaviour:
   m_Name: TestGridLevelData
   m_EditorClassIdentifier: Assembly-CSharp::GridLevelData
   gridSize: {x: 8, y: 4}
-  startingFreindlyColumns: 4
+  startingFriendlyColumns: 4
+  xBoundingBoxMin: 0
+  xBoundingBoxMax: 8
+  yBoundingBoxMin: 0
+  yBoundingBoxMax: 4

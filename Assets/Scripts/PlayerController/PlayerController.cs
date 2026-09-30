@@ -2,6 +2,9 @@
 
 using UnityEngine;
 
+/// <summary>
+/// This script manages the player controller, handling player input and movement within the game.
+/// </summary>
 public class PlayerController : MonoBehaviour
 {
     // Player movement variables
