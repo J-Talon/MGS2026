@@ -1,25 +1,20 @@
 // Authors: [Jacky, Jeremy, Mark]
-// This script manages the grid system of the game.
-// It handles the generation of grid cells and updating the state of the grid based on player actions and game events.
 using UnityEngine;
+using System.Collections.Generic;
 
-public class GridManager : MonoBehaviour, IGridSystemControl
+/// <summary>
+/// This script manages the grid system of the game.
+/// It handles the generation of grid cells and updating the state of the grid based on player actions and game events.
+/// </summary>
+public class GridManager : MonoBehaviour
 {
-    public static GridManager Instance
-    {
-        get
-        {
-            return instance;
-        }
-    }
-
+    public static GridManager Instance { get { return instance; } }
     private static GridManager instance = null;
 
     /// <summary>
     /// grid specific level data
     /// </summary>
-    public GridLevelData gridLevelData;
-
+    public GridManagerLevelData gridLevelData;
 
     // References
     public GridCell gridCellPrefab;
@@ -36,12 +31,7 @@ public class GridManager : MonoBehaviour, IGridSystemControl
     public bool debuggerEnable;
 
     // Runtime state
-    public GridCell[,] cells;
-
-    /// <summary>
-    /// The bordering column of control (W.R.T player)
-    /// </summary>
-    private int border;
+    private Dictionary<Vector2, GridCell> gridCells;
 
     // Generate the grid based on the specified size and instantiate grid cells
     void GenerateGrid()
@@ -54,15 +44,13 @@ public class GridManager : MonoBehaviour, IGridSystemControl
             for (int y = 0; y < gridLevelData.gridSize.y; y++) //col setup
             {
                 // Instantiate a new grid cell at the specified position
-                GridCell newCell = Instantiate(gridCellPrefab, new Vector3(x, y, 0), Quaternion.identity, gridCellContainer.transform);
+                GridCell newCell = Instantiate(gridCellPrefab, new Vector3(x, y, 0), Quaternion.identity, GridCellContainer.transform);
                 // Name the cell for easier identification in the hierarchy
                 newCell.name = $"GridCell_{x}_{y}";
-                
-                // Set if cell is friendly or enemy based on position. Uses "startingFreindlyColumns" from grid level data to determine start data
-                //print (x + " " + gridLevelData.startingFreindlyColumns);
-                newCell.isFriendly = x < gridLevelData.startingFreindlyColumns;
-                // Store the cell in the 2D array
-                cells[x, y] = newCell;
+                // Set if cell is friendly or enemy based on position. For now, we can assume the first half of the grid is friendly and the second half is enemy.
+                newCell.isFriendly = x < gridLevelData.startingFriendlyColumns;
+                // Store the cell in the grid cells dictionary for easy access later
+                gridCells[new Vector2(x, y)] = newCell;
             }
         }
     }
@@ -81,7 +69,7 @@ public class GridManager : MonoBehaviour, IGridSystemControl
         {
             for (int y = 0; y < gridLevelData.gridSize.y; y++)
             {
-                GridCell cell = cells[x, y];
+                GridCell cell = gridCells[new Vector2(x, y)];
                 // Update the texture based on whether the cell is friendly or enemy and if it's offset
                 bool isOffset = (x + y) % 2 == 1; // Simple checkerboard pattern for offset
                 cell.UpdateTexture(isOffset);
@@ -92,7 +80,7 @@ public class GridManager : MonoBehaviour, IGridSystemControl
     /// <summary>
     /// Class setup
     /// </summary>
-    void Awake ()
+    void Awake()
     {
         if (instance)
         {
@@ -119,56 +107,10 @@ public class GridManager : MonoBehaviour, IGridSystemControl
     void Start()
     {
         // Initialize the grid cells
-        cells = new GridCell[gridLevelData.gridSize.x, gridLevelData.gridSize.y];
+        gridCells = new Dictionary<Vector2, GridCell>();
         GenerateGrid();
         CenterCamera();
         UpdateGridTextures();
     }
-
-    /// <summary>
-    /// Change control of a single 
-    /// 
-    /// by default, increases "freindly" player territory by 1 col
-    /// </summary>
-    /// <param name="freindly"></param>
-    public void SingleColControlUpdate(bool freindly = true)
-    {   
-        if (freindly)
-        {
-            if (border < gridLevelData.gridSize.x-1) //-1 cause of 0 indexing
-            { 
-                border += 1;
-                for (int i = 0; i < gridLevelData.gridSize.y; i++)
-                {
-                    cells[border, i].isFriendly = true; 
-                }
-                
-            }
-            else
-            {
-                print ("cannot increase freindly border control any more");
-            }
-        }
-        else
-        {
-            if (border > -1) //-1 cause of 0 indexing
-            { 
-                for (int i = 0; i < gridLevelData.gridSize.y; i++)
-                {
-                    cells[border, i].isFriendly = false; 
-                } 
-                border -= 1;   
-            }
-            else
-            {
-                print ("cannot decrease freindly border control any more");
-            }
-        }
-
-        
-        UpdateGridTextures();
-    }
-
-
 
 }

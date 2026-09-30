@@ -1,9 +1,10 @@
 // Authors: [Jacky, Jeremy, Mark]
-// This script manages a single cell in the grid system.
-// It holds properties related to the cell's state.
-
 using UnityEngine;
 
+/// </summary>
+/// This script manages a single cell in the grid system.
+/// It holds properties related to the cell's state.
+/// </summary>
 public class GridCell : MonoBehaviour
 {
 
@@ -23,6 +24,10 @@ public class GridCell : MonoBehaviour
     // Reference to the SpriteRenderer component for updating the cell's appearance
     public SpriteRenderer spriteRenderer;
 
+    /// <summary>
+    /// Updates the texture of the cell based on its state (friendly or enemy) and whether it is offset.
+    /// </summary>
+    /// <param name="isOffset">Indicates whether the cell is offset.</param>
     public void UpdateTexture(bool isOffset)
     {
         if (isFriendly)
