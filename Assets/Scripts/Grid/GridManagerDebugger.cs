@@ -1,3 +1,4 @@
+using Event;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,6 +26,16 @@ public class GridManagerDebugger : MonoBehaviour
         if (Keyboard.current.qKey.wasReleasedThisFrame) //decrease player control
         {
             managerControls.SingleColControlUpdate(false);
+        }
+
+        //event checking
+        if (Keyboard.current.rKey.wasReleasedThisFrame) //increase player control
+        {
+            GameplayEvents.gridColUpdateEvent.CallEvent(true);
+        }
+        if (Keyboard.current.tKey.wasReleasedThisFrame) //decrease player control
+        {
+            GameplayEvents.gridColUpdateEvent.CallEvent(false);
         }
     }
 }

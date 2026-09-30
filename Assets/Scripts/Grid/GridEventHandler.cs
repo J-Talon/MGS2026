@@ -7,7 +7,6 @@ public class GridEventHandler
 
     GridManager gridSystem;
 
-    IGridSystemControl gridControls;
 
     public GridEventHandler(GridManager gridSystem)
     {
@@ -22,7 +21,7 @@ public class GridEventHandler
     /// </summary>
     /// <param name="_"></param>
     private void TerritoryChangeEventHandler(bool freindly) {   
-        gridControls.SingleColControlUpdate(freindly);
+        gridSystem.SingleColControlUpdate(freindly);
     }
 
     /// <summary>
