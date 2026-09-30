@@ -15,6 +15,11 @@ public class GridManagerLevelData : ScriptableObject
     /// </summary>
     public int startingFriendlyColumns = 4;
 
+    /// <summary>
+    /// number of rightmost columns that always belong to the enemy and can never be captured
+    /// </summary>
+    public int uncapturableColumns = 2;
+
     // Bounding box for grid cells to explicitly define the grid area.
     // This is useful for future considerations, such as extending the grid on the negative x-axis.
     public int xBoundingBoxMin = 0;
