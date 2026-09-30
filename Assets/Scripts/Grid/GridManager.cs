@@ -3,7 +3,7 @@
 // It handles the generation of grid cells and updating the state of the grid based on player actions and game events.
 using UnityEngine;
 
-public class GridManager : MonoBehaviour
+public class GridManager : MonoBehaviour, IGridSystemControl
 {
     public static GridManager Instance
     {
@@ -16,7 +16,7 @@ public class GridManager : MonoBehaviour
     private static GridManager instance = null;
 
     /// <summary>
-    /// level data
+    /// grid specific level data
     /// </summary>
     public GridLevelData gridLevelData;
 
@@ -30,12 +30,24 @@ public class GridManager : MonoBehaviour
     /// </summary>
     public GameObject gridCellContainer {private set; get;}
 
+    /// <summary>
+    /// auto create debugger script if enabled
+    /// </summary>
+    public bool debuggerEnable;
+
     // Runtime state
     public GridCell[,] cells;
+
+    /// <summary>
+    /// The bordering column of control (W.R.T player)
+    /// </summary>
+    private int border;
 
     // Generate the grid based on the specified size and instantiate grid cells
     void GenerateGrid()
     {
+        border = gridLevelData.startingFreindlyColumns-1; //-1 cause of 0 indexing
+
         // Iterate through grid cells
         for (int x = 0; x < gridLevelData.gridSize.x; x++) //row setup
         {
@@ -92,6 +104,13 @@ public class GridManager : MonoBehaviour
 
         // Initialize grid cell container
         gridCellContainer = new GameObject("Grid Cell Container");
+
+        new GridEventHandler(this);
+
+        if (debuggerEnable == true)
+        {
+            gameObject.AddComponent<GridManagerDebugger>();
+        }
     }
 
     /// <summary>
@@ -105,5 +124,51 @@ public class GridManager : MonoBehaviour
         CenterCamera();
         UpdateGridTextures();
     }
+
+    /// <summary>
+    /// Change control of a single 
+    /// 
+    /// by default, increases "freindly" player territory by 1 col
+    /// </summary>
+    /// <param name="freindly"></param>
+    public void SingleColControlUpdate(bool freindly = true)
+    {   
+        if (freindly)
+        {
+            if (border < gridLevelData.gridSize.x-1) //-1 cause of 0 indexing
+            { 
+                border += 1;
+                for (int i = 0; i < gridLevelData.gridSize.y; i++)
+                {
+                    cells[border, i].isFriendly = true; 
+                }
+                
+            }
+            else
+            {
+                print ("cannot increase freindly border control any more");
+            }
+        }
+        else
+        {
+            if (border > -1) //-1 cause of 0 indexing
+            { 
+                for (int i = 0; i < gridLevelData.gridSize.y; i++)
+                {
+                    cells[border, i].isFriendly = false; 
+                } 
+                border -= 1;   
+            }
+            else
+            {
+                print ("cannot decrease freindly border control any more");
+            }
+        }
+
+        
+        UpdateGridTextures();
+    }
+
+
 
 }
