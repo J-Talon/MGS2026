@@ -20,8 +20,15 @@ public enum GridRowSide
     Bottom
 }
 
+/// <summary>
+/// Interface for grid system. Contains definitions for manipulating grid system cells/rows/cols after initial grid setup
+/// </summary>
 public interface IGridSystemControl
 {
+    /// <summary>
+    /// Change controlled territory by 1 column. Will not go beyond current grid borders (or permanent enemy controlled columns)
+    /// </summary>
+    /// <param name="friendly">by default (true), pushes up freindly controlled columns by 1, otherwise, decreases freindly control by 1</param>
     void SingleColControlUpdate(bool friendly = true);
 
     /// <summary>
@@ -48,5 +55,5 @@ public interface IGridSystemControl
     /// <param name="side">The side of the grid to remove the row from.</param>
     void RemoveGridRow(GridRowSide side);
 
-    GridCell GetTileAtPosition(Vector2 position);
+
 }

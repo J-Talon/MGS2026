@@ -7,7 +7,7 @@ using Event;
 /// This script manages the grid system of the game.
 /// It handles the generation of grid cells and updating the state of the grid based on player actions and game events.
 /// </summary>
-public class GridManager : MonoBehaviour, IGridSystemControl
+public class GridManager : MonoBehaviour, IGridSystemControl, IGridSystemView
 {
     /// <summary>
     /// grid specific level data

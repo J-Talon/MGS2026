@@ -29,8 +29,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void OnUp(InputValue value)
     {
-        IGridSystemControl gridControls = Object.FindFirstObjectByType<GridManager>();
-        GridCell targetTile = gridControls.GetTileAtPosition(new Vector2(positionX, positionY + 1));
+        IGridSystemView gridView = Object.FindFirstObjectByType<GridManager>();
+        GridCell targetTile = gridView.GetTileAtPosition(new Vector2(positionX, positionY + 1));
         if (targetTile != null && targetTile.isFriendly)
         {
             if (value.isPressed) SetPlayerPosition(positionX, positionY + 1);
@@ -42,8 +42,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void OnDown(InputValue value)
     {
-        IGridSystemControl gridControls = Object.FindFirstObjectByType<GridManager>();
-        GridCell targetTile = gridControls.GetTileAtPosition(new Vector2(positionX, positionY - 1));
+        IGridSystemView gridView = Object.FindFirstObjectByType<GridManager>();
+        GridCell targetTile = gridView.GetTileAtPosition(new Vector2(positionX, positionY - 1));
         if (targetTile != null && targetTile.isFriendly)
         {
             if (value.isPressed) SetPlayerPosition(positionX, positionY - 1);
@@ -55,8 +55,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void OnLeft(InputValue value)
     {
-        IGridSystemControl gridControls = Object.FindFirstObjectByType<GridManager>();
-        GridCell targetTile = gridControls.GetTileAtPosition(new Vector2(positionX - 1, positionY));
+        IGridSystemView gridView = Object.FindFirstObjectByType<GridManager>();
+        GridCell targetTile = gridView.GetTileAtPosition(new Vector2(positionX - 1, positionY));
         if (targetTile != null && targetTile.isFriendly)
         {
             if (value.isPressed) SetPlayerPosition(positionX - 1, positionY);
@@ -68,8 +68,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void OnRight(InputValue value)
     {
-        IGridSystemControl gridControls = Object.FindFirstObjectByType<GridManager>();
-        GridCell targetTile = gridControls.GetTileAtPosition(new Vector2(positionX + 1, positionY));
+        IGridSystemView gridView = Object.FindFirstObjectByType<GridManager>();
+        GridCell targetTile = gridView.GetTileAtPosition(new Vector2(positionX + 1, positionY));
         if (targetTile != null && targetTile.isFriendly)
         {
             if (value.isPressed) SetPlayerPosition(positionX + 1, positionY);
