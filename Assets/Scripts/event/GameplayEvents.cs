@@ -5,7 +5,7 @@ namespace Event
 
     public static class GameplayEvents
     {
-        
+        public static readonly EventDispatcher<bool> gridColUpdateEvent = new EventDispatcher<bool>();  //< int, float param
     }
     
 }

@@ -1,6 +1,7 @@
 // Authors: [Jacky, Jeremy, Mark]
 using UnityEngine;
 using System.Collections.Generic;
+using Event;
 
 /// <summary>
 /// This script manages the grid system of the game.
@@ -8,6 +9,9 @@ using System.Collections.Generic;
 /// </summary>
 public class GridManager : MonoBehaviour, IGridSystemControl
 {
+
+
+
     public static GridManager Instance { get { return instance; } }
     private static GridManager instance = null;
 

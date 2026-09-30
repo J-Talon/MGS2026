@@ -7,12 +7,12 @@ using UnityEngine.InputSystem;
 public class GridManagerDebugger : MonoBehaviour
 {
     //Public interface references to the manager
-    IGridSystemControl manager;
+    IGridSystemControl managerControls;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        manager = gameObject.GetComponent<IGridSystemControl>();
+        managerControls = gameObject.GetComponent<IGridSystemControl>();
     }
 
     // Update is called once per frame
@@ -20,11 +20,11 @@ public class GridManagerDebugger : MonoBehaviour
     {
         if (Keyboard.current.eKey.wasReleasedThisFrame) //increase player control
         {
-            manager.SingleColControlUpdate();
+            managerControls.SingleColControlUpdate();
         }
         if (Keyboard.current.qKey.wasReleasedThisFrame) //decrease player control
         {
-            manager.SingleColControlUpdate(false);
+            managerControls.SingleColControlUpdate(false);
         }
     }
 }
