@@ -1,6 +1,9 @@
 // Authors: [Jacky, Jeremy, Mark]
 using UnityEngine;
 
+/// <summary>
+/// This scriptable object holds the configuration data for the grid manager, including grid size, starting friendly columns, and bounding box limits.
+/// </summary>
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/Grid/GridManagerLevelData", order = 1)]
 public class GridManagerLevelData : ScriptableObject
 {

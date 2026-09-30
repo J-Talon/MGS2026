@@ -1,7 +1,5 @@
 // Authors: [Jacky, Jeremy, Mark]
-using System;
 using Event;
-using UnityEngine;
 
 public class GridEventHandler
 {
@@ -11,7 +9,6 @@ public class GridEventHandler
     {
         this.gridSystem = gridSystem;
         IGridSystemControl gridControls = gridSystem;
-
         GameplayEvents.gridColUpdateEvent.AddEventListener(TerritoryChangeEventHandler);
     }
 
@@ -30,6 +27,5 @@ public class GridEventHandler
     ~GridEventHandler()
     {
         GameplayEvents.gridColUpdateEvent.RemoveEventListener(TerritoryChangeEventHandler);
-
     }
 }

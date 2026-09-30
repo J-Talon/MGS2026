@@ -1,7 +1,6 @@
 // Authors: [Jacky, Jeremy, Mark]
 using UnityEngine;
 using System.Collections.Generic;
-using Event;
 
 /// <summary>
 /// This script manages the grid system of the game.
@@ -31,13 +30,14 @@ public class GridManager : MonoBehaviour, IGridSystemControl
     // Runtime state
     private Dictionary<Vector2, GridCell> gridCells;
 
-
     /// <summary>
     /// The bordering column of control (W.R.T player)
     /// </summary>
     private int border;
 
-    // Generate the grid based on the specified size and instantiate grid cells
+    /// <summary>
+    /// Generate the grid based on the specified size and instantiate grid cells
+    /// </summary>
     void GenerateGrid()
     {
         border = gridLevelData.startingFriendlyColumns - 1; //-1 cause of 0 indexing
@@ -61,13 +61,17 @@ public class GridManager : MonoBehaviour, IGridSystemControl
         }
     }
 
-    // Camera repositioning to center the grid in the scene view
+    /// <summary>
+    /// Camera repositioning to center the grid in the scene view
+    /// </summary>
     void CenterCamera()
     {
         cameraTransform.position = new Vector3((gridLevelData.gridSize.x / 2f) - 0.5f, (gridLevelData.gridSize.y / 2f) - 0.5f, -10f);
     }
 
-    // Function to update the grid textures. Separate from GenerateGrid in case we want to update this in the future.
+    /// <summary>
+    /// Function to update the grid textures. Separate from GenerateGrid in case we want to update this in the future.
+    /// </summary>
     void UpdateGridTextures()
     {
         // Iterate through grid cells
@@ -84,9 +88,7 @@ public class GridManager : MonoBehaviour, IGridSystemControl
     }
 
     /// <summary>
-    /// Change control of a single 
-    /// 
-    /// by default, increases "friendly" player territory by 1 col
+    /// Change control of a single by default, increases "friendly" player territory by 1 col
     /// </summary>
     /// <param name="friendly"></param>
     public void SingleColControlUpdate(bool friendly = true)
