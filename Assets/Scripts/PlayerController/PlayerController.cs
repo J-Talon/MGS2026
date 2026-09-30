@@ -1,5 +1,4 @@
 // Authors: [Jacky, Jeremy, Mark]
-
 using UnityEngine;
 
 /// <summary>

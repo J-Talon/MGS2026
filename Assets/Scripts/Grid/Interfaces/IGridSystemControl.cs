@@ -1,8 +1,9 @@
+// Authors: [Jacky, Jeremy, Mark]
 using UnityEngine;
 
 public interface IGridSystemControl
 {
-    void SingleColControlUpdate(bool freindly = true);
+    void SingleColControlUpdate(bool friendly = true);
 
     void AddGridColumn();
 

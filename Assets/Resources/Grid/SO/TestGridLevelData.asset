@@ -15,6 +15,6 @@ MonoBehaviour:
   gridSize: {x: 8, y: 4}
   startingFriendlyColumns: 4
   xBoundingBoxMin: 0
-  xBoundingBoxMax: 8
+  xBoundingBoxMax: 7
   yBoundingBoxMin: 0
-  yBoundingBoxMax: 4
+  yBoundingBoxMax: 3

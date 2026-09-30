@@ -9,12 +9,6 @@ using Event;
 /// </summary>
 public class GridManager : MonoBehaviour, IGridSystemControl
 {
-
-
-
-    public static GridManager Instance { get { return instance; } }
-    private static GridManager instance = null;
-
     /// <summary>
     /// grid specific level data
     /// </summary>
@@ -27,7 +21,7 @@ public class GridManager : MonoBehaviour, IGridSystemControl
     /// <summary>
     /// For organizing grid cells
     /// </summary>
-    public GameObject gridCellContainer {private set; get;}
+    public GameObject gridCellContainer { private set; get; }
 
     /// <summary>
     /// auto create debugger script if enabled
@@ -37,22 +31,24 @@ public class GridManager : MonoBehaviour, IGridSystemControl
     // Runtime state
     private Dictionary<Vector2, GridCell> gridCells;
 
-    
+
     /// <summary>
     /// The bordering column of control (W.R.T player)
     /// </summary>
     private int border;
-    
+
     // Generate the grid based on the specified size and instantiate grid cells
     void GenerateGrid()
     {
-        border = gridLevelData.startingFriendlyColumns-1; //-1 cause of 0 indexing
-
+        border = gridLevelData.startingFriendlyColumns - 1; //-1 cause of 0 indexing
+        Vector2 coordinate = new Vector2(0, 0);
         // Iterate through grid cells
         for (int x = 0; x < gridLevelData.gridSize.x; x++) //row setup
         {
             for (int y = 0; y < gridLevelData.gridSize.y; y++) //col setup
             {
+                coordinate.x = x;
+                coordinate.y = y;
                 // Instantiate a new grid cell at the specified position
                 GridCell newCell = Instantiate(gridCellPrefab, new Vector3(x, y, 0), Quaternion.identity, gridCellContainer.transform);
                 // Name the cell for easier identification in the hierarchy
@@ -60,7 +56,7 @@ public class GridManager : MonoBehaviour, IGridSystemControl
                 // Set if cell is friendly or enemy based on position. For now, we can assume the first half of the grid is friendly and the second half is enemy.
                 newCell.isFriendly = x < gridLevelData.startingFriendlyColumns;
                 // Store the cell in the grid cells dictionary for easy access later
-                gridCells[new Vector2(x, y)] = newCell;
+                gridCells[coordinate] = newCell;
             }
         }
     }
@@ -87,48 +83,45 @@ public class GridManager : MonoBehaviour, IGridSystemControl
         }
     }
 
-    
     /// <summary>
     /// Change control of a single 
     /// 
-    /// by default, increases "freindly" player territory by 1 col
+    /// by default, increases "friendly" player territory by 1 col
     /// </summary>
-    /// <param name="freindly"></param>
-    public void SingleColControlUpdate(bool freindly = true)
-    {   
-        if (freindly)
+    /// <param name="friendly"></param>
+    public void SingleColControlUpdate(bool friendly = true)
+    {
+        if (friendly)
         {
-            if (border < gridLevelData.gridSize.x-1) //-1 cause of 0 indexing
-            { 
+            if (border < gridLevelData.gridSize.x - 1) //-1 cause of 0 indexing
+            {
                 border += 1;
                 for (int i = 0; i < gridLevelData.gridSize.y; i++)
                 {
-                    gridCells[new Vector2(border, i)].isFriendly = true; 
+                    gridCells[new Vector2(border, i)].isFriendly = true;
                 }
-                
+
             }
             else
             {
-                print ("cannot increase freindly border control any more");
+                print("cannot increase friendly border control any more");
             }
         }
         else
         {
             if (border > -1) //-1 cause of 0 indexing
-            { 
+            {
                 for (int i = 0; i < gridLevelData.gridSize.y; i++)
                 {
-                    gridCells[new Vector2(border, i)].isFriendly = false; 
-                } 
-                border -= 1;   
+                    gridCells[new Vector2(border, i)].isFriendly = false;
+                }
+                border -= 1;
             }
             else
             {
-                print ("cannot decrease freindly border control any more");
+                print("cannot decrease friendly border control any more");
             }
         }
-
-        
         UpdateGridTextures();
     }
 
@@ -165,14 +158,6 @@ public class GridManager : MonoBehaviour, IGridSystemControl
     /// </summary>
     void Awake()
     {
-        if (instance)
-        {
-            DestroyImmediate(gameObject);
-            return;
-        }
-
-        instance = this;
-
         // Initialize grid cell container
         gridCellContainer = new GameObject("Grid Cell Container");
 
