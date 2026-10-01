@@ -9,6 +9,10 @@ using Event;
 /// </summary>
 public class GridManager : MonoBehaviour, IGridSystemControl, IGridSystemView
 {
+
+    public static GridManager instance = null;
+
+
     /// <summary>
     /// grid specific level data
     /// </summary>
@@ -321,6 +325,15 @@ public class GridManager : MonoBehaviour, IGridSystemControl, IGridSystemView
     /// </summary>
     void Awake()
     {
+        //singleton management
+        if (instance)
+        {
+            DestroyImmediate(gameObject);
+            return;
+        }
+        instance = this;
+
+
         // Initialize grid cell container
         gridCellContainer = new GameObject("Grid Cell Container");
 
