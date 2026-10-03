@@ -1,15 +1,17 @@
 using System;
+using UnityEngine;
+
 namespace Event
 {
 
-
     public static class GameplayEvents
     {
-        
+        public static readonly EventDispatcher<(Vector2, Vector2)> moveGridEntity = new();
+        public static readonly EventDispatcher<Vector2> removeGridEntity = new();
+        public static readonly EventDispatcher<(Vector2, GameObject)> placeGridEntity = new();
     }
     
 }
-
 
 
 /*
