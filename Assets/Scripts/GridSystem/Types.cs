@@ -1,6 +1,6 @@
 // ===========================================
 // Project: Terra Terralis 2026
-// File: GridSystem.cs
+// File: Types.cs
 // Author: Samyat Gautam (github: FadedBronze)
 // Description: TODO
 // ===========================================

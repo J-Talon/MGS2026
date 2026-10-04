@@ -9,6 +9,8 @@ namespace Event
         public static readonly EventDispatcher<(Vector2, Vector2)> moveGridEntity = new();
         public static readonly EventDispatcher<Vector2> removeGridEntity = new();
         public static readonly EventDispatcher<(Vector2, GameObject)> placeGridEntity = new();
+        public static readonly EventDispatcher<(int, int)> resizeGrid = new();
+        public static readonly EventDispatcher<ValueTuple> gridResized = new();
     }
     
 }

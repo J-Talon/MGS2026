@@ -1,8 +1,8 @@
 // ===========================================
 // Project: Terra Terralis 2026
-// File: GridSystem.cs
+// File: Tile.cs
 // Author: Samyat Gautam (github: FadedBronze)
-// Description: TODO
+// Description: Game Tile class is assigned to tile prefab this script can be changed for whatever tile/environment specific behaviour is required
 // ===========================================
 
 using UnityEngine;
@@ -11,13 +11,23 @@ using UnityEngine.Assertions;
 namespace GridSystem {
     class GameTile : MonoBehaviour {
         public TerritoryOwnership territory;
+        public SpriteRenderer renderer;
 
-        public void Init(Vector2 position, float size, TerritoryOwnership territory) {
+        public bool Visible {
+            get {
+                Assert.IsNotNull(renderer);
+                return renderer.enabled;
+            }
+            set {
+                Assert.IsNotNull(renderer);
+                renderer.enabled = value;
+            }
+        }
+
+        public void Init(TerritoryOwnership territory) {
             this.territory = territory;
-            transform.position = position;
-            transform.localScale = new(size, size);
 
-            SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
+            renderer = gameObject.GetComponent<SpriteRenderer>();
             Assert.IsNotNull(renderer);
 
             switch (this.territory) {

@@ -2,13 +2,13 @@
 // Project: Terra Terralis 2026
 // File: GridSystem.cs
 // Author: Samyat Gautam (github: FadedBronze)
-// Description: TODO
+// Description: The core grid system logic handles positioning of tiles, thier sizes, gaps between them, and moving gameobjects across tiles
 // ===========================================
 
 using UnityEngine;
-using System.Collections.Generic;
 using Event;
 using UnityEngine.Assertions;
+using System;
 
 namespace GridSystem {
 
@@ -17,54 +17,83 @@ namespace GridSystem {
     /// </summary>
     class GridManager : MonoBehaviour {
         [SerializeField]
-        Vector2 origin;
+        private Vector2 origin;
 
         [SerializeField]
-        private float tileSize = 0.0f;
+        private float tileSize;
 
         [SerializeField]
         private int columns;
         [SerializeField]
         private int rows;
 
+        public int Columns { get { return columns; } }
+        public int Rows { get { return rows; } }
+        public float TileSize { get { return tileSize; } }
+
+        [SerializeField]
+        private int maxRows;
+        [SerializeField]
+        private int maxColumns;
+
         private Tile[] tiles;
 
         [SerializeField]
-        Camera camera;
+        private Camera camera;
 
         [SerializeField]
-        GameObject tileGameObject;
+        private GameObject tileGameObject;
         
+        [SerializeField]
+        private float gap;
+
         // ======== Setup ========
 
-        private void UpdateGrid() {
-            CenterGridInCamera(camera);
-
-            tiles = new Tile[rows*columns];
-            for (int i = 0; i < rows*columns; i++) {
-                Tile tile = new();
-                tiles[i] = tile;
-                tile.gridPosition = ListIndexToGridPosition(i);
-            }
-
-            SetupTiles();
-        }
-        
         public void Start() {
-            UpdateGrid();
+            tiles = new Tile[maxRows*maxColumns];
+
+            for (int i = 0; i < maxRows; i++) {
+                for (int j = 0; j < maxColumns; j++) {
+                    Tile tile = new();
+                    int idx = GridPositionToListIndex(new(j, i));
+                    tiles[idx] = tile;
+                    tile.gridPosition = new(j, i);
+                }
+            }
+            
+            SetupTiles();
+
+            CenterGridInCamera(camera);
 
             GameplayEvents.moveGridEntity.AddEventListener(MoveGridEntityListener);
             GameplayEvents.placeGridEntity.AddEventListener(PlaceGridEntityListener);
             GameplayEvents.removeGridEntity.AddEventListener(RemoveGridEntityListener);
+            GameplayEvents.resizeGrid.AddEventListener(ResizeGridListener);
         }
 
+        bool revalidate = false;
+
+        // runs whenever a property has changed in the inspector
+        private void OnValidate() {
+            revalidate = true; 
+        }
+
+        private void Update() {
+            if (revalidate) {
+                ResizeGridListener((rows, columns));
+                revalidate = false;
+            }
+        }
+
+        /// <summary>
+        /// instantiates all tile prefabs then calls thier Init function function
+        /// this is meant to run once at start
+        /// </summary>
         public void SetupTiles() {
             int playerColumns = columns/2;
 
-            for (int i = 0; i < rows; i++) {
-                for (int j = 0; j < columns; j++) {
-                    Vector2 worldPosition = GridToWorldPosition(new(j, i));
-
+            for (int i = 0; i < maxRows; i++) {
+                for (int j = 0; j < maxColumns; j++) {
                     TerritoryOwnership territory;
                     if (j < playerColumns) {
                         territory = TerritoryOwnership.Player;
@@ -74,11 +103,14 @@ namespace GridSystem {
 
                     Tile tile = GetTile(new(j, i));
                     GameObject instance = Instantiate(tileGameObject);
+                    instance.transform.SetParent(transform);
 
                     tile.gameTile = instance.GetComponent<GameTile>();
-                    tile.gameTile.Init(worldPosition, tileSize, territory);
+                    tile.gameTile.Init(territory);
                 }
             }
+
+            ResizeGridListener((rows, columns));
         }
 
         /// <summary>
@@ -113,16 +145,38 @@ namespace GridSystem {
             
             Vector2 padding = new(leftPadding, topPadding);
 
-            origin = worldViewportMin + padding + new Vector2(0.5f, 0.5f);
+            origin = worldViewportMin + padding + tileSize * new Vector2(0.5f, 0.5f);
         }
 
         // ======== Listeners ========
+        
+        /// <summary>
+        /// resizes the grid and updates tile positions, scale, and visibility (based on whether its inside the non-max bounds)
+        /// </summary>
+        public void ResizeGridListener((int new_rows, int new_columns) data) {
+            Assert.IsTrue(data.new_rows <= maxRows && data.new_columns <= maxColumns);
+            columns = data.new_columns;
+            rows = data.new_rows;
+            
+            CenterGridInCamera(camera);
+
+            for (int i = 0; i < maxRows; i++) {
+                for (int j = 0; j < maxColumns; j++) {
+                    Tile tile = GetTile(new(j, i));
+                    tile.gameTile.Visible = i < rows && j < columns;
+                    tile.gameTile.transform.position = GridToWorldPosition(new(j, i));
+                    tile.gameTile.transform.localScale = new(tileSize-gap/2, tileSize-gap/2);
+                }
+            }
+
+            GameplayEvents.gridResized.CallEvent(ValueTuple.Create());
+        }
 
         public void MoveGridEntityListener((Vector2 position, Vector2 previousPosition) data) {
             var movingEntity = GetTile(data.previousPosition).entity;
             var destinationTile = GetTile(data.position);
 
-            if (destinationTile.entity == null) {
+            if (destinationTile.entity == null || destinationTile.entity == movingEntity) {
                 destinationTile.entity = movingEntity;
             } else {
                 Assert.IsTrue(false, "tile already has another entity");
@@ -151,30 +205,22 @@ namespace GridSystem {
 
         // ========= Utils =========
 
-        private Vector2 WorldToGridPosition(Vector2 worldPosition) {
+        public Vector2 WorldToGridPosition(Vector2 worldPosition) {
             Vector2 displacementFromOrigin = worldPosition - origin;
             Vector2 displacementFromOriginGrid = displacementFromOrigin / tileSize;
             return displacementFromOriginGrid;
         }
         
-        private Vector2 GridToWorldPosition(Vector2 gridPosition) {
+        public Vector2 GridToWorldPosition(Vector2 gridPosition) {
             return gridPosition * tileSize + origin;
         }
 
-        private Tile GetTile(Vector2 gridPosition) {
-            return tiles[GridPositionToListIndex(gridPosition)];
-        }
-        
-        private Tile GetTile(int row, int column) {
-            return tiles[row * columns + column];
-        }
-
         public Vector2 ListIndexToGridPosition(int index) {
-            return new(index%columns, index/columns); 
+            return new(index%maxColumns, index/maxColumns); 
         }
         
         public int GridPositionToListIndex(Vector2 gridPosition) {
-            return (int)gridPosition.y * columns + (int)gridPosition.x;
+            return (int)Math.Floor(gridPosition.y) * maxColumns + (int)Math.Floor(gridPosition.x);
         }
         
         public Vector2 FindEntityGridPosition(GameObject entity, out bool success) {
@@ -186,6 +232,29 @@ namespace GridSystem {
             }
             success = false;
             return Vector2.zero;
+        }
+
+        public bool WithinBounds(Vector2 gridPosition) {
+            float row = gridPosition.y;
+            float column = gridPosition.x;
+
+            return row <= rows-1 && column <= columns-1 && row >= 0 && column >= 0;
+        }
+
+        public static bool OnSameTile(Vector2 a, Vector2 b) {
+            return (int)Math.Floor(a.x+0.5) == (int)Math.Floor(b.x+0.5) && (int)Math.Floor(a.y+0.5) == (int)Math.Floor(b.y+0.5);
+        }
+        
+        public static bool PassedTileCenter(Vector2 a, Vector2 b) {
+            return !OnSameTile(new(a.x+0.5f, a.y+0.5f), new(b.x+0.5f, b.y+0.5f));
+        }
+
+        private Tile GetTile(Vector2 gridPosition) {
+            return tiles[GridPositionToListIndex(gridPosition)];
+        }
+        
+        private Tile GetTile(int row, int column) {
+            return tiles[row * maxColumns + column];
         }
     }
 }
