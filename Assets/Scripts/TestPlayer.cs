@@ -1,7 +1,13 @@
+// ===========================================
+// Project: Terra Terralis 2026
+// File: TestPlayer.cs
+// Author: Samyat Gautam (github: FadedBronze)
+// Description: Simple player controller script and example on how to use grid system could be expanded on or replaced
+// ===========================================
+
 using GridSystem;
 using Event;
 using UnityEngine;
-using UnityEngine.Assertions;
 using System;
 using UnityEngine.InputSystem;
 using System.Collections.Generic;

@@ -2,7 +2,12 @@
 // Project: Terra Terralis 2026
 // File: GridSystem.cs
 // Author: Samyat Gautam (github: FadedBronze)
-// Description: The core grid system logic handles positioning of tiles, thier sizes, gaps between them, and moving gameobjects across tiles
+//
+// Description: 
+// The core grid system logic handles 
+// positioning of tiles, thier sizes, gaps 
+// between them, and moving gameobjects across 
+// tiles.
 // ===========================================
 
 using UnityEngine;
@@ -13,7 +18,7 @@ using System;
 namespace GridSystem {
 
     /// <summary>
-    /// TODO
+    /// Can be passed by [SerializeField] but mutations/updates done through GameplayEvents
     /// </summary>
     class GridManager : MonoBehaviour {
         [SerializeField]

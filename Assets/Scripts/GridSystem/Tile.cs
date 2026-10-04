@@ -2,7 +2,11 @@
 // Project: Terra Terralis 2026
 // File: Tile.cs
 // Author: Samyat Gautam (github: FadedBronze)
-// Description: Game Tile class is assigned to tile prefab this script can be changed for whatever tile/environment specific behaviour is required
+//
+// Description: Game Tile class is assigned to 
+// tile prefab this script can be changed for 
+// whatever tile/environment specific 
+// behaviour is required
 // ===========================================
 
 using UnityEngine;

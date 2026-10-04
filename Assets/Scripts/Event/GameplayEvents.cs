@@ -4,6 +4,8 @@ using UnityEngine;
 namespace Event
 {
 
+    // @author Samyat G 
+    // if these are 'GameplayEvents' maybe we should move the grid into a new 'SystemEvents' or 'GridEvents'
     public static class GameplayEvents
     {
         public static readonly EventDispatcher<(Vector2, Vector2)> moveGridEntity = new();

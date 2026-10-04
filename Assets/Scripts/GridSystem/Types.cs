@@ -2,7 +2,12 @@
 // Project: Terra Terralis 2026
 // File: Types.cs
 // Author: Samyat Gautam (github: FadedBronze)
-// Description: TODO
+//
+// Description: 
+// Additional GridSystem types in another file 
+// because unity seems to complain when there 
+// is multiple classes in a MonoBehaviour 
+// inheriting classes file
 // ===========================================
 
 using UnityEngine;
