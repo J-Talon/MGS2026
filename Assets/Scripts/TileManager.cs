@@ -32,6 +32,13 @@ public class TileManager : MonoBehaviour
         float rowOffset = rows / 2f - 0.5f;
         float colOffset = columns / 2f - 0.5f;
 
+        // Destroy the previous grid and create a new one
+        foreach (Vector2 key in tiles.Keys)
+        {
+            Destroy(tiles[key]);
+        }
+        tiles.Clear();
+
         for (int i = 0; i < rows; i++)
         {
             for (int j = 0; j < columns; j++)
@@ -48,9 +55,9 @@ public class TileManager : MonoBehaviour
         }
     }
 
-    public TileController GetTileControllerAt(int x, int y)
+    public TileController GetTileControllerAt(int row, int col)
     {
-        if (tiles.TryGetValue(new Vector2(x, y), out GameObject tile)) return tile.GetComponent<TileController>();
+        if (tiles.TryGetValue(new Vector2(row, col), out GameObject tile)) return tile.GetComponent<TileController>();
         return null;
     }
 }
