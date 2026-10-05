@@ -393,7 +393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc19bb5e7911ca04c89e09078e0ec2b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridMovement
-  moveSpeed: 10
+  moveSpeed: 20
   isEnemy: 0
 --- !u!212 &1534516132
 SpriteRenderer:

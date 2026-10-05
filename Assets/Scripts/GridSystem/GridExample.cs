@@ -43,7 +43,7 @@ public class GridExample : MonoBehaviour
                 print(x.ToString() + ", " + y.ToString());
 
                 SpriteRenderer spriteRenderer = tileSpriteObj.AddComponent<SpriteRenderer>();
-
+                spriteRenderer.sortingOrder = -1;
 
                 Texture2D texture = new Texture2D(1, 1);
                 texture.SetPixel(0, 0, Color.green);
