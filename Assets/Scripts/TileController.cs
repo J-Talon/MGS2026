@@ -20,16 +20,9 @@ public class TileController : MonoBehaviour
         }
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void Init(bool isSafe)
     {
-        UpdateTileImg();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        IsSafe = isSafe;
     }
 
     private void UpdateTileImg()
