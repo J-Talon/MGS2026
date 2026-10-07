@@ -1,17 +1,13 @@
+// Authors: [Jacky, Jeremy, Mark]
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class ProjectileMoveLinear : MonoBehaviour
+public abstract class ProjectileMove : MonoBehaviour
 {
     /// <summary>
-    /// reference interface for controlling the projectile
+    /// reference for controlling the projectile
     /// </summary>
-    IProjectileMove parentProjectile;
-
-    /// <summary>
-    /// The generic data for this projectile
-    /// </summary>
-    ProjectileData parentProjectileData;
+    EntityProjectile parentProjectile;
 
     #region projectile instance data
 
@@ -32,8 +28,7 @@ public class ProjectileMoveLinear : MonoBehaviour
     /// </summary>
     void Start()
     {
-        parentProjectile = GetComponent<IProjectileMove>();
-        timeLeft = parentProjectileData.movementTickTimer;
+        parentProjectile = GetComponent<EntityProjectile>();
     }
 
     // Update is called once per frame
@@ -53,7 +48,7 @@ public class ProjectileMoveLinear : MonoBehaviour
         }
         else
         {
-            timeLeft = parentProjectileData.movementTickTimer;;
+            timeLeft = parentProjectile.movementTickTimer;
 
             Vector2 deltaVector = new Vector2(0,0);
             if (isFreindly == true)

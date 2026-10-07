@@ -1,6 +1,7 @@
+// Authors: [Jacky, Jeremy, Mark]
 using UnityEngine;
 
-public class ProjectileOnHit : IProjectileOnHit
+public abstract class ProjectileOnHit : MonoBehaviour
 {
     public void OnHitMapBorder()
     {

@@ -4,10 +4,9 @@ using UnityEngine;
 /// <summary>
 /// Base projectile class
 /// </summary>
-public class EntityProjectile : Entity, IProjectileMove
+public class EntityProjectile : Entity
 {
-    
-    public ProjectileData pData;
+    public float movementTickTimer; 
 
     public void MoveProjectile(Vector2 deltaMovement)
     {

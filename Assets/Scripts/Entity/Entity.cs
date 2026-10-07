@@ -7,17 +7,18 @@ using System;
 /// </summary>
 public class Entity : MonoBehaviour
 {
+
     [Header("Identifiers")]
-    [SerializeField] public bool isInvulnerable {protected set; get;}
-    [SerializeField] public bool isFriendly {protected set; get;} = false;
-    [SerializeField] public bool isAlive {protected set; get;} = true;
+    [field: SerializeField] public bool isInvulnerable {protected set; get;}
+    [field: SerializeField] public bool isFriendly {protected set; get;} = false;
+    [field: SerializeField] public bool isAlive {protected set; get;} = true;
 
     [Header("Stats")]
-    [SerializeField] public float maxHealth {protected set; get;} = 100;
-    [SerializeField] public float currentHealth {protected set; get;}
-    [SerializeField] public float damage {protected set; get;}
-    [SerializeField] public float speed {protected set; get;} = 1f;
-    [SerializeField] public float maxLifeSpan {protected set; get;} = 0f; // 0 means infinite lifespan
+    [field: SerializeField] public float maxHealth {protected set; get;} = 100;
+    [field: SerializeField] public float currentHealth {protected set; get;}
+    [field: SerializeField] public float damage {protected set; get;}
+    [field: SerializeField] public float speed {protected set; get;} = 1f;
+    [field: SerializeField] public float maxLifeSpan {protected set; get;} = 0f; // 0 means infinite lifespan
 
 
     // Events for UI, audio, or visual effects listeners
