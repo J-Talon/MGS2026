@@ -1,6 +1,10 @@
 using System.IO;
 using UnityEngine;
 
+
+/*
+ * @Author Talon J
+ */
 namespace Particle.Base
 {
     public class ParticleType
@@ -9,7 +13,11 @@ namespace Particle.Base
         private string _assetPath;
         private GameObject _prefab;
         
-
+        /**
+         *
+         * Each particle type should have a particle system and a script which inherits from ParticleWrapperBase
+         * We throw exceptions to let you know that you're missing something
+         */
         public ParticleType(string assetPath) {
             _assetPath = assetPath;
             _prefab = Resources.Load<GameObject>(assetPath);
@@ -30,12 +38,22 @@ namespace Particle.Base
         
         
         
-        
+        /**
+         *
+         * Creates a new particle at a given location
+         * @Return: A particle wrapper object which gives you access to the raw particle system component
+         */
         public ParticleWrapperBase Play(float locationX, float locationY, float locationZ)
         {
             return this.Play(locationX, locationY, locationZ, Quaternion.identity);
         }
-
+        
+        
+        /**
+         *
+         * Creates a new particle at a given location with an initial rotation
+         * @Return: A particle wrapper object which gives you access to the raw particle system component
+         */
         public ParticleWrapperBase Play(float locationX, float locationY, float locationZ, Quaternion rotation)
         {
             ParticleManager manager = ParticleManager.GetInstance();
@@ -67,12 +85,17 @@ namespace Particle.Base
         //The base prefab for the particle variants can be found at:
         //"Assets/Prefab/ParticleSystem/BaseParticleBurst"
         //"Assets/Prefab/ParticleSystem/BaseParticleRepeat"
+        //please put all particle prefabs in the resources folder under Resources/VFX/Particle
         
         //you are free to create your own base as well, so as long as it:
         // 1: has a script component which inherits from ParticleWrapperBase
         // 2: has a particle system component (The particle type class will check for these requirements and throw exceptions if they do not)
         // 3: For all particle types, you must ensure that the StopAction is set to CALLBACK
         
+        
+        //How to spawn particles?
+        //Simple: ParticleType.SPARK.Play(x, y, -1);
+        //That's it. It's THAT easy. :P Enjoy.
         
         
         //sample particle system that plays particles and then ends

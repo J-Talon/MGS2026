@@ -1,3 +1,7 @@
+
+/*
+ * @Author Talon J
+ */
 namespace Particle.Interfaces
 {
     public interface IParticleWrapper

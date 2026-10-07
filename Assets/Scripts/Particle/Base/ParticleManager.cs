@@ -6,16 +6,24 @@ using JetBrains.Annotations;
 namespace Particle.Base
 {
     
-    
+    /**
+     *
+     * Particle manager which is scene agnostic (usable anywhere without dependencies)
+     * @author Talon J
+     */
     public class ParticleManager
     {
+     
+        //there are benefits to not having monobehaviour objects. 
+        //you decrease the amount of coupling, and can allow the object to be scene independent
         
+        //object pools for active and reserved objects
         private static ParticleManager _instance = null;
         private readonly Dictionary<string, List<ParticleWrapperBase>> _reservePool;
         private readonly Dictionary<string, HashSet<ParticleWrapperBase>> _activePool;
         
-
-
+        
+        //True singleton pattern using private constructor
         private ParticleManager() {
             _reservePool = new Dictionary<string, List<ParticleWrapperBase>>();
             _activePool = new Dictionary<string, HashSet<ParticleWrapperBase>>();
@@ -31,6 +39,7 @@ namespace Particle.Base
         }
 
         
+        //start tracking a particle system wrapper
         public void StartTracking(ParticleWrapperBase wrapperBase) {
                 string path = wrapperBase.GetAssetPath();
                 
@@ -44,7 +53,10 @@ namespace Particle.Base
 
 
         
-        
+        /**
+        Try to get a particle system object from the reserved pool if available
+        since we may have many particles, reusing them is a good idea where possible
+        */
         [CanBeNull]
         public ParticleWrapperBase ExtractObject(ParticleType particleType)
         {
@@ -76,7 +88,10 @@ namespace Particle.Base
         }
 
         
-        
+        /**
+         * Returns an object to the pool
+         * Use this if you want to force a particle to stop playing
+         */
         public void ReturnObject(ParticleWrapperBase wrapperBase)
         {
             string path = wrapperBase.GetAssetPath();
@@ -94,12 +109,17 @@ namespace Particle.Base
             list.Add(wrapperBase);
         }
 
-        
+        /**
+         * Forcibly stops all particles of a certain type to stop playing.
+         *
+         */
         public bool ClearParticlesOfType(ParticleType particleType) {
             return this.ClearParticlesOfType(particleType.GetAssetPath());
         }
-
-
+        
+        
+        //Don't use this function. It should stay private. Use the particle type instead
+        //It prevents you needing to fumble around with strings
         private bool ClearParticlesOfType(string assetPath)
         {
             _activePool.TryGetValue(assetPath, out HashSet<ParticleWrapperBase> set);
@@ -124,7 +144,9 @@ namespace Particle.Base
         }
 
         
-
+        /**
+         * Stops all particles from playing
+         */
         public void ClearAllParticles()
         {
             foreach (string key in _activePool.Keys) {
