@@ -2,15 +2,22 @@
 using UnityEngine;
 
 /// <summary>
-/// Base abstract projectile class
-/// Concrete projectile classes should be inherited off of this
+/// Base projectile class
 /// </summary>
-public abstract class EntityProjectile : Entity
+public class EntityProjectile : Entity, IProjectileMove
 {
+    
+    public ProjectileData pData;
+
+    public void MoveProjectile(Vector2 deltaMovement)
+    {
+        //TODO POSITION HERE
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+         
     }
 
     // Update is called once per frame
