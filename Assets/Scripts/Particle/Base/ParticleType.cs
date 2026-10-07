@@ -10,15 +10,15 @@ namespace Particle.Base
     public class ParticleType
     {
         
-        private string _assetPath;
-        private GameObject _prefab;
+        private readonly string _assetPath;
+        private readonly GameObject _prefab;
         
         /**
          *
          * Each particle type should have a particle system and a script which inherits from ParticleWrapperBase
          * We throw exceptions to let you know that you're missing something
          */
-        public ParticleType(string assetPath) {
+        private ParticleType(string assetPath) {
             _assetPath = assetPath;
             _prefab = Resources.Load<GameObject>(assetPath);
             
@@ -93,9 +93,28 @@ namespace Particle.Base
         // 3: For all particle types, you must ensure that the StopAction is set to CALLBACK
         
         
-        //How to spawn particles?
-        //Simple: ParticleType.SPARK.Play(x, y, -1);
-        //That's it. It's THAT easy. :P Enjoy.
+
+        
+        /*
+         @author Talon J
+         How to create a new particle?
+         
+         1. Create a prefab (either a variant, or an entirely new prefab) which has:
+           -> a particle system component
+           -> a script which inherits from ParticleWrapperBase (use ParticleSimple if you just need something simple)
+        Put this prefab in the resources folder.
+           
+         2. Create a new particle type below
+         public static readonly ParticleType MY_PARTICLE = new ParticleType("path to the prefab");
+         
+         3. Call ParticleType.<Your particle here>.Play(...)
+         
+         Example:
+           //How to spawn particles?
+           //Simple: ParticleType.SPARK.Play(x, y, -1);
+           //That's it. It's THAT easy. :P Enjoy.
+         
+         */
         
         
         //sample particle system that plays particles and then ends
