@@ -2,15 +2,13 @@ using Particle.Base;
 
 namespace Particle.Behaviour
 {
-    public class ParticleSingle: ParticleWrapperBase
+    public class ParticleSimple: ParticleWrapperBase
     {
         
         protected override void OnPlay() {
-            
         }
 
         protected override void OnStop() {
-            
         }
     }
 }

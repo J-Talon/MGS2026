@@ -33,11 +33,14 @@ namespace Particle.Base
         {
             gameObject.SetActive(false);
             particleEmitter.Stop();
-            
+            gameObject.transform.SetParent(null); //if for some reason people attach them to objects
+
         }
 
         public void StartPlaying()
         {
+            transform.SetParent(null);  //if for some reason people attach them to objects
+            gameObject.SetActive(true);
             if (particleEmitter.isEmitting) return;
             particleEmitter.Play();
             this.OnPlay();

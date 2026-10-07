@@ -29,9 +29,15 @@ namespace Particle.Base
         }
         
         
+        
+        
         public ParticleWrapperBase Play(float locationX, float locationY, float locationZ)
         {
-            
+            return this.Play(locationX, locationY, locationZ, Quaternion.identity);
+        }
+
+        public ParticleWrapperBase Play(float locationX, float locationY, float locationZ, Quaternion rotation)
+        {
             ParticleManager manager = ParticleManager.GetInstance();
             ParticleWrapperBase wrapperBase = manager.ExtractObject(this);
 
@@ -50,24 +56,30 @@ namespace Particle.Base
             
             body = wrapperBase.gameObject;
             body.transform.position = new Vector3(locationX, locationY, locationZ);
-            body.SetActive(true);
+            body.transform.rotation = rotation;
             wrapperBase.StartPlaying();
             
             return wrapperBase;
         }
-
         
+
         //==============================
         //The base prefab for the particle variants can be found at:
         //"Assets/Prefab/ParticleSystem/BaseParticleBurst"
+        //"Assets/Prefab/ParticleSystem/BaseParticleRepeat"
+        
         //you are free to create your own base as well, so as long as it:
         // 1: has a script component which inherits from ParticleWrapperBase
         // 2: has a particle system component (The particle type class will check for these requirements and throw exceptions if they do not)
-        // 3: If the particle type is a burst type (i.e plays a burst of particles or similar and then ends, you must ensure that the 
-        // StopAction is set to CALLBACK
+        // 3: For all particle types, you must ensure that the StopAction is set to CALLBACK
         
         
+        
+        //sample particle system that plays particles and then ends
         public static readonly ParticleType SPARK = new ParticleType("VFX/Particle/ParticleBurstSpark");
+        
+        //sample particle system that plays indefinitely
+        public static readonly ParticleType FIRE = new ParticleType("VFX/Particle/ParticleFireRepeat");
         
 
 

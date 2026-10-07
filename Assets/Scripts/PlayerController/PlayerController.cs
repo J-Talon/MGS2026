@@ -1,4 +1,6 @@
 // Authors: [Jacky, Jeremy, Mark]
+
+using Particle.Base;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -22,6 +24,8 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector3(x, y, -1);
         positionX = x;
         positionY = y;
+
+        ParticleType.SPARK.Play(x, y, -1);
     }
 
     /// <summary>
@@ -35,6 +39,7 @@ public class PlayerController : MonoBehaviour
         {
             if (value.isPressed) SetPlayerPosition(positionX, positionY + 1);
         }
+        ParticleManager.GetInstance().ClearAllParticles();
     }
 
     /// <summary>
