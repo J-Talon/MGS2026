@@ -5,7 +5,7 @@ using System;
 /// <summary>
 /// Base class for all entities in the game, including players, enemies and projectiles. Contains common stats and properties that all entities share.
 /// </summary>
-public class Entity : MonoBehaviour
+public abstract class Entity : MonoBehaviour
 {
 
     [Header("Identifiers")]
@@ -19,7 +19,17 @@ public class Entity : MonoBehaviour
     [field: SerializeField] public float damage {protected set; get;}
     [field: SerializeField] public float speed {protected set; get;} = 1f;
     [field: SerializeField] public float maxLifeSpan {protected set; get;} = 0f; // 0 means infinite lifespan
+    [field: SerializeField] public float movementTickTimer {protected set; get;} = 1f;
 
+    //[field: SerializeField] public Texture2D sprite {protected set; get;}
+
+    
+
+    #region instance variables
+    // Player position variables
+    protected Vector2 position;
+    
+    #endregion
 
     // Events for UI, audio, or visual effects listeners
     public event Action<float, float> OnHealthChanged; // (currentHealth, maxHealth)
@@ -31,6 +41,7 @@ public class Entity : MonoBehaviour
     protected virtual void Awake()
     {
         currentHealth = maxHealth;
+        position = gameObject.transform.position;
     }
 
     /// <summary>

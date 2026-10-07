@@ -2,15 +2,15 @@
 using UnityEngine;
 
 /// <summary>
-/// Base projectile class
+/// Base projectile class. Will make use of composition for specific behaviours
 /// </summary>
-public class EntityProjectile : Entity
+public class EntityProjectile : Entity, IProjectileMove
 {
-    public float movementTickTimer; 
 
     public void MoveProjectile(Vector2 deltaMovement)
     {
-        //TODO POSITION HERE
+        gameObject.transform.position = gameObject.transform.position + (Vector3) deltaMovement;
+        //call validation method here or smth
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

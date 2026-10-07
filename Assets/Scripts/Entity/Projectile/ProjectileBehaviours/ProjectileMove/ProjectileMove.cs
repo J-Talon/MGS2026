@@ -2,24 +2,22 @@
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
+/// <summary>
+/// abstract class for projectile movement behaviour. Used abstract due to common stuff for all projectile movements (i.e timer tracking between movements)
+/// </summary>
 public abstract class ProjectileMove : MonoBehaviour
 {
     /// <summary>
     /// reference for controlling the projectile
     /// </summary>
-    EntityProjectile parentProjectile;
+    protected EntityProjectile parentProjectile;
 
     #region projectile instance data
 
     /// <summary>
-    /// 
+    /// Cooldown time before movement
     /// </summary>
     private float timeLeft;
-
-    /// <summary>
-    /// General 
-    /// </summary>
-    public bool isFreindly;
 
     #endregion
 
@@ -31,16 +29,11 @@ public abstract class ProjectileMove : MonoBehaviour
         parentProjectile = GetComponent<EntityProjectile>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        movementRoutine();        
-    }
-
     /// <summary>
-    /// W
+    /// Main loop, decrements timer when still on movement cooldown
+    /// Else, resets timer then calls the actual movement behaviour defined in a actual concrete class
     /// </summary>
-    void movementRoutine()
+    void Update()
     {
         if (timeLeft > 0)
         {
@@ -49,18 +42,13 @@ public abstract class ProjectileMove : MonoBehaviour
         else
         {
             timeLeft = parentProjectile.movementTickTimer;
-
-            Vector2 deltaVector = new Vector2(0,0);
-            if (isFreindly == true)
-            {
-                deltaVector.x += 1;
-            }
-            else
-            {
-                deltaVector.x -= 1;
-            }
-
-            parentProjectile.MoveProjectile(deltaVector); //move projectile by 1 left or right depending on fired entity unity 
-        } 
+            parentProjectile.MoveProjectile(movementRoutine());  
+        }
+              
     }
+
+    /// <summary>
+    /// The actual movement behaviour to be implemented in a concrete class implementation.
+    /// </summary>
+    protected abstract Vector2 movementRoutine();
 }
