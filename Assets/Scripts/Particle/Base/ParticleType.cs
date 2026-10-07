@@ -15,7 +15,7 @@ namespace Particle.Base
             _prefab = Resources.Load<GameObject>(assetPath);
             
             if (_prefab == null) 
-                throw new FileNotFoundException("Could not find the particle system asset:",  assetPath);
+                throw new FileNotFoundException("Could not find the particle system asset:"+assetPath);
             
             if (_prefab.GetComponent<ParticleSystem>() == null)
                 throw new MissingComponentException("The particle asset "+assetPath+" must have a particle system component");
@@ -29,7 +29,7 @@ namespace Particle.Base
         }
         
         
-        public ParticleWrapperBase Create(float locationX, float locationY, float locationZ)
+        public ParticleWrapperBase Play(float locationX, float locationY, float locationZ)
         {
             
             ParticleManager manager = ParticleManager.GetInstance();
@@ -58,10 +58,16 @@ namespace Particle.Base
 
         
         //==============================
-
+        //The base prefab for the particle variants can be found at:
+        //"Assets/Prefab/ParticleSystem/BaseParticleBurst"
+        //you are free to create your own base as well, so as long as it:
+        // 1: has a script component which inherits from ParticleWrapperBase
+        // 2: has a particle system component (The particle type class will check for these requirements and throw exceptions if they do not)
+        // 3: If the particle type is a burst type (i.e plays a burst of particles or similar and then ends, you must ensure that the 
+        // StopAction is set to CALLBACK
         
         
-        public static readonly ParticleType X = new ParticleType("X");
+        public static readonly ParticleType SPARK = new ParticleType("VFX/Particle/ParticleBurstSpark");
         
 
 
