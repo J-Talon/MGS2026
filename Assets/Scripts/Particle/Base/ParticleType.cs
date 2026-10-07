@@ -1,8 +1,7 @@
 using System.IO;
-using Unity.Collections;
 using UnityEngine;
 
-namespace Particle
+namespace Particle.Base
 {
     public class ParticleType
     {
@@ -21,7 +20,7 @@ namespace Particle
             if (_prefab.GetComponent<ParticleSystem>() == null)
                 throw new MissingComponentException("The particle asset "+assetPath+" must have a particle system component");
 
-            if (_prefab.GetComponent<ParticleWrapper>() == null)
+            if (_prefab.GetComponent<ParticleWrapperBase>() == null)
                 throw new MissingComponentException("The particle asset "+assetPath+" must have a particle wrapper script component");
         }
         
@@ -30,14 +29,31 @@ namespace Particle
         }
         
         
-        public ParticleWrapper Create(float locationX, float locationY, float locationZ)
+        public ParticleWrapperBase Create(float locationX, float locationY, float locationZ)
         {
-            GameObject instance = Object.Instantiate(_prefab);
-            ParticleWrapper wrapper = instance.GetComponent<ParticleWrapper>();
-            wrapper.Initialize(_assetPath);
+            
+            ParticleManager manager = ParticleManager.GetInstance();
+            ParticleWrapperBase wrapperBase = manager.ExtractObject(this);
 
-            instance.transform.position = new Vector3(locationX, locationY, locationZ);
-            return wrapper;
+            GameObject body;
+            
+            if (wrapperBase == null) { 
+                body = Object.Instantiate(_prefab);
+                wrapperBase = body.GetComponent<ParticleWrapperBase>();
+                wrapperBase.Initialize(_assetPath);
+                manager.StartTracking(wrapperBase);
+                body.transform.position = new Vector3(locationX, locationY, locationZ);
+                wrapperBase.StartPlaying();
+                
+                return wrapperBase;
+            }
+            
+            body = wrapperBase.gameObject;
+            body.transform.position = new Vector3(locationX, locationY, locationZ);
+            body.SetActive(true);
+            wrapperBase.StartPlaying();
+            
+            return wrapperBase;
         }
 
         
