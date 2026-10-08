@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2709714934540238264}
   - component: {fileID: 5012778751537462019}
-  - component: {fileID: -5269258623207898324}
+  - component: {fileID: 298701433461384458}
   - component: {fileID: 4217820465151521796}
   - component: {fileID: -9016523079888146811}
   m_Layer: 0
-  m_Name: ProjectileTestLinear
+  m_Name: ProjectileTestZiggedSmooth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4352979034981964772}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 3.48, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EntityProjectile
   <isInvulnerable>k__BackingField: 0
-  <isFriendly>k__BackingField: 0
+  <isFriendly>k__BackingField: 1
   <isAlive>k__BackingField: 1
   <maxHealth>k__BackingField: 100
   <currentHealth>k__BackingField: 0
@@ -56,7 +56,7 @@ MonoBehaviour:
   <speed>k__BackingField: 1
   <maxLifeSpan>k__BackingField: 0
   <movementTickTimer>k__BackingField: 1
---- !u!114 &-5269258623207898324
+--- !u!114 &298701433461384458
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,9 +65,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4352979034981964772}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5ee82bee85030694aa426d1e80d7ff3b, type: 3}
+  m_Script: {fileID: 11500000, guid: 058542ba9433b184e874011aa11877d3, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectileMoveLinear
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileMoveZigZagSmooth
 --- !u!114 &4217820465151521796
 MonoBehaviour:
   m_ObjectHideFlags: 0

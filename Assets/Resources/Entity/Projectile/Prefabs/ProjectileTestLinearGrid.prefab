@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2709714934540238264}
   - component: {fileID: 5012778751537462019}
+  - component: {fileID: -5269258623207898324}
   - component: {fileID: 4217820465151521796}
-  - component: {fileID: 537049611859839370}
   - component: {fileID: -9016523079888146811}
   m_Layer: 0
-  m_Name: ProjectileTestZigged
+  m_Name: ProjectileTestLinearGrid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,6 +56,18 @@ MonoBehaviour:
   <speed>k__BackingField: 1
   <maxLifeSpan>k__BackingField: 0
   <movementTickTimer>k__BackingField: 1
+--- !u!114 &-5269258623207898324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4352979034981964772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ee82bee85030694aa426d1e80d7ff3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileMoveLinear
 --- !u!114 &4217820465151521796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,18 +80,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e3ea65fad5044b418d516afaaad2d6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileOnHitBasic
---- !u!114 &537049611859839370
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4352979034981964772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e20ef3fefa33af41b1b92e0af1646f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectileMoveZigZag
 --- !u!212 &-9016523079888146811
 SpriteRenderer:
   m_ObjectHideFlags: 0

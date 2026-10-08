@@ -4,12 +4,13 @@ using UnityEngine;
 /// <summary>
 /// Implements linear movement behaviour (in a line)
 /// Switches direction based on fired projectile friendly status
+/// TEST BEHAVIOUR FOR CHECKING ARCHITECTURE
 /// </summary>
-public class ProjectileMoveLinear : ProjectileMove
+public class ProjectileMoveLinearGrid : ProjectileMoveGrid
 {
-    protected override Vector2 movementRoutine()
+    protected override Vector2Int movementRoutine()
     {
-        Vector2 deltaVector = new Vector2(0,0);
+        Vector2Int deltaVector = new Vector2Int(0,0);
         if (parentProjectile.isFriendly == true)
         {
             deltaVector.x += 1;

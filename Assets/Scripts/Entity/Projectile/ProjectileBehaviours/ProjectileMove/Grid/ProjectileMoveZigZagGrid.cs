@@ -3,17 +3,18 @@ using UnityEngine;
 
 /// <summary>
 /// Implements zig zig movement behaviour(1 up, then 1 down, with constant left/right movement)
+/// TEST BEHAVIOUR FOR CHECKING ARCHITECTURE
 /// </summary>
-public class ProjectileMoveZigZag : ProjectileMove
+public class ProjectileMoveZigZagGrid : ProjectileMoveGrid
 {
     /// <summary>
     /// should go up or down 1
     /// </summary>
     private bool zigged = false; 
 
-    protected override Vector2 movementRoutine()
+    protected override Vector2Int movementRoutine()
     {
-        Vector2 deltaVector = new Vector2(0,0);
+        Vector2Int deltaVector = new Vector2Int(0,0);
 
         deltaVector.x += 1; //constant movement in horizontal direction
 

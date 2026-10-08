@@ -4,12 +4,25 @@ using UnityEngine;
 /// <summary>
 /// Base projectile class. Will make use of composition for specific behaviours
 /// </summary>
-public class EntityProjectile : Entity, IProjectileMove
+public class EntityProjectile : Entity, IProjectileMoveGrid, IProjectileMoveSmooth
 {
 
-    public void MoveProjectile(Vector2 deltaMovement)
+    /// <summary>
+    /// Implementation of continuous movement
+    /// </summary>
+    /// <param name="deltaMovement"></param>
+    public void MoveProjectileSmooth(Vector2 deltaMovement)
     {
-        gameObject.transform.position = gameObject.transform.position + (Vector3) deltaMovement;
+        gameObject.transform.position = gameObject.transform.position + (Vector3)deltaMovement;
+    }
+
+    /// <summary>
+    /// Implementation of grid based movement (int)
+    /// </summary>
+    /// <param name="deltaMovement"></param>
+    public void MoveProjectileGridSnap(Vector2Int deltaMovement)
+    {
+        gameObject.transform.position = gameObject.transform.position + (Vector3Int)deltaMovement;
         //call validation method here or smth
     }
 

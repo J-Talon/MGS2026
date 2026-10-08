@@ -4,22 +4,14 @@ using UnityEngine;
 
 /// <summary>
 /// abstract class for projectile movement behaviour. Used abstract due to common stuff for all projectile movements (i.e timer tracking between movements)
+/// TEST BEHAVIOUR FOR CHECKING ARCHITECTURE
 /// </summary>
-public abstract class ProjectileMove : MonoBehaviour
+public abstract class ProjectileMoveSmooth : MonoBehaviour
 {
     /// <summary>
     /// reference for controlling the projectile
     /// </summary>
     protected EntityProjectile parentProjectile;
-
-    #region projectile instance data
-
-    /// <summary>
-    /// Cooldown time before movement
-    /// </summary>
-    private float timeLeft;
-
-    #endregion
 
     /// <summary>
     /// Setup internal cooldown tracker and interface getting
@@ -35,15 +27,8 @@ public abstract class ProjectileMove : MonoBehaviour
     /// </summary>
     void Update()
     {
-        if (timeLeft > 0)
-        {
-            timeLeft -= Time.deltaTime;
-        }
-        else
-        {
-            timeLeft = parentProjectile.movementTickTimer;
-            parentProjectile.MoveProjectile(movementRoutine());  
-        }
+
+        parentProjectile.MoveProjectileSmooth(movementRoutine());  
               
     }
 
