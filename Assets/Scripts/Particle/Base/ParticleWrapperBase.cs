@@ -69,10 +69,13 @@ namespace Particle.Base
         public string GetAssetPath() {
             return _particleType;
         }
-        
-        
-        
-        
+
+        public ParticleSystem GetParticleSystem() {
+            return this.particleEmitter;
+        }
+
+
+
         public void Initialize(string particleType)
         {
             if (_initialized) return;

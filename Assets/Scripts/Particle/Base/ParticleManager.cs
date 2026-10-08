@@ -48,7 +48,13 @@ namespace Particle.Base
                     _activePool.Add(path, new HashSet<ParticleWrapperBase>());
                 
                 _activePool[path].Add(wrapperBase);
-             
+                
+                //this is my stop-gap solution to people who destroy active particles
+                if (_activePool[path].Contains(null)) {
+                    _activePool[path].Remove(null);
+                }
+
+
         }
 
 
@@ -82,6 +88,11 @@ namespace Particle.Base
             
             ParticleWrapperBase obj = list[0];
             list.RemoveAt(0);
+            
+            //in case they destroy a particle system
+            if (obj == null) return null;
+            
+            
             this.StartTracking(obj);
             
             return obj;
@@ -98,6 +109,8 @@ namespace Particle.Base
             
             if (_activePool.ContainsKey(path))
                 _activePool[path].Remove(wrapperBase);
+
+            if (wrapperBase == null) return;
             
             wrapperBase.StopPlaying();
             
@@ -107,6 +120,39 @@ namespace Particle.Base
                 throw new KeyNotFoundException("Particle "+path+" could not be returned to object pool!");
             
             list.Add(wrapperBase);
+        }
+        
+        /**
+         * @pre: The particle should be active
+         * Removes the particle from the active objects tracking
+         * No effect if it is currently reserved
+         * Return: whether the object was successfully removed
+         *
+         *The usecase for this is if you spawned a particle and then want to have it no longer be managed by the
+         * particle manager
+         *
+         * You better have GOOOD reason for using this function, cause particles persist across scenes.
+         */
+        public bool Untrack(ParticleWrapperBase wrapperBase) {
+            string path = wrapperBase.GetAssetPath();
+            _activePool.TryGetValue(path, out HashSet<ParticleWrapperBase> set);
+
+            if (set == null)
+                return false;
+
+            return set.Remove(wrapperBase);
+        }
+
+
+        /**
+         * Return the number of active particles of a given type
+         */
+        public int NumParticlesOfType(ParticleType type)
+        {
+            string path = type.GetAssetPath();
+            _activePool.TryGetValue(path, out HashSet<ParticleWrapperBase> set);
+            if (set == null) return 0;
+            return set.Count;
         }
 
         /**
@@ -129,6 +175,10 @@ namespace Particle.Base
                 
             List<ParticleWrapperBase> list = new List<ParticleWrapperBase>();
             foreach (ParticleWrapperBase wrapper in set) {
+                
+                //in case they destroy a particle system while it's still "active"
+                if (wrapper == null) continue;
+                
                 wrapper.StopPlaying();
                 list.Add(wrapper);
             }
