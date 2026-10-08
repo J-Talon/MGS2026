@@ -67,6 +67,7 @@ namespace Particle.Base
                 wrapperBase.Initialize(_assetPath);
                 manager.StartTracking(wrapperBase);
                 body.transform.position = new Vector3(locationX, locationY, locationZ);
+                body.transform.rotation = rotation;
                 wrapperBase.StartPlaying();
                 
                 return wrapperBase;
