@@ -16,6 +16,7 @@ namespace Event
 
         public static readonly EventDispatcher<ValueTuple> PlaceTurretPressed = new EventDispatcher<ValueTuple>();
 
+        public static readonly EventDispatcher<bool> gridColUpdateEvent = new EventDispatcher<bool>();  //< int, float param
     }
 
 }
