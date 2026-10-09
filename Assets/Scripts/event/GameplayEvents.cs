@@ -6,7 +6,7 @@ namespace Event
 
     public static class GameplayEvents
     {
-        public static readonly EventDispatcher<Vector2> Move = new EventDispatcher<Vector2>();
+        public static readonly EventDispatcher<Vector2> MovementInput = new EventDispatcher<Vector2>();
 
         public static readonly EventDispatcher<ValueTuple> InteractPressed = new EventDispatcher<ValueTuple>();
 

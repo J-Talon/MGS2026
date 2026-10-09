@@ -1,6 +1,8 @@
 // Authors: [Jacky, Jeremy, Mark]
+using Event;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.DebugUI;
 
 /// <summary>
 /// This script manages the player controller, handling player input and movement within the game.
@@ -10,6 +12,17 @@ public class PlayerController : MonoBehaviour
     // Player position variables
     private int positionX = 0;
     private int positionY = 0;
+
+    public void OnEnable()
+    {
+        GameplayEvents.MovementInput.AddEventListener(OnMove);
+    }
+
+    private void OnDisable()
+    {
+        GameplayEvents.MovementInput.RemoveEventListener(OnMove);
+
+    }
 
     /// <summary>
     /// Sets the position of the player on the grid.
@@ -22,6 +35,29 @@ public class PlayerController : MonoBehaviour
         transform.position = new Vector3(x, y, -1);
         positionX = x;
         positionY = y;
+    }
+
+    public void OnMove(Vector2 moveDir)
+    {
+        // safe guard from Controller Input hack  
+        moveDir = Vector2.ClampMagnitude(moveDir, 1.0f); 
+
+        Vector2Int gridMovement = new Vector2Int(  // accounting for Joystick/Diagonal inputs
+            Mathf.RoundToInt(moveDir.x),
+            Mathf.RoundToInt(moveDir.y)
+        );
+
+        // used to check whether the square tile is friendly
+        int newPositionX = positionX + gridMovement.x;
+        int newPositionY = positionY + gridMovement.y;
+
+        IGridSystemView gridView = GridManager.instance;
+        GridCell targetTile = gridView.GetTileAtPosition(new Vector2(newPositionX, newPositionY));
+        if (targetTile != null && targetTile.isFriendly)
+        {
+            //if (value.isPressed) 
+            SetPlayerPosition(newPositionX, newPositionY);
+        }
     }
 
     /// <summary>

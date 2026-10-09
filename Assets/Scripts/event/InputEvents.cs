@@ -1,23 +1,16 @@
+// Authors: Farbod
+
 using System;
 using Event;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// GameEventManager : Singleton
-// InputEvent inputEvents = new InputEvents();
-
-// GameEventManager.instance.inputEvents.
-
 
 public class InputEvents : MonoBehaviour
 {
-    [SerializeField] private InputSystem_Actions m_InputManager;
+    private InputSystem_Actions m_InputManager;
     [SerializeField] private bool debugOutput;
     [SerializeField] private bool listenForMoveCanceled;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-
-    //public Action
 
 
     private void Awake()
@@ -40,14 +33,6 @@ public class InputEvents : MonoBehaviour
         m_InputManager.Enable();
     }
 
-    private void onMove(InputAction.CallbackContext obj)
-    {
-        Vector2 move = obj.ReadValue<Vector2>();
-        
-        if (debugOutput) Debug.Log($"{obj.control.ToString()} => move = {{ {move[0]} , {move[1]} }};");
-        GameplayEvents.Move.CallEvent(move);
-    }
-
     void OnDisable()
     {
         m_InputManager.Player.Interact.performed -= onInteract;
@@ -62,6 +47,13 @@ public class InputEvents : MonoBehaviour
         if (listenForMoveCanceled) m_InputManager.Player.Move.canceled -= onMove;
 
         m_InputManager.Disable();
+    }
+    private void onMove(InputAction.CallbackContext obj)
+    {
+        Vector2 move = obj.ReadValue<Vector2>();
+
+        if (debugOutput) Debug.Log($"{obj.control.ToString()} => move = {{ {move[0]} , {move[1]} }};");
+        GameplayEvents.MovementInput.CallEvent(move);
     }
     private void onInteract(InputAction.CallbackContext context)
     {
