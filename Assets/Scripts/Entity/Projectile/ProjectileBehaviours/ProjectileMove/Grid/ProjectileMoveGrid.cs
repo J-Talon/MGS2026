@@ -41,10 +41,10 @@ public abstract class ProjectileMoveGrid : MonoBehaviour
         }
         else
         {
-            timeLeft = parentProjectile.movementTickTimer;
-            parentProjectile.MoveProjectileGridSnap(movementRoutine());  
+            timeLeft = parentProjectile.GetMovementTickTimer();
+            parentProjectile.MoveProjectileGridSnap(movementRoutine());
         }
-              
+
     }
 
     /// <summary>

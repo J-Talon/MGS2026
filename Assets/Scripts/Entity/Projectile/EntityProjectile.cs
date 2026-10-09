@@ -6,7 +6,6 @@ using UnityEngine;
 /// </summary>
 public class EntityProjectile : Entity, IProjectileMoveGrid, IProjectileMoveSmooth
 {
-
     /// <summary>
     /// Implementation of continuous movement
     /// </summary>
@@ -29,12 +28,12 @@ public class EntityProjectile : Entity, IProjectileMoveGrid, IProjectileMoveSmoo
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-         
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        base.Tick();
     }
 }

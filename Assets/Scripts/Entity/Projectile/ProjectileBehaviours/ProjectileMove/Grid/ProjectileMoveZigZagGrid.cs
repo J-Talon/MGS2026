@@ -10,11 +10,11 @@ public class ProjectileMoveZigZagGrid : ProjectileMoveGrid
     /// <summary>
     /// should go up or down 1
     /// </summary>
-    private bool zigged = false; 
+    private bool zigged = false;
 
     protected override Vector2Int movementRoutine()
     {
-        Vector2Int deltaVector = new Vector2Int(0,0);
+        Vector2Int deltaVector = new Vector2Int(0, 0);
 
         deltaVector.x += 1; //constant movement in horizontal direction
 
@@ -29,7 +29,7 @@ public class ProjectileMoveZigZagGrid : ProjectileMoveGrid
 
         zigged = !zigged;
 
-        if (parentProjectile.isFriendly == false) //flips horizontal movement based on projectile friendly status
+        if (parentProjectile.GetIsFriendly() == false) //flips horizontal movement based on projectile friendly status
         {
             deltaVector.x *= -1;
         }

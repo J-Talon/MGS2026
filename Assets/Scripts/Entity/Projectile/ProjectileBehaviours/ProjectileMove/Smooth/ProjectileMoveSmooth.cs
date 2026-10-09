@@ -28,8 +28,8 @@ public abstract class ProjectileMoveSmooth : MonoBehaviour
     void Update()
     {
 
-        parentProjectile.MoveProjectileSmooth(movementRoutine());  
-              
+        parentProjectile.MoveProjectileSmooth(movementRoutine());
+
     }
 
     /// <summary>

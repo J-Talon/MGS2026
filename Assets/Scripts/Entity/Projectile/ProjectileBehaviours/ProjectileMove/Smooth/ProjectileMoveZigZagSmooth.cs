@@ -11,43 +11,43 @@ public class ProjectileMoveZigZagSmooth : ProjectileMoveSmooth
     /// <summary>
     /// should go up or down 1
     /// </summary>
-    private bool zigged = false; 
+    private bool zigged = false;
 
     /// <summary>
     /// TEMP VARIABLE max zig amount
     /// </summary>
-    private float zigMax = 1f; 
+    private float zigMax = 1f;
 
     /// <summary>
     /// TEMP VARIABLE, this should be subject to change, track amount of zig so it can be reversed later
     /// </summary>
     private float currentZig = 0f;
-    
+
 
     protected override Vector2 movementRoutine()
     {
-        Vector2 deltaVector = new Vector2(0,0);
+        Vector2 deltaVector = new Vector2(0, 0);
 
-        deltaVector.x += parentProjectile.speed*Time.deltaTime; //constant movement in horizontal direction
+        deltaVector.x += parentProjectile.GetSpeed() * Time.deltaTime; //constant movement in horizontal direction
 
         if (zigged)
         {
-            deltaVector.y += parentProjectile.speed*Time.deltaTime;
+            deltaVector.y += parentProjectile.GetSpeed() * Time.deltaTime;
         }
         else
         {
-            deltaVector.y -= parentProjectile.speed*Time.deltaTime;
+            deltaVector.y -= parentProjectile.GetSpeed() * Time.deltaTime;
         }
-        
-        currentZig = math.clamp(currentZig + parentProjectile.speed*Time.deltaTime, 0, zigMax);
+
+        currentZig = math.clamp(currentZig + parentProjectile.GetSpeed() * Time.deltaTime, 0, zigMax);
         if (currentZig == zigMax)
         {
             zigged = !zigged;
-            currentZig = 0;  
+            currentZig = 0;
         }
-        
 
-        if (parentProjectile.isFriendly == false) //flips horizontal movement based on projectile friendly status
+
+        if (parentProjectile.GetIsFriendly() == false) //flips horizontal movement based on projectile friendly status
         {
             deltaVector.x *= -1;
         }

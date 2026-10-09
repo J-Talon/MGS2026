@@ -9,14 +9,14 @@ public class ProjectileMoveLinearSmooth : ProjectileMoveSmooth
 {
     protected override Vector2 movementRoutine()
     {
-        Vector2 deltaVector = new Vector2(0,0);
-        if (parentProjectile.isFriendly == true)
+        Vector2 deltaVector = new Vector2(0, 0);
+        if (parentProjectile.GetIsFriendly() == true)
         {
-            deltaVector.x += parentProjectile.speed * Time.deltaTime;
+            deltaVector.x += parentProjectile.GetSpeed() * Time.deltaTime;
         }
         else
         {
-            deltaVector.x -= parentProjectile.speed * Time.deltaTime;
+            deltaVector.x -= parentProjectile.GetSpeed() * Time.deltaTime;
         }
         return deltaVector;
     }

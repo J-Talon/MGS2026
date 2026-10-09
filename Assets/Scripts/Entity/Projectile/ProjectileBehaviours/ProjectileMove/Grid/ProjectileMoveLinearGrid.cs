@@ -10,8 +10,8 @@ public class ProjectileMoveLinearGrid : ProjectileMoveGrid
 {
     protected override Vector2Int movementRoutine()
     {
-        Vector2Int deltaVector = new Vector2Int(0,0);
-        if (parentProjectile.isFriendly == true)
+        Vector2Int deltaVector = new Vector2Int(0, 0);
+        if (parentProjectile.GetIsFriendly() == true)
         {
             deltaVector.x += 1;
         }

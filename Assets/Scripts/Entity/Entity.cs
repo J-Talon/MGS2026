@@ -7,28 +7,35 @@ using System;
 /// </summary>
 public abstract class Entity : MonoBehaviour
 {
-
     [Header("Identifiers")]
-    [field: SerializeField] public bool isInvulnerable {protected set; get;}
-    [field: SerializeField] public bool isFriendly {protected set; get;} = false;
-    [field: SerializeField] public bool isAlive {protected set; get;} = true;
+    [field: SerializeField] protected bool isInvulnerable = false;
+    [field: SerializeField] protected bool isFriendly = false;
+    [field: SerializeField] protected bool isAlive = true;
 
     [Header("Stats")]
-    [field: SerializeField] public float maxHealth {protected set; get;} = 100;
-    [field: SerializeField] public float currentHealth {protected set; get;}
-    [field: SerializeField] public float damage {protected set; get;}
-    [field: SerializeField] public float speed {protected set; get;} = 1f;
-    [field: SerializeField] public float maxLifeSpan {protected set; get;} = 0f; // 0 means infinite lifespan
-    [field: SerializeField] public float movementTickTimer {protected set; get;} = 1f;
+    [field: SerializeField] protected float maxHealth = 100;
+    [field: SerializeField] protected float damage = 10f;
+    [field: SerializeField] protected float speed = 1f;
+    [field: SerializeField] protected float maxLifeSpan = 0f; // 0 means infinite lifespan
+    [field: SerializeField] protected float movementTickTimer = 1f;
+
+    [Header("Runtime Stats")]
+    protected float currentHealth;
+    protected float spawnTime;
+
+    // Setters and Getters for encapsulation
+    public void SetIsFriendly(bool value) { isFriendly = value; }
+    public bool GetIsFriendly() { return isFriendly; }
+    public void SetMaxLifeSpan(float value) { maxLifeSpan = value; }
+    public void SetSpeed(float value) { speed = value; }
+    public float GetSpeed() { return speed; }
+    public float GetMovementTickTimer() { return movementTickTimer; }
 
     //[field: SerializeField] public Texture2D sprite {protected set; get;}
 
-    
-
     #region instance variables
     // Player position variables
-    protected Vector2 position;
-    
+    protected Vector3 position;
     #endregion
 
     // Events for UI, audio, or visual effects listeners
@@ -41,25 +48,8 @@ public abstract class Entity : MonoBehaviour
     protected virtual void Awake()
     {
         currentHealth = maxHealth;
+        spawnTime = Time.time;
         position = gameObject.transform.position;
-    }
-
-    /// <summary>
-    /// Called when the entity is enabled in the scene. Resets health and sets up lifespan if applicable.
-    /// </summary>
-    protected virtual void OnEnable()
-    {
-        isAlive = true;
-        currentHealth = maxHealth;
-        if (maxLifeSpan > 0f) Invoke(nameof(Despawn), maxLifeSpan);
-    }
-
-    /// <summary>
-    /// Called when the entity is disabled in the scene. Cancels any pending lifespan despawn calls.
-    /// </summary>
-    protected virtual void OnDisable()
-    {
-        CancelInvoke(nameof(Despawn));
     }
 
     /// <summary>
@@ -107,5 +97,13 @@ public abstract class Entity : MonoBehaviour
     public virtual bool IsHostile(Entity other)
     {
         return other != null && isFriendly != other.isFriendly;
+    }
+
+    public virtual void Tick()
+    {
+        if (maxLifeSpan > 0f && Time.time - spawnTime >= maxLifeSpan)
+        {
+            Die();
+        }
     }
 }
