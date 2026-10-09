@@ -1,13 +1,23 @@
 using System;
+using UnityEngine;
 namespace Event
 {
 
 
     public static class GameplayEvents
     {
-        
+        public static readonly EventDispatcher<Vector2> Move = new EventDispatcher<Vector2>();
+
+        public static readonly EventDispatcher<ValueTuple> InteractPressed = new EventDispatcher<ValueTuple>();
+
+        public static readonly EventDispatcher<ValueTuple> Spell1Pressed = new EventDispatcher<ValueTuple>();
+        public static readonly EventDispatcher<ValueTuple> Spell2Pressed = new EventDispatcher<ValueTuple>();
+        public static readonly EventDispatcher<ValueTuple> Spell3Pressed = new EventDispatcher<ValueTuple>();
+
+        public static readonly EventDispatcher<ValueTuple> PlaceTurretPressed = new EventDispatcher<ValueTuple>();
+
     }
-    
+
 }
 
 
