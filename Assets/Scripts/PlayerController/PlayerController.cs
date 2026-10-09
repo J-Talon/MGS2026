@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     public void OnUp(InputValue value)
     {
         IGridSystemView gridView = GridManager.instance;
-        GridCell targetTile = gridView.GetTileAtPosition(new Vector2(positionX, positionY + 1));
+        GridCell targetTile = gridView.GetTileAtPosition(new Vector2Int(positionX, positionY + 1));
         if (targetTile != null && targetTile.isFriendly)
         {
             if (value.isPressed) SetPlayerPosition(positionX, positionY + 1);
@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
     public void OnDown(InputValue value)
     {
         IGridSystemView gridView = GridManager.instance;
-        GridCell targetTile = gridView.GetTileAtPosition(new Vector2(positionX, positionY - 1));
+        GridCell targetTile = gridView.GetTileAtPosition(new Vector2Int(positionX, positionY - 1));
         if (targetTile != null && targetTile.isFriendly)
         {
             if (value.isPressed) SetPlayerPosition(positionX, positionY - 1);
@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
     public void OnLeft(InputValue value)
     {
         IGridSystemView gridView = GridManager.instance;
-        GridCell targetTile = gridView.GetTileAtPosition(new Vector2(positionX - 1, positionY));
+        GridCell targetTile = gridView.GetTileAtPosition(new Vector2Int(positionX - 1, positionY));
         if (targetTile != null && targetTile.isFriendly)
         {
             if (value.isPressed) SetPlayerPosition(positionX - 1, positionY);
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
     public void OnRight(InputValue value)
     {
         IGridSystemView gridView = GridManager.instance;
-        GridCell targetTile = gridView.GetTileAtPosition(new Vector2(positionX + 1, positionY));
+        GridCell targetTile = gridView.GetTileAtPosition(new Vector2Int(positionX + 1, positionY));
         if (targetTile != null && targetTile.isFriendly)
         {
             if (value.isPressed) SetPlayerPosition(positionX + 1, positionY);

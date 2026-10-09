@@ -24,7 +24,7 @@ public class ProjectileMoveZigZagSmooth : ProjectileMoveSmooth
     private float currentZig = 0f;
 
 
-    protected override Vector2 movementRoutine()
+    protected override Vector2 MovementRoutine()
     {
         Vector2 deltaVector = new Vector2(0, 0);
 

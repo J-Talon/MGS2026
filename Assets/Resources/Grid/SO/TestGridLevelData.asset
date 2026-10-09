@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2cc6dc994b3fbfc4bacb5aab7d2a85b3, type: 3}
   m_Name: TestGridLevelData
   m_EditorClassIdentifier: Assembly-CSharp::GridLevelData
-  gridSize: {x: 12, y: 6}
+  gridSize: {x: 8, y: 4}
   startingFriendlyColumns: 4
   uncapturableColumns: 2
   xBoundingBoxMin: 0
-  xBoundingBoxMax: 11
+  xBoundingBoxMax: 7
   yBoundingBoxMin: 0
-  yBoundingBoxMax: 5
+  yBoundingBoxMax: 3

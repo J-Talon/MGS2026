@@ -28,8 +28,8 @@ public class ProjectileType
     public GameObject GetPrefab() { return _prefab; }
 
     // Example of a predefined projectile type. You can add more as needed.
-    public static readonly ProjectileType ProjectileTestLinearGrid = new ProjectileType("Entity/Projectile/ProjectileTestLinearGrid");
-    public static readonly ProjectileType ProjectileTestLinearSmooth = new ProjectileType("Entity/Projectile/ProjectileTestLinearSmooth");
-    public static readonly ProjectileType ProjectileTestZiggedGrid = new ProjectileType("Entity/Projectile/ProjectileTestZiggedGrid");
-    public static readonly ProjectileType ProjectileTestZiggedSmooth = new ProjectileType("Entity/Projectile/ProjectileTestZiggedSmooth");
+    public static readonly ProjectileType ProjectileTestLinearGrid = new ProjectileType("Entity/Projectile/Prefabs/ProjectileTestLinearGrid");
+    public static readonly ProjectileType ProjectileTestLinearSmooth = new ProjectileType("Entity/Projectile/Prefabs/ProjectileTestLinearSmooth");
+    public static readonly ProjectileType ProjectileTestZiggedGrid = new ProjectileType("Entity/Projectile/Prefabs/ProjectileTestZiggedGrid");
+    public static readonly ProjectileType ProjectileTestZiggedSmooth = new ProjectileType("Entity/Projectile/Prefabs/ProjectileTestZiggedSmooth");
 }

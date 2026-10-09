@@ -12,7 +12,7 @@ public class ProjectileMoveZigZagGrid : ProjectileMoveGrid
     /// </summary>
     private bool zigged = false;
 
-    protected override Vector2Int movementRoutine()
+    protected override Vector2Int MovementRoutine()
     {
         Vector2Int deltaVector = new Vector2Int(0, 0);
 

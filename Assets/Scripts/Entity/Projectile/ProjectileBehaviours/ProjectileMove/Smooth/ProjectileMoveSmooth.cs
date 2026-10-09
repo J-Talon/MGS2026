@@ -27,13 +27,11 @@ public abstract class ProjectileMoveSmooth : MonoBehaviour
     /// </summary>
     void Update()
     {
-
-        parentProjectile.MoveProjectileSmooth(movementRoutine());
-
+        parentProjectile.MoveProjectileSmooth(MovementRoutine());
     }
 
     /// <summary>
     /// The actual movement behaviour to be implemented in a concrete class implementation.
     /// </summary>
-    protected abstract Vector2 movementRoutine();
+    protected abstract Vector2 MovementRoutine();
 }

@@ -12,7 +12,6 @@ public class GridManager : MonoBehaviour, IGridSystemControl, IGridSystemView
 
     public static GridManager instance = null;
 
-
     /// <summary>
     /// grid specific level data
     /// </summary>
@@ -33,7 +32,7 @@ public class GridManager : MonoBehaviour, IGridSystemControl, IGridSystemView
     public bool debuggerEnable;
 
     // Runtime state
-    private Dictionary<Vector2, GridCell> gridCells;
+    private Dictionary<Vector2Int, GridCell> gridCells;
 
     /// <summary>
     /// Runtime bounds of the grid (inclusive). Copied from the level data on startup so that
@@ -78,13 +77,13 @@ public class GridManager : MonoBehaviour, IGridSystemControl, IGridSystemView
         newCell.name = $"GridCell_{x}_{y}";
         newCell.isFriendly = x <= border;
         // Store the cell in the grid cells dictionary for easy access later
-        gridCells[new Vector2(x, y)] = newCell;
+        gridCells[new Vector2Int(x, y)] = newCell;
     }
 
     // Destroy a single grid cell at the given coordinate, if it exists
     void DestroyCell(int x, int y)
     {
-        Vector2 coordinate = new Vector2(x, y);
+        Vector2Int coordinate = new Vector2Int(x, y);
         if (gridCells.TryGetValue(coordinate, out var cell))
         {
             Destroy(cell.gameObject);
@@ -124,7 +123,7 @@ public class GridManager : MonoBehaviour, IGridSystemControl, IGridSystemView
     void SetColumnOwnership(int x, bool isFriendly)
     {
         for (int y = yMin; y <= yMax; y++)
-            gridCells[new Vector2(x, y)].isFriendly = isFriendly;
+            gridCells[new Vector2Int(x, y)].isFriendly = isFriendly;
     }
 
     // Keep a border value between "no friendly columns" and the capture limit
@@ -157,7 +156,7 @@ public class GridManager : MonoBehaviour, IGridSystemControl, IGridSystemView
         {
             for (int y = yMin; y <= yMax; y++)
             {
-                GridCell cell = gridCells[new Vector2(x, y)];
+                GridCell cell = gridCells[new Vector2Int(x, y)];
                 // Update the texture based on whether the cell is friendly or enemy and if it's offset
                 bool isOffset = ((x + y) & 1) == 1; // Simple checkerboard pattern for offset (& instead of % so negative coordinates work)
                 cell.UpdateTexture(isOffset);
@@ -205,7 +204,7 @@ public class GridManager : MonoBehaviour, IGridSystemControl, IGridSystemView
     /// </summary>
     /// <param name="position">XY coordinate of GridCell</param>
     /// <returns>GridCell object</returns>
-    public GridCell GetTileAtPosition(Vector2 position)
+    public GridCell GetTileAtPosition(Vector2Int position)
     {
         // Check if the position is within the grid bounds
         if (gridCells.TryGetValue(position, out var gridCell))
@@ -351,7 +350,7 @@ public class GridManager : MonoBehaviour, IGridSystemControl, IGridSystemView
     void Start()
     {
         // Initialize the grid cells
-        gridCells = new Dictionary<Vector2, GridCell>();
+        gridCells = new Dictionary<Vector2Int, GridCell>();
         GenerateGrid();
         CenterCamera();
         UpdateGridTextures();

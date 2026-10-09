@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class EntityProjectileFactory
 {
-    public EntityProjectile SpawnProjectile(ProjectileType projectileType, Vector3 position, bool isFriendly = false, float maxLifeSpan = 10f)
+    public static EntityProjectile SpawnProjectile(ProjectileType projectileType, Vector3 position, bool isFriendly = false, float maxLifeSpan = 10f)
     {
         GameObject prefabToSpawn = projectileType.GetPrefab();
         if (prefabToSpawn == null)

@@ -42,13 +42,12 @@ public abstract class ProjectileMoveGrid : MonoBehaviour
         else
         {
             timeLeft = parentProjectile.GetMovementTickTimer();
-            parentProjectile.MoveProjectileGridSnap(movementRoutine());
+            parentProjectile.MoveProjectileGridSnap(MovementRoutine());
         }
-
     }
 
     /// <summary>
     /// The actual movement behaviour to be implemented in a concrete class implementation.
     /// </summary>
-    protected abstract Vector2Int movementRoutine();
+    protected abstract Vector2Int MovementRoutine();
 }

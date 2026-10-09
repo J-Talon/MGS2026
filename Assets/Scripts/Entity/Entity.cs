@@ -23,6 +23,11 @@ public abstract class Entity : MonoBehaviour
     protected float currentHealth;
     protected float spawnTime;
 
+    #region instance variables
+    // Player position variables
+    protected Vector3 position;
+    #endregion
+
     // Setters and Getters for encapsulation
     public void SetIsFriendly(bool value) { isFriendly = value; }
     public bool GetIsFriendly() { return isFriendly; }
@@ -30,13 +35,7 @@ public abstract class Entity : MonoBehaviour
     public void SetSpeed(float value) { speed = value; }
     public float GetSpeed() { return speed; }
     public float GetMovementTickTimer() { return movementTickTimer; }
-
-    //[field: SerializeField] public Texture2D sprite {protected set; get;}
-
-    #region instance variables
-    // Player position variables
-    protected Vector3 position;
-    #endregion
+    public Vector3 GetPosition() { return transform.position; }
 
     // Events for UI, audio, or visual effects listeners
     public event Action<float, float> OnHealthChanged; // (currentHealth, maxHealth)

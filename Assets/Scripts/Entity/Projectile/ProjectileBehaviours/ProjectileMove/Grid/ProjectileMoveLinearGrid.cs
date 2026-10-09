@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class ProjectileMoveLinearGrid : ProjectileMoveGrid
 {
-    protected override Vector2Int movementRoutine()
+    protected override Vector2Int MovementRoutine()
     {
         Vector2Int deltaVector = new Vector2Int(0, 0);
         if (parentProjectile.GetIsFriendly() == true)

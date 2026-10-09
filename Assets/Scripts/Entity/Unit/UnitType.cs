@@ -27,5 +27,5 @@ public class UnitType
     public GameObject GetPrefab() { return _prefab; }
 
     // Example of a predefined unit type. You can add more as needed.
-    public static readonly UnitType UnitTest = new UnitType("Entity/Unit/UnitTest");
+    public static readonly UnitType UnitTest = new UnitType("Entity/Unit/Prefabs/UnitTest");
 }

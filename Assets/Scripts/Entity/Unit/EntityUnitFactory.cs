@@ -6,7 +6,7 @@ using UnityEngine;
 /// </summary>
 public class EntityUnitFactory
 {
-    public EntityUnit SpawnUnit(UnitType unitType, Vector3 position, bool isFriendly = false, float maxLifeSpan = 0f)
+    public static EntityUnit SpawnUnit(UnitType unitType, Vector3 position, bool isFriendly = false, float maxLifeSpan = 0f)
     {
         GameObject prefabToSpawn = unitType.GetPrefab();
         if (prefabToSpawn == null)
