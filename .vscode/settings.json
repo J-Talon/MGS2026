@@ -66,5 +66,5 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "MGS2026.sln"
+    "dotnet.defaultSolution": "triple-trouble.sln"
 }

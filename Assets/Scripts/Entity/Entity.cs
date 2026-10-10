@@ -26,10 +26,13 @@ public abstract class Entity : MonoBehaviour
     #region instance variables
     // Player position variables
     protected Vector3 position;
+    
+    protected EntityType entityType;
     #endregion
 
     // Setters and Getters for encapsulation
     public void SetIsFriendly(bool value) { isFriendly = value; }
+    public void setEntityType(EntityType type) { entityType = type; }
     public bool GetIsFriendly() { return isFriendly; }
     public void SetMaxLifeSpan(float value) { maxLifeSpan = value; }
     public void SetSpeed(float value) { speed = value; }
