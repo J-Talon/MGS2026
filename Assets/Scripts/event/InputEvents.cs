@@ -5,19 +5,34 @@ using Event;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-
+/// <summary>
+/// Bridges Unity's Input System with the game's event system
+/// by forwarding input actions to GameplayEvents.
+/// </summary>
 public class InputEvents : MonoBehaviour
 {
-    private InputSystem_Actions m_InputManager;
-    [SerializeField] private bool debugOutput;
-    [SerializeField] private bool listenForMoveCanceled;
+    private InputSystemActions m_InputManager;
+    
+    [Tooltip("Broadcast a zero movement vector when movement input is canceled.")]
+    [SerializeField] private bool broadcastMovementCanceled;
 
+    [Header("Debug Settings")]
+    [Tooltip("Log directional movement input values.")]
+    [SerializeField] private bool debugMovement; // do you want console to output the movement data
+
+    [Tooltip("Log button action activations.")]
+    [SerializeField] private bool debugActions;  // do you want console to output the button data
 
     private void Awake()
     {
-        m_InputManager = new InputSystem_Actions();
+        m_InputManager = new InputSystemActions();
+    }
+    private void OnDestroy()
+    {
+        m_InputManager?.Dispose();
     }
 
+    // Subscribe while enabled to avoid processing input when inactive.
     void OnEnable()
     {
         m_InputManager.Player.Interact.performed += onInteract;
@@ -28,11 +43,12 @@ public class InputEvents : MonoBehaviour
         m_InputManager.Player.PlaceTurret.performed += onPlaceTurret;
 
         m_InputManager.Player.Move.performed += onMove;
-        if (listenForMoveCanceled) m_InputManager.Player.Move.canceled += onMove;
+        if (broadcastMovementCanceled) m_InputManager.Player.Move.canceled += onMove;
 
         m_InputManager.Enable();
     }
 
+    // Unsubscribe while enabled to avoid processing input when inactive.
     void OnDisable()
     {
         m_InputManager.Player.Interact.performed -= onInteract;
@@ -44,7 +60,7 @@ public class InputEvents : MonoBehaviour
         m_InputManager.Player.PlaceTurret.performed -= onPlaceTurret;
 
         m_InputManager.Player.Move.performed -= onMove;
-        if (listenForMoveCanceled) m_InputManager.Player.Move.canceled -= onMove;
+        if (broadcastMovementCanceled) m_InputManager.Player.Move.canceled -= onMove;
 
         m_InputManager.Disable();
     }
@@ -52,36 +68,36 @@ public class InputEvents : MonoBehaviour
     {
         Vector2 move = obj.ReadValue<Vector2>();
 
-        if (debugOutput) Debug.Log($"{obj.control.ToString()} => move = {{ {move[0]} , {move[1]} }};");
-        GameplayEvents.MovementInput.CallEvent(move);
+        if (debugMovement) Debug.Log($"{obj.control.ToString()} => move = {{ {move[0]} , {move[1]} }};");
+        GameplayEvents.Input.movementInput.CallEvent(move);
     }
     private void onInteract(InputAction.CallbackContext context)
     {
-        if (debugOutput) Debug.Log("Interact Activated");
-        GameplayEvents.InteractPressed.CallEvent(ValueTuple.Create());
+        if (debugActions) Debug.Log("Interact Activated");
+        GameplayEvents.Input.interactPressed.CallEvent(ValueTuple.Create());
     }
 
     private void onSpell1(InputAction.CallbackContext context)
     {
-        if (debugOutput) Debug.Log("Spell1 Activated");
-        GameplayEvents.Spell1Pressed.CallEvent(ValueTuple.Create());
+        if (debugActions) Debug.Log("Spell1 Activated");
+        GameplayEvents.Input.spell1Pressed.CallEvent(ValueTuple.Create());
     }
 
     private void onSpell2(InputAction.CallbackContext context)
     {
-        if (debugOutput) Debug.Log("Spell2 Activated");
-        GameplayEvents.Spell2Pressed.CallEvent(ValueTuple.Create());
+        if (debugActions) Debug.Log("Spell2 Activated");
+        GameplayEvents.Input.spell2Pressed.CallEvent(ValueTuple.Create());
     }
 
     private void onSpell3(InputAction.CallbackContext context)
     {
-        if (debugOutput) Debug.Log("Spell3 Activated");
-        GameplayEvents.Spell3Pressed.CallEvent(ValueTuple.Create());
+        if (debugActions) Debug.Log("Spell3 Activated");
+        GameplayEvents.Input.spell3Pressed.CallEvent(ValueTuple.Create());
     }
 
     private void onPlaceTurret(InputAction.CallbackContext context)
     {
-        if (debugOutput) Debug.Log("Turret Placed");
-        GameplayEvents.PlaceTurretPressed.CallEvent(ValueTuple.Create());
+        if (debugActions) Debug.Log("Place Turret Pressed");
+        GameplayEvents.Input.placeTurretPressed.CallEvent(ValueTuple.Create());
     }
 }
