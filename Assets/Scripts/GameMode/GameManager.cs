@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
     {
         // Spawn the player at the origin with a z-position of -1 to ensure it is in front of the grid
         SpawnPlayer(new Vector3(0, 0, -1));
-
-        EntityUnit unit = (EntityUnit) EntityFactory.SpawnEntity(EntityType.UnitTest, new Vector3(5, 2, -1), false, 0f);
+        EntityUnit unit = (EntityUnit) EntityManager.GetInstance().GetEntity(EntityType.UnitTest, new Vector3(5, 2, -1), false, 0f);
     }
 }

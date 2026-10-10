@@ -33,6 +33,7 @@ public abstract class Entity : MonoBehaviour
     // Setters and Getters for encapsulation
     public void SetIsFriendly(bool value) { isFriendly = value; }
     public void setEntityType(EntityType type) { entityType = type; }
+    public EntityType getEntityType() { return entityType; }
     public bool GetIsFriendly() { return isFriendly; }
     public void SetMaxLifeSpan(float value) { maxLifeSpan = value; }
     public void SetSpeed(float value) { speed = value; }
@@ -84,12 +85,19 @@ public abstract class Entity : MonoBehaviour
         Despawn();
     }
 
+    /* kept just to compare
     /// <summary>
     /// Destroys or recycles (pools) the GameObject. Override if using object pooling.
     /// </summary>
     public virtual void Despawn()
     {
-        Destroy(gameObject);
+        //Destroy(gameObject);
+    }
+    */
+
+    public virtual void Despawn()
+    {
+        EntityManager.GetInstance().ReturnEntity(this);
     }
 
     /// <summary>
