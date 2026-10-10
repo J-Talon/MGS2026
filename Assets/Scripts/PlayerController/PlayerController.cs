@@ -1,4 +1,6 @@
 // Authors: [Jacky, Jeremy, Mark]
+
+using Particle.Base;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
