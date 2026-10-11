@@ -19,8 +19,9 @@ public class EntityFactory
         Entity entity = GameObject.Instantiate(prefabToSpawn, position, Quaternion.identity).GetComponent<Entity>();
         if (entity != null)
         {
-            entity.setEntityType(type); //IMPORTANT, this is only way to reference the original prefab
-            entity.SetIsFriendly(isFriendly);
+            entity.Setup(isFriendly, type);
+            //entity.SetEntityType(type); //IMPORTANT, this is only way to reference the original prefab
+            //entity.SetIsFriendly(isFriendly);
             
             //(jacky) do we need, we can technically just set this in prefab
             //entity.SetMaxLifeSpan(maxLifeSpan);

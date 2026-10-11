@@ -1,13 +1,23 @@
 using System.IO;
 using UnityEngine;
 
+public enum EntityClassification
+{
+    projectile, unit
+}
+
 public class EntityType
 {
+    /// <summary>
+    /// (jacky) mainly used for distingushing units (i.e if we only pool "projectiles", this can help figure out if they actually are)
+    /// </summary>
+    private readonly EntityClassification _entityClassification;
     private readonly string _assetPath;
     private readonly GameObject _prefab;
 
-    public EntityType(string assetPath)
+    public EntityType(string assetPath, EntityClassification classification)
     {
+        _entityClassification = classification;
         _assetPath = assetPath;
         _prefab = Resources.Load<GameObject>(assetPath);
 
@@ -18,15 +28,16 @@ public class EntityType
             throw new MissingComponentException("The entity asset " + assetPath + " must have a EntityUnit component attached.");
     }
 
+    public EntityClassification GetEntityClassification(){ return _entityClassification; }
     public string GetAssetPath() { return _assetPath; }
     public GameObject GetPrefab() { return _prefab; }
 
     // Example of a predefined unit type. You can add more as needed.
-    public static readonly EntityType UnitTest = new EntityType("Entity/Unit/Prefabs/UnitTest");
+    public static readonly EntityType UnitTest = new EntityType("Entity/Unit/Prefabs/UnitTest", EntityClassification.unit);
     
     // Example of a predefined projectile type. You can add more as needed.
-    public static readonly EntityType ProjectileTestLinearGrid = new EntityType("Entity/Projectile/Prefabs/ProjectileTestLinearGrid");
-    public static readonly EntityType ProjectileTestLinearSmooth = new EntityType("Entity/Projectile/Prefabs/ProjectileTestLinearSmooth");
-    public static readonly EntityType ProjectileTestZiggedGrid = new EntityType("Entity/Projectile/Prefabs/ProjectileTestZiggedGrid");
-    public static readonly EntityType ProjectileTestZiggedSmooth = new EntityType("Entity/Projectile/Prefabs/ProjectileTestZiggedSmooth");
+    public static readonly EntityType ProjectileTestLinearGrid = new EntityType("Entity/Projectile/Prefabs/ProjectileTestLinearGrid", EntityClassification.projectile);
+    public static readonly EntityType ProjectileTestLinearSmooth = new EntityType("Entity/Projectile/Prefabs/ProjectileTestLinearSmooth", EntityClassification.projectile);
+    public static readonly EntityType ProjectileTestZiggedGrid = new EntityType("Entity/Projectile/Prefabs/ProjectileTestZiggedGrid", EntityClassification.projectile);
+    public static readonly EntityType ProjectileTestZiggedSmooth = new EntityType("Entity/Projectile/Prefabs/ProjectileTestZiggedSmooth", EntityClassification.projectile);
 }

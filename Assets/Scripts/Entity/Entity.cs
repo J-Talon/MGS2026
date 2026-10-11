@@ -21,7 +21,7 @@ public abstract class Entity : MonoBehaviour
 
     [Header("Runtime Stats")]
     protected float currentHealth;
-    protected float spawnTime;
+    public float spawnTime;
 
     #region instance variables
     // Player position variables
@@ -32,8 +32,8 @@ public abstract class Entity : MonoBehaviour
 
     // Setters and Getters for encapsulation
     public void SetIsFriendly(bool value) { isFriendly = value; }
-    public void setEntityType(EntityType type) { entityType = type; }
-    public EntityType getEntityType() { return entityType; }
+    public void SetEntityType(EntityType type) { entityType = type; }
+    public EntityType GetEntityType() { return entityType; }
     public bool GetIsFriendly() { return isFriendly; }
     public void SetMaxLifeSpan(float value) { maxLifeSpan = value; }
     public void SetSpeed(float value) { speed = value; }
@@ -53,6 +53,30 @@ public abstract class Entity : MonoBehaviour
         currentHealth = maxHealth;
         spawnTime = Time.time;
         position = gameObject.transform.position;
+    }
+
+    /// <summary>
+    /// initial setup on first creation
+    /// </summary>
+    public void Setup(bool isFriendly, EntityType entityType)
+    {
+        Debug.Log("first time setup");
+        this.entityType = entityType;
+        this.isFriendly = isFriendly;
+    }
+
+    /// <summary>
+    /// Resets this entity to base state by copying values from original Prefab. Should be overriden if specific reset behaviour beyond generic entity reset is needed
+    /// </summary>
+    public virtual void Reset()
+    {
+        Debug.Log("Resetting entity to original state");
+        Entity original = entityType.GetPrefab().GetComponent<Entity>(); //NOTE: right now we don't actually need this
+
+        //reset the runtime stats
+        isAlive = true;
+        currentHealth = original.maxHealth;
+        spawnTime = Time.time;
     }
 
     /// <summary>
@@ -85,16 +109,19 @@ public abstract class Entity : MonoBehaviour
         Despawn();
     }
 
-    /* kept just to compare
     /// <summary>
-    /// Destroys or recycles (pools) the GameObject. Override if using object pooling.
+    /// Destroys game object (no pooling)
     /// </summary>
-    public virtual void Despawn()
+    public virtual void DespawnFull()
     {
-        //Destroy(gameObject);
+        EntityManager.GetInstance().Unregister(this);
+        Destroy(gameObject);
     }
-    */
+    
 
+    /// <summary>
+    /// Pools the gameobject, if pooling shouldn't be implemented
+    /// </summary>
     public virtual void Despawn()
     {
         EntityManager.GetInstance().ReturnEntity(this);

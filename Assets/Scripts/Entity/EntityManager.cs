@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem.Interactions;
 using UnityEngine.Pool;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 
@@ -10,7 +11,12 @@ using UnityEngine.UIElements;
 /// We note several things from pool system:
 /// - don't destroy on load is used when placed into reserve pool (reason being if scene changed then pooled objects will persist)
 /// - only a reserve pool is tracked, not active (reason being that i can't think of a reason to track active entities for now) (maybe just have a "active list" of entities instead)
-/// </summary>
+///
+/// IMPORTANT THING TO DO OPTIONALLY: using entity classification enum in EntityType, disallow pooling for certain entities
+/// (i.e as talon said, maybe not the best idea to pool units)
+/// 
+/// Also to note, maybe replace queue for pool storage? if we need a specific object in the queue, we literally can't get it
+///  </summary>
 public class EntityManager
 {
     EntityFactory entityFactory;
@@ -100,10 +106,15 @@ public class EntityManager
         }
         else
         { //can remove from pool, reset to original state and return it
-            entity = reservePool[type].Dequeue();
+            entity = reservePool[type].Dequeue(); 
+            entity.Reset();
             entity.gameObject.SetActive(true);
-            //TODDO - need to also remove the "dont destroy on load" if possible after retrieving from pool
-            //TODO- also add the "reset"/"setup" functions to deal with resetting a pooled entity back to original state   
+
+            //removes it from "don't destroy on load" permanent scene
+            //NOTE, this assumes active scene IS the actual scene we move it to
+            SceneManager.MoveGameObjectToScene(entity.gameObject ,UnityEngine.SceneManagement.SceneManager.GetActiveScene()); 
+
+            //resets entity in new position
             entity.transform.position = position;
         }
 
@@ -124,12 +135,20 @@ public class EntityManager
         entity.gameObject.SetActive(false);
         Object.DontDestroyOnLoad(entity);
 
-        if (reservePool.ContainsKey(entity.getEntityType()) != true) //will have to instantiate the new dictionary element since it didn't exist in pool before 
+        if (reservePool.ContainsKey(entity.GetEntityType()) != true) //will have to instantiate the new dictionary element since it didn't exist in pool before 
         {
-            reservePool.Add(entity.getEntityType(), new Queue<Entity>());
+            reservePool.Add(entity.GetEntityType(), new Queue<Entity>());
         }
 
-        reservePool[entity.getEntityType()].Enqueue(entity); //add to pool
+        reservePool[entity.GetEntityType()].Enqueue(entity); //add to pool
+    }
+
+    /// <summary>
+    /// To be called manually to unregister a entity (in the event it should be destroyed rather than be pooled)
+    /// </summary>
+    public void Unregister(Entity entity)
+    {
+        activeEntities.Remove(entity);
     }
 
     #endregion Pooling

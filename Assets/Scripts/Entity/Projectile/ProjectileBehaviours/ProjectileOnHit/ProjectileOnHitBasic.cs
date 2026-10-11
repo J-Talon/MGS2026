@@ -2,7 +2,7 @@
 using UnityEngine;
 
 /// <summary>
-/// to be implemented later
+/// to be implemented later, collisions and other stuff is still undecided by game design
 /// </summary>
 public class ProjectileOnHitBasic : MonoBehaviour, IProjectileOnHit
 {
