@@ -1,8 +1,10 @@
 // Authors: [Jacky, Jeremy, Mark]
+using Event;
 
 using Particle.Base;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.DebugUI;
 
 /// <summary>
 /// This script manages the player controller, handling player input and movement within the game.
@@ -12,6 +14,17 @@ public class PlayerController : MonoBehaviour
     // Player position variables
     private int positionX = 0;
     private int positionY = 0;
+
+    public void OnEnable()
+    {
+        GameplayEvents.Input.movementInput.AddEventListener(OnMove);
+    }
+
+    private void OnDisable()
+    {
+        GameplayEvents.Input.movementInput.RemoveEventListener(OnMove);
+
+    }
 
     /// <summary>
     /// Sets the position of the player on the grid.
@@ -27,54 +40,28 @@ public class PlayerController : MonoBehaviour
     }
 
     /// <summary>
-    /// Handles player movement input for moving up on the grid. The player can only move to a tile that is friendly.
+    /// Handles player movement input for moving around on the grid in all directions. The player can only move to a tile that is friendly.
     /// </summary>
-    public void OnUp(InputValue value)
+    public void OnMove(Vector2 moveDir)
     {
-        IGridSystemView gridView = GridManager.instance;
-        GridCell targetTile = gridView.GetTileAtPosition(new Vector2Int(positionX, positionY + 1));
-        if (targetTile != null && targetTile.isFriendly)
-        {
-            if (value.isPressed) SetPlayerPosition(positionX, positionY + 1);
-        }
-    }
+        // safe guard from Controller Input hack  
+        moveDir = Vector2.ClampMagnitude(moveDir, 1.0f); 
 
-    /// <summary>
-    /// Handles player movement input for moving down on the grid. The player can only move to a tile that is friendly.
-    /// </summary>
-    public void OnDown(InputValue value)
-    {
-        IGridSystemView gridView = GridManager.instance;
-        GridCell targetTile = gridView.GetTileAtPosition(new Vector2Int(positionX, positionY - 1));
-        if (targetTile != null && targetTile.isFriendly)
-        {
-            if (value.isPressed) SetPlayerPosition(positionX, positionY - 1);
-        }
-    }
+        Vector2Int gridMovement = new Vector2Int(  // accounting for Joystick OR Diagonal inputs
+            Mathf.RoundToInt(moveDir.x),
+            Mathf.RoundToInt(moveDir.y)
+        );
 
-    /// <summary>
-    /// Handles player movement input for moving left on the grid. The player can only move to a tile that is friendly.
-    /// </summary>
-    public void OnLeft(InputValue value)
-    {
-        IGridSystemView gridView = GridManager.instance;
-        GridCell targetTile = gridView.GetTileAtPosition(new Vector2Int(positionX - 1, positionY));
-        if (targetTile != null && targetTile.isFriendly)
-        {
-            if (value.isPressed) SetPlayerPosition(positionX - 1, positionY);
-        }
-    }
+        // used to check whether the square tile is friendly
+        int newPositionX = positionX + gridMovement.x;
+        int newPositionY = positionY + gridMovement.y;
 
-    /// <summary>
-    /// Handles player movement input for moving right on the grid. The player can only move to a tile that is friendly.
-    /// </summary>
-    public void OnRight(InputValue value)
-    {
         IGridSystemView gridView = GridManager.instance;
-        GridCell targetTile = gridView.GetTileAtPosition(new Vector2Int(positionX + 1, positionY));
+        GridCell targetTile = gridView.GetTileAtPosition(new Vector2(newPositionX, newPositionY));
         if (targetTile != null && targetTile.isFriendly)
         {
-            if (value.isPressed) SetPlayerPosition(positionX + 1, positionY);
+            //if (value.isPressed) 
+            SetPlayerPosition(newPositionX, newPositionY);
         }
     }
 }
