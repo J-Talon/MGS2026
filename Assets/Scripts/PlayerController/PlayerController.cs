@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
         int newPositionY = positionY + gridMovement.y;
 
         IGridSystemView gridView = GridManager.instance;
-        GridCell targetTile = gridView.GetTileAtPosition(new Vector2(newPositionX, newPositionY));
+        GridCell targetTile = gridView.GetTileAtPosition(new Vector2Int(newPositionX, newPositionY));
         if (targetTile != null && targetTile.isFriendly)
         {
             //if (value.isPressed) 
