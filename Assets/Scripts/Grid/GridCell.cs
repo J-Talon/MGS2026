@@ -7,6 +7,8 @@ using UnityEngine;
 /// </summary>
 public class GridCell : MonoBehaviour
 {
+    public EntityUnit occupiedUnit {get; private set;}
+
     public bool isOccupied = false;
     public bool isFriendly = false;
 
@@ -33,5 +35,25 @@ public class GridCell : MonoBehaviour
             spriteRenderer.color = isOffset ? friendlyOffsetColor : friendlyColor;
         else
             spriteRenderer.color = isOffset ? enemyOffsetColor : enemyColor;
+    }
+
+    /// <summary>
+    /// Updates the texture of the cell based on its state (friendly or enemy) and whether it is offset.
+    /// </summary>
+    /// <param name="isOffset">Indicates whether the cell is offset.</param>
+    public void EntityUnitOccupy(EntityUnit unit)
+    {
+        occupiedUnit = unit;
+        isOccupied = true;
+    }
+
+    /// <summary>
+    /// Updates the texture of the cell based on its state (friendly or enemy) and whether it is offset.
+    /// </summary>
+    /// <param name="isOffset">Indicates whether the cell is offset.</param>
+    public void EntityUnitLeft()
+    {
+        occupiedUnit = null;
+        isOccupied = false;
     }
 }

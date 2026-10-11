@@ -54,6 +54,7 @@ MonoBehaviour:
   speed: 1
   maxLifeSpan: 0
   movementTickTimer: 1
+  spawnTime: 0
 --- !u!114 &3793609078325505280
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,7 +113,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 41fedc340aed5924e9b2dd84b66b301c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
