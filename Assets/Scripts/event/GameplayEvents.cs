@@ -1,13 +1,38 @@
 using System;
+using UnityEngine;
 namespace Event
 {
 
-
     public static class GameplayEvents
     {
+        /// <summary>
+        /// Groups the event relating to the Input System ||
+        /// Flow Rule: Only called from InputEvents.cs -> can be listened to from anywhere (mostly listened to from PlayerController)
+        /// </summary>
+        public static class Input {
+            public static readonly EventDispatcher<Vector2> movementInput = new EventDispatcher<Vector2>();
+
+            public static readonly EventDispatcher<ValueTuple> interactPressed = new EventDispatcher<ValueTuple>();
+
+            public static readonly EventDispatcher<ValueTuple> spell1Pressed = new EventDispatcher<ValueTuple>();
+            public static readonly EventDispatcher<ValueTuple> spell2Pressed = new EventDispatcher<ValueTuple>();
+            public static readonly EventDispatcher<ValueTuple> spell3Pressed = new EventDispatcher<ValueTuple>();
+
+            public static readonly EventDispatcher<ValueTuple> placeTurretPressed = new EventDispatcher<ValueTuple>();
+        }
+
+        /// <summary>
+        /// Group the event for the Grid ||
+        /// Flow Rule: Called From (file.cs OR anywhere) -> Listened From (file.cs Or Anywhere) [Ideally either called OR listen from one file]
+        /// </summary>
+        public static class Grid
+        {
+
+        }
+
         public static readonly EventDispatcher<bool> gridColUpdateEvent = new EventDispatcher<bool>();  //< int, float param
     }
-    
+
 }
 
 
