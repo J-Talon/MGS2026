@@ -1,5 +1,7 @@
 // Authors: [Jacky, Jeremy, Mark]
 using Event;
+
+using Particle.Base;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.Rendering.DebugUI;
