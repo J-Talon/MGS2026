@@ -285,7 +285,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c8d1629af36c4c4182ef8c380b70784, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputEvents
-  broadcastMovementCanceled: 0
+  broadcastMovementCanceled: 1
   debugMovement: 0
   debugActions: 1
 --- !u!4 &448114064

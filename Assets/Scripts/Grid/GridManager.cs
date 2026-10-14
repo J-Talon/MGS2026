@@ -2,6 +2,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Event;
+using UnityEngine.InputSystem;
+using System.Linq;
 
 /// <summary>
 /// This script manages the grid system of the game.
@@ -355,5 +357,19 @@ public class GridManager : MonoBehaviour, IGridSystemControl, IGridSystemView
         CenterCamera();
         UpdateGridTextures();
     }
+
+    void Update()
+    {
+        if (Keyboard.current.uKey.wasReleasedThisFrame) //remove row on the bottom
+        {
+            for (int i = 0; i < gridCells.Count; i = i + 1)
+            {
+                var a = gridCells.Values.ToList()[i];
+                var b = gridCells.Values.ToList()[i].isOccupied;
+                Debug.Log($"{a} + {b}");
+            }
+        }
+    }
+
 
 }

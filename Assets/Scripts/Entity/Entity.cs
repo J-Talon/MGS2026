@@ -68,7 +68,7 @@ public abstract class Entity : MonoBehaviour
     /// <summary>
     /// Resets this entity to base state by copying values from original Prefab. Should be overriden if specific reset behaviour beyond generic entity reset is needed
     /// </summary>
-    public virtual void Reset()
+    public virtual void ResetToOriginal()
     {
         Debug.Log("Resetting entity to original state");
         Entity original = entityType.GetPrefab().GetComponent<Entity>(); //NOTE: right now we don't actually need this
