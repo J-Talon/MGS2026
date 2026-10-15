@@ -26,12 +26,12 @@ public class EntityManager
     /// </summary>
     private readonly Dictionary<EntityType, Queue<Entity>> reservePool;
 
-    private readonly List<Entity> activeEntities;
+    private readonly Dictionary<int, Entity> activeEntities;
 
     private EntityManager()
     {
         reservePool = new Dictionary<EntityType, Queue<Entity>>();
-        activeEntities = new List<Entity>();
+        activeEntities = new Dictionary<int, Entity>();
     }
 
     /// <summary>
@@ -47,7 +47,7 @@ public class EntityManager
     {
         if (instance == null)
             instance = new EntityManager();
-        
+
         return instance;
     }
 
@@ -56,10 +56,10 @@ public class EntityManager
     public int GetTotalPooledEntitiesCount()
     {
         int totalPooled = 0;
-        foreach(var entityType in reservePool) //lowkey using foreach cause idk how else to iterate through dict in a clean way
+        foreach (var entityType in reservePool) //lowkey using foreach cause idk how else to iterate through dict in a clean way
         {
             totalPooled += entityType.Value.Count;
-        } 
+        }
         return totalPooled;
     }
 
@@ -68,7 +68,7 @@ public class EntityManager
         return activeEntities.Count;
     }
 
-    
+
     public int GetAllEntitiesCount()
     {
         return GetTotalPooledEntitiesCount() + GetActiveEntitiesCount();
@@ -95,7 +95,7 @@ public class EntityManager
         Entity entity = null;
         if (reservePool.ContainsKey(type) != true) //pool list for this specific entity doesn't even exist
         {
-            reservePool.Add(type, new Queue<Entity>()); 
+            reservePool.Add(type, new Queue<Entity>());
         }
 
         if (reservePool[type].Count == 0) //no entities was pooled, must make a new one
@@ -105,7 +105,7 @@ public class EntityManager
         }
         else
         { //can remove from pool, reset to original state and return it
-            entity = reservePool[type].Dequeue(); 
+            entity = reservePool[type].Dequeue();
             entity.ResetToOriginal();
             entity.gameObject.SetActive(true);
 
@@ -114,7 +114,7 @@ public class EntityManager
         }
 
         //Debug.Log("adding");
-        activeEntities.Add(entity); //add to active list
+        activeEntities.Add(entity.GetEntityID(), entity); //add to active dictionary for tracking
         return entity;
     }
 
@@ -124,11 +124,11 @@ public class EntityManager
     /// <param name="entity"></param>
     public void ReturnEntity(Entity entity)
     {
-        activeEntities.Remove(entity); //remove from active list
+        activeEntities.Remove(entity.GetEntityID()); //remove from active dictionary
 
         //disable and ensure it won't be removed on scene change, etc...
         entity.gameObject.SetActive(false);
-        
+
 
         if (reservePool.ContainsKey(entity.GetEntityType()) != true) //will have to instantiate the new dictionary element since it didn't exist in pool before 
         {
@@ -143,7 +143,7 @@ public class EntityManager
     /// </summary>
     public void Unregister(Entity entity)
     {
-        activeEntities.Remove(entity);
+        activeEntities.Remove(entity.GetEntityID());
     }
 
     #endregion Pooling

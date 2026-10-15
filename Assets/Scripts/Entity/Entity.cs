@@ -1,6 +1,7 @@
 // Authors: [Jacky, Jeremy, Mark]
 using UnityEngine;
 using System;
+using Event;
 
 /// <summary>
 /// Base class for all entities in the game, including players, enemies and projectiles. Contains common stats and properties that all entities share.
@@ -11,6 +12,8 @@ public abstract class Entity : MonoBehaviour
     [field: SerializeField] protected bool isInvulnerable = false;
     [field: SerializeField] protected bool isFriendly = false;
     [field: SerializeField] protected bool isAlive = true;
+    static protected int globalStaticIDCounter = 0;
+    protected int entityID; // Unique identifier for the specific instance of the entity, useful for tracking and managing entities in the game world.
 
     [Header("Stats")]
     [field: SerializeField] protected float maxHealth = 100;
@@ -26,7 +29,6 @@ public abstract class Entity : MonoBehaviour
     #region instance variables
     // Player position variables
     protected Vector3 position;
-    
     protected EntityType entityType;
     #endregion
 
@@ -40,10 +42,18 @@ public abstract class Entity : MonoBehaviour
     public float GetSpeed() { return speed; }
     public float GetMovementTickTimer() { return movementTickTimer; }
     public Vector3 GetPosition() { return transform.position; }
+    public int GetEntityID() { return entityID; }
 
-    // Events for UI, audio, or visual effects listeners
-    public event Action<float, float> OnHealthChanged; // (currentHealth, maxHealth)
-    public event Action OnDeath;
+    static int AssignUniqueID()
+    {
+        globalStaticIDCounter++;
+        return globalStaticIDCounter;
+    }
+
+    protected virtual void Start()
+    {
+        entityID = AssignUniqueID();
+    }
 
     /// <summary>
     /// Initializes the entity's health and sets up any necessary components. This method is called when the entity is first created in the game.
@@ -87,7 +97,6 @@ public abstract class Entity : MonoBehaviour
     {
         if (!isAlive || isInvulnerable || damage <= 0f) return;
         currentHealth -= damage;
-        OnHealthChanged?.Invoke(currentHealth, maxHealth);
         if (currentHealth <= 0f) Die();
     }
 
@@ -95,7 +104,6 @@ public abstract class Entity : MonoBehaviour
     {
         if (!isAlive || amount <= 0f) return;
         currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
-        OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
     /// <summary>
@@ -105,7 +113,6 @@ public abstract class Entity : MonoBehaviour
     {
         if (!isAlive) return;
         isAlive = false;
-        OnDeath?.Invoke();
         Despawn();
     }
 
@@ -117,7 +124,6 @@ public abstract class Entity : MonoBehaviour
         EntityManager.GetInstance().Unregister(this);
         Destroy(gameObject);
     }
-    
 
     /// <summary>
     /// Pools the gameobject, if pooling shouldn't be implemented

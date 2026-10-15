@@ -29,9 +29,11 @@ public static class EntityFactory
             entity.Setup(isFriendly, type);
             //entity.SetEntityType(type); //IMPORTANT, this is only way to reference the original prefab
             //entity.SetIsFriendly(isFriendly);
-            
+
             //(jacky) do we need, we can technically just set this in prefab
             //entity.SetMaxLifeSpan(maxLifeSpan);
+
+            // (Jeremy) TODO - pass in JSON data to setup entity variables (e.g. health, speed, etc.) if needed in the future
         }
         else
         {
