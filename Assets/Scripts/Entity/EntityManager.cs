@@ -122,9 +122,16 @@ public class EntityManager
     {
         activeEntities.Remove(entity.GetEntityID()); //remove from active dictionary
 
+        // if the entity is a unit, unregister it from the grid cell it occupies
+        if (entity.GetEntityType().GetEntityClassification() == EntityClassification.unit)
+        {
+            IGridSystemView gridManager = GridManager.instance;
+            GridCell gridPosition = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(entity.GetPosition()));
+            gridPosition.EntityUnitLeave(); //unregister from grid cell
+        }
+
         //disable and ensure it won't be removed on scene change, etc...
         entity.gameObject.SetActive(false);
-
 
         if (reservePool.ContainsKey(entity.GetEntityType()) != true) //will have to instantiate the new dictionary element since it didn't exist in pool before 
         {
