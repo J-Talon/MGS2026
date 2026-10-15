@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8921206993582459777}
   - component: {fileID: 8060877121987549014}
+  - component: {fileID: -2332521726127746915}
   - component: {fileID: 6666874912454835544}
   - component: {fileID: 4189265674046521110}
   m_Layer: 0
@@ -80,7 +81,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 75173bd9a9b96d24f8059364160dc6c8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -92,6 +93,27 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &-2332521726127746915
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220599807332297726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9612c2237f70c3540a41caf28ca72bd6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EntityUnit
+  isInvulnerable: 0
+  isFriendly: 1
+  isAlive: 1
+  maxHealth: 100
+  damage: 10
+  speed: 1
+  maxLifeSpan: 0
+  movementTickTimer: 0.15
+  spawnTime: 0
 --- !u!114 &6666874912454835544
 MonoBehaviour:
   m_ObjectHideFlags: 0
