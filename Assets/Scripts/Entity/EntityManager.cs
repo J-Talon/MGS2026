@@ -101,16 +101,13 @@ public class EntityManager
         if (reservePool[type].Count == 0) //no entities was pooled, must make a new one
         {
             entity = EntityFactory.SpawnEntity(type, position, isFriendly, maxLifeSpan);
+            Object.DontDestroyOnLoad(entity); //ensure entity that is part of pool system cannot be destroyed via scene change
         }
         else
         { //can remove from pool, reset to original state and return it
             entity = reservePool[type].Dequeue(); 
             entity.Reset();
             entity.gameObject.SetActive(true);
-
-            //removes it from "don't destroy on load" permanent scene
-            //NOTE, this assumes active scene IS the actual scene we move it to
-            SceneManager.MoveGameObjectToScene(entity.gameObject ,UnityEngine.SceneManagement.SceneManager.GetActiveScene()); 
 
             //resets entity in new position
             entity.transform.position = position;
@@ -131,7 +128,7 @@ public class EntityManager
 
         //disable and ensure it won't be removed on scene change, etc...
         entity.gameObject.SetActive(false);
-        Object.DontDestroyOnLoad(entity);
+        
 
         if (reservePool.ContainsKey(entity.GetEntityType()) != true) //will have to instantiate the new dictionary element since it didn't exist in pool before 
         {
