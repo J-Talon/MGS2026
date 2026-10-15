@@ -19,7 +19,6 @@ using UnityEngine.UIElements;
 ///  </summary>
 public class EntityManager
 {
-    EntityFactory entityFactory;
 
     /// <summary>
     /// Track entities that are no longer actively used
@@ -31,7 +30,6 @@ public class EntityManager
 
     private EntityManager()
     {
-        entityFactory = new EntityFactory();
         reservePool = new Dictionary<EntityType, Queue<Entity>>();
         activeEntities = new List<Entity>();
     }
@@ -102,7 +100,7 @@ public class EntityManager
 
         if (reservePool[type].Count == 0) //no entities was pooled, must make a new one
         {
-            entity = entityFactory.SpawnEntity(type, position, isFriendly, maxLifeSpan);
+            entity = EntityFactory.SpawnEntity(type, position, isFriendly, maxLifeSpan);
         }
         else
         { //can remove from pool, reset to original state and return it
