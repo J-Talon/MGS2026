@@ -46,12 +46,16 @@ public abstract class Entity : MonoBehaviour
     static int AssignUniqueID()
     {
         globalStaticIDCounter++;
+        //Debug.Log(globalStaticIDCounter);
         return globalStaticIDCounter;
     }
 
-    void Start()
+    /// <summary>
+    /// Common start up for entity
+    /// </summary>
+    protected void Start()
     {
-        entityID = AssignUniqueID();
+
     }
 
     /// <summary>
@@ -59,6 +63,9 @@ public abstract class Entity : MonoBehaviour
     /// </summary>
     protected virtual void Awake()
     {
+        entityID = AssignUniqueID();
+        Debug.Log(entityID);
+
         currentHealth = maxHealth;
         spawnTime = Time.time;
     }

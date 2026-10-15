@@ -109,7 +109,7 @@ public class EntityManager
             entity.transform.position = position;
         }
 
-        //Debug.Log("adding");
+        //Debug.Log("adding " + entity.GetEntityID());
         activeEntities.Add(entity.GetEntityID(), entity); //add to active dictionary for tracking
         return entity;
     }
