@@ -58,6 +58,26 @@ public class GridManager : MonoBehaviour, IGridSystemView
         return null; // Return null if the position is out of bounds
     }
 
+    /// <summary>
+    /// Function to get a entity at the given grid cell
+    /// It is a wrapper function using GetTileAtPosition
+    /// </summary>
+    /// <returns>Entity if one exists there (using a snappy movement type), null otherwise</returns>
+    public EntityUnit GetEntityAtTilePosition(Vector2Int position)
+    {
+        GridCell tile = GetTileAtPosition(position);
+        if (tile != null)
+        {
+            EntityUnit unit = tile.occupiedUnit;
+            if (unit != null)
+            {
+                return unit;
+            }
+        }
+
+        return null; //return null if either no units on cell or cell itself doesn't exist at the given position
+    }
+
     // Re-centre the camera and recolour every cell after the grid changes
     void Redraw()
     {
