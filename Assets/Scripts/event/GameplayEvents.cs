@@ -10,7 +10,8 @@ namespace Event
         /// Flow Rule: Only called from InputEvents.cs -> can be listened to from anywhere (mostly listened to from PlayerController)
         /// </summary>
         public static class Input {
-            public static readonly EventDispatcher<Vector2> movementInput = new EventDispatcher<Vector2>();
+            public static readonly EventDispatcher<Vector2Int> movePressed = new EventDispatcher<Vector2Int>();
+            public static readonly EventDispatcher<Vector2Int> moveReleased = new EventDispatcher<Vector2Int>();
 
             public static readonly EventDispatcher<ValueTuple> interactPressed = new EventDispatcher<ValueTuple>();
 
@@ -38,7 +39,7 @@ namespace Event
 
 
 /*
-@author Talon J
+@author Talon J         edited by Jordan (see below for changelog)
 How to use the event system:
 
 1: Declare a listener function where you need it.
@@ -87,5 +88,14 @@ Remember to unregister the event when the object is destroyed, otherwise you wil
 GameplayEvents.playerEvent.RemoveEventListener(MyListenerFunction);
 
 
+---CHANGELOG---
 
+Edited by Jordan - October 14, 2026
+Removed the general "move" event and replaced it with two events called "movePressed" and "moveReleased"
+Reasoning for this is because i had to deal with multiple inputs. If multiple inputs were done at the same time, the character moves very incorrectly
+The 2 events handling it let me break it up between a move input, and whether you pressed another movement within the movement period (has a small cooldown window)
+This lets me have a buffer system 
+Basically means that during the movement cooldown, if i am holding down another direction to move, it will execute that movement as soon as the cooldown ends
+And to account for someone changing their buffered input to a different one, the moveReleased deals with it (hence the name)
+For more details about this stuff, go to InputEvents.cs and PlayerController.cs
  */
