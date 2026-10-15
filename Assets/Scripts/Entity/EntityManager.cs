@@ -106,7 +106,7 @@ public class EntityManager
         else
         { //can remove from pool, reset to original state and return it
             entity = reservePool[type].Dequeue(); 
-            entity.Reset();
+            entity.ResetToOriginal();
             entity.gameObject.SetActive(true);
 
             //resets entity in new position

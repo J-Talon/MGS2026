@@ -21,6 +21,7 @@ public abstract class UnitMoveSnappy : MonoBehaviour
         {
             movementCooldown -= Time.deltaTime;
         }
+
         else
         {
             movementCooldown = parentUnit.GetMovementTickTimer();

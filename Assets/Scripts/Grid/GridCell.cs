@@ -51,7 +51,7 @@ public class GridCell : MonoBehaviour
     /// Updates the texture of the cell based on its state (friendly or enemy) and whether it is offset.
     /// </summary>
     /// <param name="isOffset">Indicates whether the cell is offset.</param>
-    public void EntityUnitLeft()
+    public void EntityUnitLeave()
     {
         occupiedUnit = null;
         isOccupied = false;
