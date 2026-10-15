@@ -5,7 +5,6 @@ using UnityEngine.Pool;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-
 /// <summary>
 /// Pool system is adapted from Unity's built in framework for pooling (uses stack to use older ones first (not sure reasoning))
 /// We note several things from pool system:
@@ -19,7 +18,6 @@ using UnityEngine.UIElements;
 ///  </summary>
 public class EntityManager
 {
-
     /// <summary>
     /// Track entities that are no longer actively used
     /// Key of entity type to check specific lists for those specific entities
@@ -68,12 +66,10 @@ public class EntityManager
         return activeEntities.Count;
     }
 
-
     public int GetAllEntitiesCount()
     {
         return GetTotalPooledEntitiesCount() + GetActiveEntitiesCount();
     }
-
 
     #endregion
 

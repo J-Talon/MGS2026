@@ -50,7 +50,7 @@ public abstract class Entity : MonoBehaviour
         return globalStaticIDCounter;
     }
 
-    protected virtual void Start()
+    void Start()
     {
         entityID = AssignUniqueID();
     }

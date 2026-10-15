@@ -53,8 +53,6 @@ public class EntityUnit : Entity, IUnitMoveSnappy, IUnitMoveSmooth
         {
             //do nothing ig
         }
-
-     
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
