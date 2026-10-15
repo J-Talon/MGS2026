@@ -1,5 +1,7 @@
 // Authors: [Jacky, Jeremy, Mark]
 using UnityEngine;
+using System.Collections.Generic;
+using Event;
 using UnityEngine.InputSystem;
 using System.Linq;
 
@@ -153,7 +155,6 @@ public class GridManager : MonoBehaviour, IGridSystemView
 
     void Update()
     {
-        
         //debugging code
         // if (Keyboard.current.uKey.wasReleasedThisFrame) //remove row on the bottom
         // {
