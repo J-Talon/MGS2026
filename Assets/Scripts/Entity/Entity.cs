@@ -28,7 +28,6 @@ public abstract class Entity : MonoBehaviour
 
     #region instance variables
     // Player position variables
-    protected Vector3 position;
     protected EntityType entityType;
     #endregion
 
@@ -62,7 +61,6 @@ public abstract class Entity : MonoBehaviour
     {
         currentHealth = maxHealth;
         spawnTime = Time.time;
-        position = gameObject.transform.position;
     }
 
     /// <summary>
@@ -113,6 +111,13 @@ public abstract class Entity : MonoBehaviour
     {
         if (!isAlive) return;
         isAlive = false;
+        // if the entity is a unit, unregister it from the grid cell it occupies
+        if (entityType.GetEntityClassification() == EntityClassification.unit)
+        {
+            IGridSystemView gridManager = GridManager.instance;
+            GridCell gridPosition = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(gameObject.transform.position));
+            gridPosition.EntityUnitLeave(); //unregister from grid cell
+        }
         Despawn();
     }
 
