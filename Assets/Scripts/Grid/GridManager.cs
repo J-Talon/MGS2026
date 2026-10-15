@@ -360,15 +360,17 @@ public class GridManager : MonoBehaviour, IGridSystemControl, IGridSystemView
 
     void Update()
     {
-        if (Keyboard.current.uKey.wasReleasedThisFrame) //remove row on the bottom
-        {
-            for (int i = 0; i < gridCells.Count; i = i + 1)
-            {
-                var a = gridCells.Values.ToList()[i];
-                var b = gridCells.Values.ToList()[i].isOccupied;
-                Debug.Log($"{a} + {b}");
-            }
-        }
+        
+        //debugging code
+        // if (Keyboard.current.uKey.wasReleasedThisFrame) //remove row on the bottom
+        // {
+        //     for (int i = 0; i < gridCells.Count; i = i + 1)
+        //     {
+        //         var a = gridCells.Values.ToList()[i];
+        //         var b = gridCells.Values.ToList()[i].isOccupied;
+        //         Debug.Log($"{a} + {b}");
+        //     }
+        // }
     }
 
 
