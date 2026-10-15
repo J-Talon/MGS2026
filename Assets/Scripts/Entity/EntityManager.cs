@@ -113,7 +113,7 @@ public class EntityManager
             entity.transform.position = position;
         }
 
-        Debug.Log("adding");
+        //Debug.Log("adding");
         activeEntities.Add(entity); //add to active list
         return entity;
     }

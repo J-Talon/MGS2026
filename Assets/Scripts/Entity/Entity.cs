@@ -60,7 +60,7 @@ public abstract class Entity : MonoBehaviour
     /// </summary>
     public void Setup(bool isFriendly, EntityType entityType)
     {
-        Debug.Log("first time setup");
+        //Debug.Log("first time setup");
         this.entityType = entityType;
         this.isFriendly = isFriendly;
     }
@@ -70,7 +70,7 @@ public abstract class Entity : MonoBehaviour
     /// </summary>
     public virtual void Reset()
     {
-        Debug.Log("Resetting entity to original state");
+        //Debug.Log("Resetting entity to original state");
         Entity original = entityType.GetPrefab().GetComponent<Entity>(); //NOTE: right now we don't actually need this
 
         //reset the runtime stats
