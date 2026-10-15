@@ -8,7 +8,7 @@ public interface IGridSystemView
     /// <summary>
     /// GridCell Getter 
     /// </summary>
-    /// <param name="position">Vector2 position (should ensure its within current grid size</param>
+    /// <param name="position">Vector2Int position (should ensure its within current grid size</param>
     /// <returns>Returns grid cell given the position provided, returns null otherwise</returns>
-    GridCell GetTileAtPosition(Vector2 position);
+    GridCell GetTileAtPosition(Vector2Int position);
 }

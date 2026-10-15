@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GridLevelData
   gridSize: {x: 8, y: 4}
   startingFriendlyColumns: 4
+  uncapturableColumns: 2
   xBoundingBoxMin: 0
   xBoundingBoxMax: 7
   yBoundingBoxMin: 0
