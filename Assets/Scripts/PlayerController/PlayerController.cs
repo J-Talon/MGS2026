@@ -15,7 +15,7 @@ using static UnityEngine.Rendering.DebugUI;
 public class PlayerController : MonoBehaviour
 {
     protected EntityUnit parentUnit;
-    private float movementCooldown = 0f;
+    private float movementCooldownTimer = 0f; //a timer that actually keeps track of the remaining time before the next movement
 
     void Start()
     {
@@ -53,13 +53,13 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         //checks the movementCooldownTimer. If the countdown is greater than 0, continue counting down
-        if (movementCooldown > 0f)
+        if (movementCooldownTimer > 0f)
         {
-            movementCooldown -= Time.deltaTime;
+            movementCooldownTimer -= Time.deltaTime;
         }
 
         // if the countdown is 0 or less, the players buffered movement direction can be executed
-        if (movementCooldown <= 0f && bufferedMovement.HasValue)
+        if (movementCooldownTimer <= 0f && bufferedMovement.HasValue)
         {
             Vector2Int nextMovement = bufferedMovement.Value;
             bufferedMovement = null; //reset buffer for any potential future buffering of movements
@@ -72,11 +72,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void OnMovePressed(Vector2Int moveDir)
     {
-        //movementCooldown and buffer stuff added by Jordan
+        //movementCooldownTimer and buffer stuff added by Jordan
 
         //player inputs a buffered movement (aka pressing and holding a movement during movement cooldown)
         //exits the function after setting the buffer direction as the player cant move yet
-        if (movementCooldown > 0f)
+        if (movementCooldownTimer > 0f)
         {
             bufferedMovement = moveDir;
             return;
@@ -90,7 +90,7 @@ public class PlayerController : MonoBehaviour
         GridCell targetTile = gridView.GetTileAtPosition(newPosition);
         if (targetTile != null && targetTile.isFriendly)
         {
-            movementCooldown = parentUnit.GetMovementTickTimer();
+            movementCooldownTimer = parentUnit.GetMovementTickTimer();
             parentUnit.MoveUnitSnappy(newPosition - currentPosition); // Move the player to the new position
         }
     }
