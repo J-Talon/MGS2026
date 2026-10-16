@@ -62,6 +62,12 @@ public class MenuManager : MonoBehaviour
        // pauseMenu.GetComponent<BaseMenu>().Close();
       
     }
+
+      private void Start()
+    {
+        m_UIManager.Enable();
+        SetCurrentMenu(mainMenu);
+    }
     private void OnDestroy()
     {
         m_UIManager?.Dispose();
@@ -75,6 +81,8 @@ public class MenuManager : MonoBehaviour
             movementAction.performed += OnMove;
             movementAction.canceled += OnMove;
         }
+        m_UIManager.UI.Submit.performed += HandleSubmit;
+        m_UIManager.UI.Cancel.performed += HandleCancel;
 
         m_UIManager.Enable();
     }
@@ -82,6 +90,13 @@ public class MenuManager : MonoBehaviour
     // Unsubscribe while enabled to avoid processing input when inactive.
     void OnDisable()
     {
+        foreach (InputAction movementAction in movementDirections.Keys)
+        {
+            movementAction.performed -= OnMove;
+            movementAction.canceled -= OnMove;
+        }
+        m_UIManager.UI.Submit.performed -= HandleSubmit;
+        m_UIManager.UI.Cancel.performed -= HandleCancel;
 
         m_UIManager.Disable();
     }
@@ -172,7 +187,8 @@ public class MenuManager : MonoBehaviour
         else
         {
             activeMenu = null;
-            InputEvents.Instance.OnEnable();
+            if (InputEvents.Instance != null)
+                InputEvents.Instance.OnEnable();
             m_UIManager.Disable();
         }
     }
@@ -188,7 +204,8 @@ public class MenuManager : MonoBehaviour
         }
 
         OpenedMenus.Clear();
-        InputEvents.Instance.OnEnable();
+        if (InputEvents.Instance != null)
+            InputEvents.Instance.OnEnable();
         m_UIManager.Disable();
         activeMenu = null;
     }
@@ -204,7 +221,8 @@ public class MenuManager : MonoBehaviour
                 Debug.Log($"Movement pressed - {direction}");
             }
 
-            activeMenu?.HandleNavigate(direction); //calls the event for the appropriate movement direction
+            if (activeMenu != null)
+                activeMenu.HandleNavigate(direction); //calls the event for the appropriate movement direction
         }
 
         else if (obj.canceled)
@@ -215,16 +233,17 @@ public class MenuManager : MonoBehaviour
             }
 
             //check if the player releases the movement button they were holding (for things like changing what movement direction they want to do/buffer)
-            activeMenu?.HandleNavigate(direction); //calls the event for the appropriate movement direction
+            if (activeMenu != null)
+                activeMenu.HandleNavigate(direction); //calls the event for the appropriate movement direction
         }
     }
 
-    private void HandleSubmit()
+    private void HandleSubmit(InputAction.CallbackContext context)
     {
         activeMenu?.HandleSubmit();
     }
 
-    private void HandleCancel()
+    private void HandleCancel(InputAction.CallbackContext context)
     {
         if (activeMenu != null)
         {

@@ -62,7 +62,6 @@ public class MainMenu : BaseMenu
 
     public override void HandleNavigate(Vector2 direction)
     {
-
         if (direction.y > 0.5f)
         {
             selectedIndex = 0; 
@@ -73,13 +72,14 @@ public class MainMenu : BaseMenu
             selectedIndex = 1;
             HighlightButton(selectedIndex);
         }
-
+        Debug.Log("Nav in Main Menu, selected"+selectedIndex);
     }
 
     public override void HandleSubmit()
     {
         var button = buttons[selectedIndex];
         button.onClick.Invoke();
+        Debug.Log("button clicked: " + button.name);
     }
 
     public override void HandleCancel()
@@ -116,6 +116,7 @@ public class MainMenu : BaseMenu
 
         SceneManager.LoadScene("GridTestScene");
     }
+    
         private void OnQuit()
     {
         Debug.Log("Quitting game...");
