@@ -32,26 +32,19 @@ public class EntityUnit : Entity, IUnitMoveSnappy, IUnitMoveSmooth
         GridCell newCell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(newPos));
         if (newCell.isOccupied == false) //new cell is not occupied, can move there
         {
-            //debugging code for ensuring new and old cells change occupation status
-            // Debug.Log("-----");
-            // Debug.Log(newCell.isOccupied);
-            // Debug.Log("-----");
-
             GridCell oldCell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(oldPos));
             oldCell.EntityUnitLeave(); //unregister from old cell
-
-
-            // Debug.Log("-----");
-            // Debug.Log(newCell.isOccupied);
-            // Debug.Log("-----");
 
             newCell.EntityUnitOccupy(this); //register self to new cell
             gameObject.transform.position = newPos;
 
-            // Debug.Log("-----");
-            // Debug.Log(newCell.isOccupied);
-            // Debug.Log(oldCell.isOccupied);
-            // Debug.Log("-----");
+            /*
+            //debugging code for ensuring new and old cells change occupation status
+            Debug.Log("-----");
+            Debug.Log(newCell.isOccupied);
+            Debug.Log(oldCell.isOccupied);
+            Debug.Log("-----");
+            */
         }
         else
         {
