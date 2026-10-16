@@ -5,7 +5,6 @@ using UnityEngine.Pool;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
-
 /// <summary>
 /// Pool system is adapted from Unity's built in framework for pooling (uses stack to use older ones first (not sure reasoning))
 /// We note several things from pool system:
@@ -19,21 +18,18 @@ using UnityEngine.UIElements;
 ///  </summary>
 public class EntityManager
 {
-    EntityFactory entityFactory;
-
     /// <summary>
     /// Track entities that are no longer actively used
     /// Key of entity type to check specific lists for those specific entities
     /// </summary>
     private readonly Dictionary<EntityType, Queue<Entity>> reservePool;
 
-    private readonly List<Entity> activeEntities;
+    private readonly Dictionary<int, Entity> activeEntities;
 
     private EntityManager()
     {
-        entityFactory = new EntityFactory();
         reservePool = new Dictionary<EntityType, Queue<Entity>>();
-        activeEntities = new List<Entity>();
+        activeEntities = new Dictionary<int, Entity>();
     }
 
     /// <summary>
@@ -49,7 +45,7 @@ public class EntityManager
     {
         if (instance == null)
             instance = new EntityManager();
-        
+
         return instance;
     }
 
@@ -58,10 +54,10 @@ public class EntityManager
     public int GetTotalPooledEntitiesCount()
     {
         int totalPooled = 0;
-        foreach(var entityType in reservePool) //lowkey using foreach cause idk how else to iterate through dict in a clean way
+        foreach (var entityType in reservePool) //lowkey using foreach cause idk how else to iterate through dict in a clean way
         {
             totalPooled += entityType.Value.Count;
-        } 
+        }
         return totalPooled;
     }
 
@@ -70,12 +66,10 @@ public class EntityManager
         return activeEntities.Count;
     }
 
-    
     public int GetAllEntitiesCount()
     {
         return GetTotalPooledEntitiesCount() + GetActiveEntitiesCount();
     }
-
 
     #endregion
 
@@ -97,29 +91,26 @@ public class EntityManager
         Entity entity = null;
         if (reservePool.ContainsKey(type) != true) //pool list for this specific entity doesn't even exist
         {
-            reservePool.Add(type, new Queue<Entity>()); 
+            reservePool.Add(type, new Queue<Entity>());
         }
 
         if (reservePool[type].Count == 0) //no entities was pooled, must make a new one
         {
-            entity = entityFactory.SpawnEntity(type, position, isFriendly, maxLifeSpan);
+            entity = EntityFactory.SpawnEntity(type, position, isFriendly, maxLifeSpan);
+            Object.DontDestroyOnLoad(entity); //ensure entity that is part of pool system cannot be destroyed via scene change
         }
         else
         { //can remove from pool, reset to original state and return it
-            entity = reservePool[type].Dequeue(); 
+            entity = reservePool[type].Dequeue();
             entity.ResetToOriginal();
             entity.gameObject.SetActive(true);
-
-            //removes it from "don't destroy on load" permanent scene
-            //NOTE, this assumes active scene IS the actual scene we move it to
-            SceneManager.MoveGameObjectToScene(entity.gameObject ,UnityEngine.SceneManagement.SceneManager.GetActiveScene()); 
 
             //resets entity in new position
             entity.transform.position = position;
         }
 
-        Debug.Log("adding");
-        activeEntities.Add(entity); //add to active list
+        //Debug.Log("adding " + entity.GetEntityID());
+        activeEntities.Add(entity.GetEntityID(), entity); //add to active dictionary for tracking
         return entity;
     }
 
@@ -129,11 +120,10 @@ public class EntityManager
     /// <param name="entity"></param>
     public void ReturnEntity(Entity entity)
     {
-        activeEntities.Remove(entity); //remove from active list
+        activeEntities.Remove(entity.GetEntityID()); //remove from active dictionary
 
         //disable and ensure it won't be removed on scene change, etc...
         entity.gameObject.SetActive(false);
-        Object.DontDestroyOnLoad(entity);
 
         if (reservePool.ContainsKey(entity.GetEntityType()) != true) //will have to instantiate the new dictionary element since it didn't exist in pool before 
         {
@@ -148,7 +138,7 @@ public class EntityManager
     /// </summary>
     public void Unregister(Entity entity)
     {
-        activeEntities.Remove(entity);
+        activeEntities.Remove(entity.GetEntityID());
     }
 
     #endregion Pooling

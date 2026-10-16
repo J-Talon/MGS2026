@@ -9,7 +9,8 @@ namespace Event
         /// Groups the event relating to the Input System ||
         /// Flow Rule: Only called from InputEvents.cs -> can be listened to from anywhere (mostly listened to from PlayerController)
         /// </summary>
-        public static class Input {
+        public static class Input
+        {
             public static readonly EventDispatcher<Vector2Int> movePressed = new EventDispatcher<Vector2Int>();
             public static readonly EventDispatcher<Vector2Int> moveReleased = new EventDispatcher<Vector2Int>();
 

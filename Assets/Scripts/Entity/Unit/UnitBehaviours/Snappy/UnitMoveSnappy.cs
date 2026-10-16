@@ -13,6 +13,7 @@ public abstract class UnitMoveSnappy : MonoBehaviour
     void Start()
     {
         parentUnit = GetComponent<EntityUnit>();
+        movementCooldown = parentUnit.GetMovementTickTimer(); //before we even move, inherit the movement cooldown
     }
 
     void Update()
@@ -21,7 +22,6 @@ public abstract class UnitMoveSnappy : MonoBehaviour
         {
             movementCooldown -= Time.deltaTime;
         }
-
         else
         {
             movementCooldown = parentUnit.GetMovementTickTimer();
