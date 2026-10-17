@@ -34,7 +34,8 @@ public class EntityType
 
     // Example of a predefined unit type. You can add more as needed.
     public static readonly EntityType UnitTest = new EntityType("Entity/Unit/Prefabs/UnitTest", EntityClassification.unit);
-    
+    public static readonly EntityType UnitTestDemon = new EntityType("Entity/Unit/Prefabs/UnitTestDemon", EntityClassification.unit);
+
     // Example of a predefined projectile type. You can add more as needed.
     public static readonly EntityType ProjectileTestLinearGrid = new EntityType("Entity/Projectile/Prefabs/ProjectileTestLinearGrid", EntityClassification.projectile);
     public static readonly EntityType ProjectileTestLinearSmooth = new EntityType("Entity/Projectile/Prefabs/ProjectileTestLinearSmooth", EntityClassification.projectile);

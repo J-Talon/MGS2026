@@ -1,6 +1,7 @@
 // Authors: [Jacky, Jeremy, Mark]
 using UnityEngine;
 using System;
+using Event;
 
 /// <summary>
 /// Base class for all entities in the game, including players, enemies and projectiles. Contains common stats and properties that all entities share.
@@ -11,6 +12,8 @@ public abstract class Entity : MonoBehaviour
     [field: SerializeField] protected bool isInvulnerable = false;
     [field: SerializeField] protected bool isFriendly = false;
     [field: SerializeField] protected bool isAlive = true;
+    static protected int globalStaticIDCounter = 0;
+    protected int entityID; // Unique identifier for the specific instance of the entity, useful for tracking and managing entities in the game world.
 
     [Header("Stats")]
     [field: SerializeField] protected float maxHealth = 100;
@@ -25,8 +28,6 @@ public abstract class Entity : MonoBehaviour
 
     #region instance variables
     // Player position variables
-    protected Vector3 position;
-    
     protected EntityType entityType;
     #endregion
 
@@ -40,19 +41,33 @@ public abstract class Entity : MonoBehaviour
     public float GetSpeed() { return speed; }
     public float GetMovementTickTimer() { return movementTickTimer; }
     public Vector3 GetPosition() { return transform.position; }
+    public int GetEntityID() { return entityID; }
 
-    // Events for UI, audio, or visual effects listeners
-    public event Action<float, float> OnHealthChanged; // (currentHealth, maxHealth)
-    public event Action OnDeath;
+    static int AssignUniqueID()
+    {
+        globalStaticIDCounter++;
+        //Debug.Log(globalStaticIDCounter);
+        return globalStaticIDCounter;
+    }
+
+    /// <summary>
+    /// Common start up for entity
+    /// </summary>
+    protected void Start()
+    {
+
+    }
 
     /// <summary>
     /// Initializes the entity's health and sets up any necessary components. This method is called when the entity is first created in the game.
     /// </summary>
     protected virtual void Awake()
     {
+        entityID = AssignUniqueID();
+        Debug.Log(entityID);
+
         currentHealth = maxHealth;
         spawnTime = Time.time;
-        position = gameObject.transform.position;
     }
 
     /// <summary>
@@ -60,7 +75,7 @@ public abstract class Entity : MonoBehaviour
     /// </summary>
     public void Setup(bool isFriendly, EntityType entityType)
     {
-        Debug.Log("first time setup");
+        //Debug.Log("first time setup");
         this.entityType = entityType;
         this.isFriendly = isFriendly;
     }
@@ -70,7 +85,7 @@ public abstract class Entity : MonoBehaviour
     /// </summary>
     public virtual void ResetToOriginal()
     {
-        Debug.Log("Resetting entity to original state");
+        //Debug.Log("Resetting entity to original state");
         Entity original = entityType.GetPrefab().GetComponent<Entity>(); //NOTE: right now we don't actually need this
 
         //reset the runtime stats
@@ -87,7 +102,6 @@ public abstract class Entity : MonoBehaviour
     {
         if (!isAlive || isInvulnerable || damage <= 0f) return;
         currentHealth -= damage;
-        OnHealthChanged?.Invoke(currentHealth, maxHealth);
         if (currentHealth <= 0f) Die();
     }
 
@@ -95,7 +109,6 @@ public abstract class Entity : MonoBehaviour
     {
         if (!isAlive || amount <= 0f) return;
         currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
-        OnHealthChanged?.Invoke(currentHealth, maxHealth);
     }
 
     /// <summary>
@@ -105,7 +118,13 @@ public abstract class Entity : MonoBehaviour
     {
         if (!isAlive) return;
         isAlive = false;
-        OnDeath?.Invoke();
+        // if the entity is a unit, unregister it from the grid cell it occupies
+        if (entityType.GetEntityClassification() == EntityClassification.unit)
+        {
+            IGridSystemView gridManager = GridManager.instance;
+            GridCell gridPosition = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(gameObject.transform.position));
+            gridPosition.EntityUnitLeave(); //unregister from grid cell
+        }
         Despawn();
     }
 
@@ -117,7 +136,6 @@ public abstract class Entity : MonoBehaviour
         EntityManager.GetInstance().Unregister(this);
         Destroy(gameObject);
     }
-    
 
     /// <summary>
     /// Pools the gameobject, if pooling shouldn't be implemented

@@ -14,7 +14,7 @@ public class GridManagerDebugger : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        managerControls = gameObject.GetComponent<IGridSystemControl>();
+        managerControls = gameObject.GetComponent<GridManager>().Controls;
     }
 
     // Update is called once per frame

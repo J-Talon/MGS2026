@@ -1,4 +1,5 @@
 // Authors: [Jacky, Jeremy, Mark]
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -19,6 +20,8 @@ public class EntityUnit : Entity, IUnitMoveSnappy, IUnitMoveSmooth
     /// Implementation of snappy based movement (int)
     /// 
     /// also registers self to grid cell while also preventing movement if new grid cell is occupied 
+    /// 
+    /// To account for possible 0 delta movement, unregistration is done first to grid cell before registration to avoid unit accidentlaly unoccuppying its current cell
     /// </summary>
     /// <param name="deltaMovement"></param>
     public void MoveUnitSnappy(Vector2Int deltaMovement)
@@ -29,38 +32,47 @@ public class EntityUnit : Entity, IUnitMoveSnappy, IUnitMoveSmooth
         GridCell newCell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(newPos));
         if (newCell.isOccupied == false) //new cell is not occupied, can move there
         {
-            //debugging code for ensuring new and old cells change occupation status
-            // Debug.Log("-----");
-            // Debug.Log(newCell.isOccupied);
-            // Debug.Log("-----");
+            GridCell oldCell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(oldPos));
+            oldCell.EntityUnitLeave(); //unregister from old cell
 
             newCell.EntityUnitOccupy(this); //register self to new cell
             gameObject.transform.position = newPos;
 
-            // Debug.Log("-----");
-            // Debug.Log(newCell.isOccupied);
-            // Debug.Log("-----");
-
-            GridCell oldCell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(oldPos));
-            oldCell.EntityUnitLeave(); //register self to new cell
-
-            // Debug.Log("-----");
-            // Debug.Log(newCell.isOccupied);
-            // Debug.Log(oldCell.isOccupied);
-            // Debug.Log("-----");
+            /*
+            //debugging code for ensuring new and old cells change occupation status
+            Debug.Log("-----");
+            Debug.Log(newCell.isOccupied);
+            Debug.Log(oldCell.isOccupied);
+            Debug.Log("-----");
+            */
         }
         else
         {
             //do nothing ig
         }
 
-     
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    new void Start()
     {
-        MoveUnitSnappy(Vector2Int.zero); //we call this right at the start to ensure we register self to grid cell at game start, not just on movement
+        base.Start();
+        UnitSetup();
+    }
+
+    /// <summary>
+    /// Dedicated unit setup
+    /// For now, it just ensures that unit properly registers itself to its current grid cell (for grid based movement)
+    /// NOTE, we are assuming that "Unit Smooth" is never used (as said by execs about not worry about units not needings to use smooth movement behaviour)
+    /// </summary>
+    void UnitSetup()
+    {
+        IGridSystemView gridManager = GridManager.instance;   
+        GridCell cell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(gameObject.transform.position));
+        cell.EntityUnitOccupy(this); //register self to new cell
+    
+        //Debug.Log("setup");
+        //Debug.Log(cell.isOccupied);
     }
 
     // Update is called once per frame
