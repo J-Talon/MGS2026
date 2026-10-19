@@ -9,6 +9,12 @@ using UnityEngine.InputSystem;
 /// 
 /// Author: Logan (LogChiCha)
 /// </summary>
+/// 
+/// MENU TUTORIAL:
+/// For every new menu prefab, you must:
+/// do the 3 instantiations in Awake(), and make the Open__ method in this MenuManager.cs script
+/// Create your own unique script for the new menu, must inherit BaseMenu.cs (look at MainMenu.cs as example)
+/// 
 public class MenuManager : MonoBehaviour
 {
     private InputSystemActions m_UIManager;
@@ -54,7 +60,7 @@ public class MenuManager : MonoBehaviour
             {m_UIManager.UI.MoveRight, new Vector2Int(1, 0) },
         };
 
-        // Instantiate the menus!!!
+        // Instantiate the menus for any new ones that are made!!! ------------------
       //  pauseMenu = Instantiate(pauseMenu);
 
         //DontDestroyOnLoad(pauseMenu);
@@ -102,7 +108,7 @@ public class MenuManager : MonoBehaviour
     }
 
 
-// ADD OTHER MENUS HERE
+// ADD OTHER MENUS HERE --------------------------
     public void OpenPause()
     {
         if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name == "GridTestScene") //Change to whatever scene game is on

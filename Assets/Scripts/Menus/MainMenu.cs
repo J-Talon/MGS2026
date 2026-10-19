@@ -7,16 +7,18 @@ using TMPro;
 
 /// <summary>
 /// The main menu
+/// Author: Logan (LogChiCha)
 /// </summary>
 public class MainMenu : BaseMenu
 {
+    // attach the button objects in the inspector to these
      [Header("Button References")]
     [SerializeField] private Button playButton;
     [SerializeField] private Button quitButton;
 
+    //starting index
     private int selectedIndex = 0;
     private Button[] buttons;
-
     private GameObject EventSystem;
 
     protected override void Awake()
@@ -25,9 +27,11 @@ public class MainMenu : BaseMenu
 
         base.Awake();
 
+        //attach any new buttons the this array (be aware of the order for the HandleNavigate method)
         buttons = new[] { playButton, quitButton};
 
 
+        // attach a click action to the button to do what is in the method
         playButton.onClick.AddListener(OnPlay);
         //EXAMPLE: settingsButton.onClick.AddListener(OpenSettings);
         quitButton.onClick.AddListener(OnQuit);
@@ -43,6 +47,7 @@ public class MainMenu : BaseMenu
     {
     }
 
+    // hiding the menu
     public override void Hide()
     {
         if (canvasGroup != null)
@@ -51,6 +56,8 @@ public class MainMenu : BaseMenu
             canvasGroup.blocksRaycasts = false;
         }
     }
+
+    //showing the menu
     public override void Show()
     {
         if (canvasGroup != null)
@@ -62,19 +69,26 @@ public class MainMenu : BaseMenu
 
     public override void HandleNavigate(Vector2 direction)
     {
-        if (direction.y > 0.5f)
+        if (direction.y > 0.5f) //up
         {
             selectedIndex = 0; 
-            HighlightButton(selectedIndex);
         }
-        else if (direction.y < -0.5f)
+        else if (direction.y < -0.5f) //down
         {
             selectedIndex = 1;
-            HighlightButton(selectedIndex);
         }
+        else if (direction.x > 0.5f) //right
+        {
+        }
+        else if (direction.x < -0.5f) //left
+        {
+        }
+        // do the highlight of the new selected button
+        HighlightButton(selectedIndex);
         Debug.Log("Nav in Main Menu, selected"+selectedIndex);
     }
 
+    // when the enter/space key is hit on a button, run what would be the same as clicking the button
     public override void HandleSubmit()
     {
         var button = buttons[selectedIndex];
@@ -82,6 +96,7 @@ public class MainMenu : BaseMenu
         Debug.Log("button clicked: " + button.name);
     }
 
+    // when escape key is hit (should close menu, but this is main so no functionality here)
     public override void HandleCancel()
     {
         //none, is main menu
@@ -101,6 +116,8 @@ public class MainMenu : BaseMenu
         ev.SetSelectedGameObject(buttons[index].gameObject);
     }
 
+
+
     /* EXAMPLE
    private void OpenSettings()
     {
@@ -108,15 +125,17 @@ public class MainMenu : BaseMenu
         MenuManager.Instance.OpenSettings();
     }*/
 
+    //play button
     private void OnPlay()
     {
-        //gameSettings.gameMode = gameModeDropdown.value;
         var menuManager = MenuManager.Instance;
         menuManager.CloseMenu();
 
+        //load new scene (scene must be in build settings, go to File > Build Profile > Scene List)
         SceneManager.LoadScene("GridTestScene");
     }
     
+    //quit button
         private void OnQuit()
     {
         Debug.Log("Quitting game...");

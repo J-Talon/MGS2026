@@ -3,6 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Base class for all in-game menus. Provides open/close logic and 
 /// virtual input handlers that child menus can override.
+/// Author: Logan (LogChiCha), imported from B&B
 /// </summary>
 public abstract class BaseMenu : MonoBehaviour
 {
