@@ -14,6 +14,7 @@ using UnityEngine.InputSystem;
 public class InputEvents : MonoBehaviour
 {
     private InputSystemActions m_InputManager;
+    public static InputEvents Instance { get; private set; }
     
     [Header("Debug Settings")]
     [Tooltip("Log directional movement input values.")]
@@ -26,6 +27,14 @@ public class InputEvents : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+        
         m_InputManager = new InputSystemActions();
 
         //makes an item for the dict with the InputAction and the direction
@@ -43,7 +52,7 @@ public class InputEvents : MonoBehaviour
     }
 
     // Subscribe while enabled to avoid processing input when inactive.
-    void OnEnable()
+    public void OnEnable()
     {
         m_InputManager.Player.Interact.performed += OnInteract;
 
@@ -62,7 +71,7 @@ public class InputEvents : MonoBehaviour
     }
 
     // Unsubscribe while enabled to avoid processing input when inactive.
-    void OnDisable()
+    public void OnDisable()
     {
         m_InputManager.Player.Interact.performed -= OnInteract;
 
