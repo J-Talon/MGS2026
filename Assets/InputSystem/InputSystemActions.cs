@@ -129,9 +129,9 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Interact"",
+                    ""name"": ""BasicShot"",
                     ""type"": ""Button"",
-                    ""id"": ""852140f2-7766-474d-8707-702459ba45f3"",
+                    ""id"": ""e6b2ead9-00c5-4735-9456-170f495a018a"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -165,9 +165,45 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""PlaceTurret"",
+                    ""name"": ""SpawnTurret"",
                     ""type"": ""Button"",
                     ""id"": ""102c1570-3c79-4434-b1a0-2aa834f86cdc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveCrosshairLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""e2bfd894-d782-4dfb-a714-2f30e936af99"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveCrosshairRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""74dffea2-45eb-434e-9e65-695693d01704"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Terraform"",
+                    ""type"": ""Button"",
+                    ""id"": ""d7b89488-0ef9-408b-b5af-728bb2096e52"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""852140f2-7766-474d-8707-702459ba45f3"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -250,11 +286,33 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1c04ea5f-b012-41d1-a6f7-02e963b52893"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3f794bff-a610-4013-88f3-5e23d4c20369"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Touch"",
+                    ""action"": ""MoveCrosshairLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""adfa1c04-5bb5-4b3f-9d97-9adcf3415666"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MoveCrosshairLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -271,11 +329,33 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1b470184-6510-43a7-900c-b50a23b55639"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""id"": ""445b7ecf-8363-4ff6-ad3a-1047ee120395"",
+                    ""path"": ""<Keyboard>/capsLock"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Terraform"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d5bebf29-1f63-4321-873f-576ef6aeb57a"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Terraform"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a7238bfe-1ed2-4d3a-bcdf-5a7c5e39e244"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""Spell1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -293,11 +373,33 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""0ab53fed-6fa6-4957-bd3d-2436094bf030"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""id"": ""4e4331f5-7ae3-40d9-8de4-06c6a238a97c"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""BasicShot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""33d547c9-e712-475d-8cd5-2174359fa4b4"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""BasicShot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4dd8687-8956-45cf-a2e6-a9347fb1b566"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
                     ""action"": ""Spell2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -315,11 +417,11 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3f2211db-da23-466f-b27d-d408af79481c"",
-                    ""path"": ""<Keyboard>/space"",
+                    ""id"": ""c851c9de-68f2-4091-83c6-2dcf13b819a5"",
+                    ""path"": ""<Keyboard>/d"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
+                    ""groups"": """",
                     ""action"": ""Spell3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -337,12 +439,12 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4bf10f45-2a3d-4951-a70e-5c8a0405f2ad"",
-                    ""path"": ""<Mouse>/middleButton"",
+                    ""id"": ""ddf53274-3fd6-424c-97bd-a368c55810e2"",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""PlaceTurret"",
+                    ""groups"": """",
+                    ""action"": ""SpawnTurret"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -353,18 +455,7 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""PlaceTurret"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""de48306d-0fd7-4a28-bda5-364d8491da60"",
-                    ""path"": ""<Keyboard>/leftAlt"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PlaceTurret"",
+                    ""action"": ""SpawnTurret"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -612,17 +703,6 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a24eb510-f482-4fb9-b5d4-a21a08660388"",
-                    ""path"": ""<Keyboard>/w"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveUp"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""583ee14b-8968-4e08-b4cb-b879fe18159a"",
                     ""path"": ""<Keyboard>/upArrow"",
                     ""interactions"": """",
@@ -634,12 +714,12 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d0eeb683-fea0-4545-92a8-813cae58cc90"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""id"": ""72b0c98b-46dd-45a8-9ffb-f879692932a9"",
+                    ""path"": ""<Gamepad>/dpad/up"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""MoveLeft"",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MoveUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -656,12 +736,12 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ee9e9ad2-38f6-4def-8a4c-fb4992d1d0ff"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""id"": ""c1ab9e80-9ccb-4deb-bea6-e481ad30ded8"",
+                    ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveDown"",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MoveLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -678,12 +758,12 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7c2bc8bd-13c8-42f6-8c4a-326724faf78e"",
-                    ""path"": ""<Keyboard>/d"",
+                    ""id"": ""8bc2df16-ec95-426d-aaa4-decffdd80e24"",
+                    ""path"": ""<Gamepad>/dpad/down"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""MoveRight"",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MoveDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -695,6 +775,39 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MoveRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""94695971-ce39-47f0-97c2-0b6a81216347"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MoveRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b50988d6-6180-47a7-922e-b7926a7ef11c"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveCrosshairRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""06245061-8a0b-406d-999a-1a5dfd5bad23"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MoveCrosshairRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1970,11 +2083,15 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
         m_Player_MoveLeft = m_Player.FindAction("MoveLeft", throwIfNotFound: true);
         m_Player_MoveDown = m_Player.FindAction("MoveDown", throwIfNotFound: true);
         m_Player_MoveRight = m_Player.FindAction("MoveRight", throwIfNotFound: true);
-        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_BasicShot = m_Player.FindAction("BasicShot", throwIfNotFound: true);
         m_Player_Spell1 = m_Player.FindAction("Spell1", throwIfNotFound: true);
         m_Player_Spell2 = m_Player.FindAction("Spell2", throwIfNotFound: true);
         m_Player_Spell3 = m_Player.FindAction("Spell3", throwIfNotFound: true);
-        m_Player_PlaceTurret = m_Player.FindAction("PlaceTurret", throwIfNotFound: true);
+        m_Player_SpawnTurret = m_Player.FindAction("SpawnTurret", throwIfNotFound: true);
+        m_Player_MoveCrosshairLeft = m_Player.FindAction("MoveCrosshairLeft", throwIfNotFound: true);
+        m_Player_MoveCrosshairRight = m_Player.FindAction("MoveCrosshairRight", throwIfNotFound: true);
+        m_Player_Terraform = m_Player.FindAction("Terraform", throwIfNotFound: true);
+        m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Unused = m_Player.FindAction("------- Unused -------", throwIfNotFound: true);
         m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
@@ -2097,11 +2214,15 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_MoveLeft;
     private readonly InputAction m_Player_MoveDown;
     private readonly InputAction m_Player_MoveRight;
-    private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_BasicShot;
     private readonly InputAction m_Player_Spell1;
     private readonly InputAction m_Player_Spell2;
     private readonly InputAction m_Player_Spell3;
-    private readonly InputAction m_Player_PlaceTurret;
+    private readonly InputAction m_Player_SpawnTurret;
+    private readonly InputAction m_Player_MoveCrosshairLeft;
+    private readonly InputAction m_Player_MoveCrosshairRight;
+    private readonly InputAction m_Player_Terraform;
+    private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Unused;
     private readonly InputAction m_Player_Look;
     private readonly InputAction m_Player_Attack;
@@ -2138,9 +2259,9 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @MoveRight => m_Wrapper.m_Player_MoveRight;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Interact".
+        /// Provides access to the underlying input action "Player/BasicShot".
         /// </summary>
-        public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @BasicShot => m_Wrapper.m_Player_BasicShot;
         /// <summary>
         /// Provides access to the underlying input action "Player/Spell1".
         /// </summary>
@@ -2154,9 +2275,25 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Spell3 => m_Wrapper.m_Player_Spell3;
         /// <summary>
-        /// Provides access to the underlying input action "Player/PlaceTurret".
+        /// Provides access to the underlying input action "Player/SpawnTurret".
         /// </summary>
-        public InputAction @PlaceTurret => m_Wrapper.m_Player_PlaceTurret;
+        public InputAction @SpawnTurret => m_Wrapper.m_Player_SpawnTurret;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/MoveCrosshairLeft".
+        /// </summary>
+        public InputAction @MoveCrosshairLeft => m_Wrapper.m_Player_MoveCrosshairLeft;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/MoveCrosshairRight".
+        /// </summary>
+        public InputAction @MoveCrosshairRight => m_Wrapper.m_Player_MoveCrosshairRight;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Terraform".
+        /// </summary>
+        public InputAction @Terraform => m_Wrapper.m_Player_Terraform;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Interact".
+        /// </summary>
+        public InputAction @Interact => m_Wrapper.m_Player_Interact;
         /// <summary>
         /// Provides access to the underlying input action "Player/Unused".
         /// </summary>
@@ -2227,9 +2364,9 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
             @MoveRight.started += instance.OnMoveRight;
             @MoveRight.performed += instance.OnMoveRight;
             @MoveRight.canceled += instance.OnMoveRight;
-            @Interact.started += instance.OnInteract;
-            @Interact.performed += instance.OnInteract;
-            @Interact.canceled += instance.OnInteract;
+            @BasicShot.started += instance.OnBasicShot;
+            @BasicShot.performed += instance.OnBasicShot;
+            @BasicShot.canceled += instance.OnBasicShot;
             @Spell1.started += instance.OnSpell1;
             @Spell1.performed += instance.OnSpell1;
             @Spell1.canceled += instance.OnSpell1;
@@ -2239,9 +2376,21 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
             @Spell3.started += instance.OnSpell3;
             @Spell3.performed += instance.OnSpell3;
             @Spell3.canceled += instance.OnSpell3;
-            @PlaceTurret.started += instance.OnPlaceTurret;
-            @PlaceTurret.performed += instance.OnPlaceTurret;
-            @PlaceTurret.canceled += instance.OnPlaceTurret;
+            @SpawnTurret.started += instance.OnSpawnTurret;
+            @SpawnTurret.performed += instance.OnSpawnTurret;
+            @SpawnTurret.canceled += instance.OnSpawnTurret;
+            @MoveCrosshairLeft.started += instance.OnMoveCrosshairLeft;
+            @MoveCrosshairLeft.performed += instance.OnMoveCrosshairLeft;
+            @MoveCrosshairLeft.canceled += instance.OnMoveCrosshairLeft;
+            @MoveCrosshairRight.started += instance.OnMoveCrosshairRight;
+            @MoveCrosshairRight.performed += instance.OnMoveCrosshairRight;
+            @MoveCrosshairRight.canceled += instance.OnMoveCrosshairRight;
+            @Terraform.started += instance.OnTerraform;
+            @Terraform.performed += instance.OnTerraform;
+            @Terraform.canceled += instance.OnTerraform;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
             @Unused.started += instance.OnUnused;
             @Unused.performed += instance.OnUnused;
             @Unused.canceled += instance.OnUnused;
@@ -2289,9 +2438,9 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
             @MoveRight.started -= instance.OnMoveRight;
             @MoveRight.performed -= instance.OnMoveRight;
             @MoveRight.canceled -= instance.OnMoveRight;
-            @Interact.started -= instance.OnInteract;
-            @Interact.performed -= instance.OnInteract;
-            @Interact.canceled -= instance.OnInteract;
+            @BasicShot.started -= instance.OnBasicShot;
+            @BasicShot.performed -= instance.OnBasicShot;
+            @BasicShot.canceled -= instance.OnBasicShot;
             @Spell1.started -= instance.OnSpell1;
             @Spell1.performed -= instance.OnSpell1;
             @Spell1.canceled -= instance.OnSpell1;
@@ -2301,9 +2450,21 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
             @Spell3.started -= instance.OnSpell3;
             @Spell3.performed -= instance.OnSpell3;
             @Spell3.canceled -= instance.OnSpell3;
-            @PlaceTurret.started -= instance.OnPlaceTurret;
-            @PlaceTurret.performed -= instance.OnPlaceTurret;
-            @PlaceTurret.canceled -= instance.OnPlaceTurret;
+            @SpawnTurret.started -= instance.OnSpawnTurret;
+            @SpawnTurret.performed -= instance.OnSpawnTurret;
+            @SpawnTurret.canceled -= instance.OnSpawnTurret;
+            @MoveCrosshairLeft.started -= instance.OnMoveCrosshairLeft;
+            @MoveCrosshairLeft.performed -= instance.OnMoveCrosshairLeft;
+            @MoveCrosshairLeft.canceled -= instance.OnMoveCrosshairLeft;
+            @MoveCrosshairRight.started -= instance.OnMoveCrosshairRight;
+            @MoveCrosshairRight.performed -= instance.OnMoveCrosshairRight;
+            @MoveCrosshairRight.canceled -= instance.OnMoveCrosshairRight;
+            @Terraform.started -= instance.OnTerraform;
+            @Terraform.performed -= instance.OnTerraform;
+            @Terraform.canceled -= instance.OnTerraform;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
             @Unused.started -= instance.OnUnused;
             @Unused.performed -= instance.OnUnused;
             @Unused.canceled -= instance.OnUnused;
@@ -2896,12 +3057,12 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnMoveRight(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "BasicShot" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnInteract(InputAction.CallbackContext context);
+        void OnBasicShot(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Spell1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -2924,12 +3085,40 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSpell3(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "PlaceTurret" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "SpawnTurret" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnPlaceTurret(InputAction.CallbackContext context);
+        void OnSpawnTurret(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MoveCrosshairLeft" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMoveCrosshairLeft(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "MoveCrosshairRight" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnMoveCrosshairRight(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Terraform" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnTerraform(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Interact" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnInteract(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "------- Unused -------" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
