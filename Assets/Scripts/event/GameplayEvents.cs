@@ -20,7 +20,7 @@ namespace Event
             public static readonly EventDispatcher<ValueTuple> spell2Pressed = new EventDispatcher<ValueTuple>();
             public static readonly EventDispatcher<ValueTuple> spell3Pressed = new EventDispatcher<ValueTuple>();
 
-            public static readonly EventDispatcher<ValueTuple> placeTurretPressed = new EventDispatcher<ValueTuple>();
+            public static readonly EventDispatcher<ValueTuple> spawnTurretPressed = new EventDispatcher<ValueTuple>();
         }
 
         /// <summary>

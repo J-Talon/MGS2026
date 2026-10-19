@@ -59,7 +59,7 @@ public class InputEvents : MonoBehaviour
         m_InputManager.Player.Spell1.performed += OnSpell1;
         m_InputManager.Player.Spell2.performed += OnSpell2;
         m_InputManager.Player.Spell3.performed += OnSpell3;
-        m_InputManager.Player.PlaceTurret.performed += OnPlaceTurret;
+        m_InputManager.Player.SpawnTurret.performed += OnSpawnTurret;
 
         foreach (InputAction movementAction in movementDirections.Keys)
         {
@@ -79,7 +79,7 @@ public class InputEvents : MonoBehaviour
         m_InputManager.Player.Spell2.performed -= OnSpell2;
         m_InputManager.Player.Spell3.performed -= OnSpell3;
 
-        m_InputManager.Player.PlaceTurret.performed -= OnPlaceTurret;
+        m_InputManager.Player.SpawnTurret.performed -= OnSpawnTurret;
 
         foreach (InputAction movementAction in movementDirections.Keys)
         {
@@ -143,9 +143,9 @@ public class InputEvents : MonoBehaviour
         GameplayEvents.Input.spell3Pressed.CallEvent(ValueTuple.Create());
     }
 
-    private void OnPlaceTurret(InputAction.CallbackContext context)
+    private void OnSpawnTurret(InputAction.CallbackContext context)
     {
-        if (debugActions) Debug.Log("Place Turret Pressed");
-        GameplayEvents.Input.placeTurretPressed.CallEvent(ValueTuple.Create());
+        if (debugActions) Debug.Log("Spawn Turret Pressed");
+        GameplayEvents.Input.spawnTurretPressed.CallEvent(ValueTuple.Create());
     }
 }
