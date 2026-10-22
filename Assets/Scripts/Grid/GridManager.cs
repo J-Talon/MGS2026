@@ -1,9 +1,9 @@
 // Authors: [Jacky, Jeremy, Mark]
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 using Event;
 using UnityEngine.InputSystem;
-using System.Linq;
 
 /// <summary>
 /// This script manages the grid system of the game.
@@ -63,12 +63,11 @@ public class GridManager : MonoBehaviour, IGridSystemView
     }
 
     /// <summary>
-    /// Does a linear search to find every entity with a tag
-    /// Can be modified to do search on different properties later if needed
+    /// Does a linear search to find every entity unit matching a criteria
     /// </summary>
     /// <param name="position">XY coordinate of GridCell</param>
     /// <returns>GridCell object</returns>
-    public List<(Vector2Int, EntityUnit)> FindAllEntitiesWithTag(string tag)
+    public List<(Vector2Int, EntityUnit)> FindAllEntities(Func<EntityUnit, bool> criteria)
     {
         var units_with = new List<(Vector2Int, EntityUnit)>();
         
@@ -77,7 +76,7 @@ public class GridManager : MonoBehaviour, IGridSystemView
                 var pos = new Vector2Int(x, y);
                 var cell = state.Cells[pos];
 
-                if (cell.occupiedUnit != null && cell.occupiedUnit.tag == tag)
+                if (cell.occupiedUnit != null && criteria.Invoke(cell.occupiedUnit))
                 {
                     units_with.Add((pos, cell.occupiedUnit));
                 }

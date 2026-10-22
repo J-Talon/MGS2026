@@ -12,6 +12,8 @@ public abstract class Entity : MonoBehaviour
     [field: SerializeField] protected bool isInvulnerable = false;
     [field: SerializeField] protected bool isFriendly = false;
     [field: SerializeField] protected bool isAlive = true;
+    [field: SerializeField] protected bool isPlayer = false;
+
     static protected int globalStaticIDCounter = 0;
     protected int entityID; // Unique identifier for the specific instance of the entity, useful for tracking and managing entities in the game world.
 
@@ -37,6 +39,8 @@ public abstract class Entity : MonoBehaviour
     public EntityType GetEntityType() { return entityType; }
     public bool GetIsFriendly() { return isFriendly; }
     public void SetMaxLifeSpan(float value) { maxLifeSpan = value; }
+    public bool GetIsPlayer() { return isPlayer; }
+    public void SetIsPlayer(bool value) { isPlayer = value; }
     public void SetSpeed(float value) { speed = value; }
     public float GetSpeed() { return speed; }
     public float GetMovementTickTimer() { return movementTickTimer; }

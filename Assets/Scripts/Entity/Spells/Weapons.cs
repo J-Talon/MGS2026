@@ -6,9 +6,6 @@ using Event;
 class SpellManager : MonoBehaviour {
     GameObject pea_prefab;
 
-    [SerializeField]
-    private float speed;
-
     public void Start() {
         pea_prefab = Resources.Load<GameObject>("Entity/Spells/Pea");
         Debug.Assert(pea_prefab != null);
@@ -19,11 +16,10 @@ class SpellManager : MonoBehaviour {
     }
 
     public void Spell1Event(ValueTuple data) {
-        var (position, _) = GridManager.instance.FindAllEntitiesWithTag("Player")[0];
+        var (position, _) = GridManager.instance.FindAllEntities((entity) => entity.GetIsPlayer())[0];
 
         var manager = EntityManager.GetInstance();
         var entity = manager.GetEntity(EntityType.ProjectilePea, new Vector3(position.x, position.y, -1));
-        entity.SetSpeed(speed);
         var peaBullet = entity.gameObject.GetComponent<PeaBullet>();
         peaBullet.direction = new Vector2(1, 0);
     }

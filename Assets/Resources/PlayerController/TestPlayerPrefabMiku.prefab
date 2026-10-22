@@ -108,6 +108,7 @@ MonoBehaviour:
   isInvulnerable: 0
   isFriendly: 1
   isAlive: 1
+  isPlayer: 1
   maxHealth: 100
   damage: 10
   speed: 1

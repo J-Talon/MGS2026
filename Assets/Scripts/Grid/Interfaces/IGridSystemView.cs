@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 /// <summary>
 /// Interface for grid system. Contains definitions for viewing current grid system state
@@ -22,10 +23,9 @@ public interface IGridSystemView
     EntityUnit GetEntityAtTilePosition(Vector2Int position);
     
     /// <summary>
-    /// Does a linear search to find every entity with a tag
-    /// Can be modified to do search on different properties later if needed
+    /// Does a linear search to find every entity matching a criteria
     /// </summary>
     /// <param name="position">XY coordinate of GridCell</param>
     /// <returns>GridCell object</returns>
-    List<(Vector2Int, EntityUnit)> FindAllEntitiesWithTag(string tag);
+    List<(Vector2Int, EntityUnit)> FindAllEntities(Func<EntityUnit, bool> criteria);
 }
