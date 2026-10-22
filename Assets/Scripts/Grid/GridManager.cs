@@ -68,18 +68,18 @@ public class GridManager : MonoBehaviour, IGridSystemView
     /// </summary>
     /// <param name="position">XY coordinate of GridCell</param>
     /// <returns>GridCell object</returns>
-    public List<EntityUnit> FindAllEntitiesWithTag(string tag)
+    public List<(Vector2Int, EntityUnit)> FindAllEntitiesWithTag(string tag)
     {
-        List<EntityUnit> units_with = new List<EntityUnit>();
+        var units_with = new List<(Vector2Int, EntityUnit)>();
         
-        for (int x = state.XMin; x < state.XMax; x++) {
-            for (int y = state.YMin; x < state.YMax; y++) {
+        for (int x = state.XMin; x < state.XMax+1; x++) {
+            for (int y = state.YMin; y < state.YMax+1; y++) {
                 var pos = new Vector2Int(x, y);
                 var cell = state.Cells[pos];
 
-                if (cell.occupiedUnit.tag == tag)
+                if (cell.occupiedUnit != null && cell.occupiedUnit.tag == tag)
                 {
-                    units_with.Add(cell.occupiedUnit);
+                    units_with.Add((pos, cell.occupiedUnit));
                 }
             }
         }

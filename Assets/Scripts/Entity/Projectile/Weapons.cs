@@ -11,20 +11,13 @@ class SpellManager : MonoBehaviour {
     }    
 
     public void Spell1Event(ValueTuple data) {
-        //GridManager.instance
-        //var position = GridManager.instance.GetTileAtPosition(playerLocation).transform.position;
-        //ParticleType.FIRE.Play(position.x, position.y, -1);
+        var (position, entity) = GridManager.instance.FindAllEntitiesWithTag("Player")[0];
+        ParticleType.FIRE.Play(position.x, position.y, -1);
     }
 
     public void Spell2Event(ValueTuple data) {
-        //var position = GridManager.instance.GetTileAtPosition(playerLocation).transform.position;
-        //Debug.Log(position);
-        //ParticleType.FIRE.Play(position.x, position.y, -1);
     }
 
     public void Spell3Event(ValueTuple data) {
-        //var position = GridManager.instance.GetTileAtPosition(playerLocation).transform.position;
-        //Debug.Log(position);
-        //ParticleType.FIRE.Play(position.x, position.y, -1);
     }
 }
