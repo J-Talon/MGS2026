@@ -63,6 +63,31 @@ public class GridManager : MonoBehaviour, IGridSystemView
     }
 
     /// <summary>
+    /// Does a linear search to find every entity with a tag
+    /// Can be modified to do search on different properties later if needed
+    /// </summary>
+    /// <param name="position">XY coordinate of GridCell</param>
+    /// <returns>GridCell object</returns>
+    public List<EntityUnit> FindAllEntitiesWithTag(string tag)
+    {
+        List<EntityUnit> units_with = new List<EntityUnit>();
+        
+        for (int x = state.XMin; x < state.XMax; x++) {
+            for (int y = state.YMin; x < state.YMax; y++) {
+                var pos = new Vector2Int(x, y);
+                var cell = state.Cells[pos];
+
+                if (cell.occupiedUnit.tag == tag)
+                {
+                    units_with.Add(cell.occupiedUnit);
+                }
+            }
+        }
+
+        return units_with;
+    }
+
+    /// <summary>
     /// Function to get a entity at the given grid cell
     /// It is a wrapper function using GetTileAtPosition
     /// </summary>
@@ -81,6 +106,8 @@ public class GridManager : MonoBehaviour, IGridSystemView
 
         return null; //return null if either no units on cell or cell itself doesn't exist at the given position
     }
+
+    public 
 
     // Re-centre the camera and recolour every cell after the grid changes
     void Redraw()
