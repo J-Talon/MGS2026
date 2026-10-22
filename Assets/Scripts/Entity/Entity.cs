@@ -64,8 +64,7 @@ public abstract class Entity : MonoBehaviour
     protected virtual void Awake()
     {
         entityID = AssignUniqueID();
-        Debug.Log(entityID);
-
+        // Debug.Log(entityID);
         currentHealth = maxHealth;
         spawnTime = Time.time;
     }

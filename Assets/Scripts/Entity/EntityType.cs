@@ -3,7 +3,9 @@ using UnityEngine;
 
 public enum EntityClassification
 {
-    projectile, unit
+    projectile,
+    unit,
+    test,
 }
 
 public class EntityType
@@ -28,7 +30,7 @@ public class EntityType
             throw new MissingComponentException("The entity asset " + assetPath + " must have a EntityUnit component attached.");
     }
 
-    public EntityClassification GetEntityClassification(){ return _entityClassification; }
+    public EntityClassification GetEntityClassification() { return _entityClassification; }
     public string GetAssetPath() { return _assetPath; }
     public GameObject GetPrefab() { return _prefab; }
 
@@ -41,4 +43,7 @@ public class EntityType
     public static readonly EntityType ProjectileTestLinearSmooth = new EntityType("Entity/Projectile/Prefabs/ProjectileTestLinearSmooth", EntityClassification.projectile);
     public static readonly EntityType ProjectileTestZiggedGrid = new EntityType("Entity/Projectile/Prefabs/ProjectileTestZiggedGrid", EntityClassification.projectile);
     public static readonly EntityType ProjectileTestZiggedSmooth = new EntityType("Entity/Projectile/Prefabs/ProjectileTestZiggedSmooth", EntityClassification.projectile);
+
+    // For testing purposes
+    public static readonly EntityType ExplosionTest = new EntityType("Explosions/TestExplosionPrefab", EntityClassification.test);
 }
