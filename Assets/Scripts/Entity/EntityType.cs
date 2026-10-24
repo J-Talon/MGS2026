@@ -44,4 +44,5 @@ public class EntityType
 
     public static readonly EntityType ProjectilePea = new EntityType("Entity/Spells/Pea", EntityClassification.projectile);
     public static readonly EntityType ProjectileBomb = new EntityType("Entity/Spells/Bomb", EntityClassification.projectile);
+    public static readonly EntityType ProjectileBoomerang = new EntityType("Entity/Spells/Boomerang", EntityClassification.projectile);
 }

@@ -28,4 +28,13 @@ public interface IGridSystemView
     /// <param name="position">XY coordinate of GridCell</param>
     /// <returns>GridCell object</returns>
     List<(Vector2Int, EntityUnit)> FindAllEntities(Func<EntityUnit, bool> criteria);
+    
+    /// <summary>
+    /// </summary>
+    /// <returns>If coordinate exists within grid bounds</returns>
+    bool WithinGrid(Vector2Int position);
+
+
+    /// <returns>If coordinate exists within grid bounds</returns>
+    bool WithinGridSmooth(Vector2 position);
 }

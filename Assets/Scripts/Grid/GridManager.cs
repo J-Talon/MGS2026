@@ -86,6 +86,16 @@ public class GridManager : MonoBehaviour, IGridSystemView
         return units_with;
     }
 
+    /// <returns>If coordinate exists within grid bounds</returns>
+    public bool WithinGrid(Vector2Int position) {
+        return state.XMin <= position.x && position.x <= state.XMax && state.YMin <= position.y && position.y <= state.YMax;
+    }
+
+    /// <returns>If coordinate exists within grid bounds</returns>
+    public bool WithinGridSmooth(Vector2 position) {
+        return state.XMin-0.5 < position.x && position.x < state.XMax + 0.5 && state.YMin-0.5 < position.y && position.y < state.YMax+0.5;
+    }
+
     /// <summary>
     /// Function to get a entity at the given grid cell
     /// It is a wrapper function using GetTileAtPosition
