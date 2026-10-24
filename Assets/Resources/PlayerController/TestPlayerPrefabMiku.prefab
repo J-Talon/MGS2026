@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4189265674046521110}
   m_Layer: 0
   m_Name: TestPlayerPrefabMiku
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -108,6 +108,7 @@ MonoBehaviour:
   isInvulnerable: 0
   isFriendly: 1
   isAlive: 1
+  isPlayer: 1
   maxHealth: 100
   damage: 10
   speed: 1
