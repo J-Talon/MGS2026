@@ -126,4 +126,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UnitFireCardinal
   fireCooldown: 2
-  fireDirection: {x: 0, y: 0}
+  fireDirection: {x: 1, y: 0}

@@ -50,13 +50,19 @@ public abstract class UnitFire : MonoBehaviour
         {
             timeLeft = fireCooldown;
 
-            Tuple<Vector2Int, EntityType> firedData = FireRoutine();
-            parentUnit.FireProjectile(firedData.Item1, firedData.Item2);
+            Tuple<Vector2Int, EntityType, bool> firedData = FireRoutine();
+            if (firedData.Item3 == true)
+            {
+                parentUnit.FireProjectile(firedData.Item1, firedData.Item2);
+            }
+            
         }
     }
 
     /// <summary>
     /// The actual firing behaviour to be implemented in a concrete class implementation.
+    /// 
+    /// Return tuple stating the spawn position, projectile type, and if spawning is even allowed for this fire cycle
     /// </summary>
-    protected abstract Tuple<Vector2Int, EntityType> FireRoutine();
+    protected abstract Tuple<Vector2Int, EntityType, bool> FireRoutine();
 }
