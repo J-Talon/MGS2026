@@ -1,20 +1,6 @@
 // Author: Jeremy
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
-public enum Direction { Up, Down, Left, Right }
-public static class DirectionExtensions
-{
-    public static Vector2Int ToVector(this Direction d) => d switch
-    {
-        Direction.Up => Vector2Int.up,
-        Direction.Down => Vector2Int.down,
-        Direction.Left => Vector2Int.left,
-        Direction.Right => Vector2Int.right,
-        _ => Vector2Int.zero
-    };
-}
 
 /// <summary>
 /// Test script for creating explosions in the game. This script allows you to specify the source of the explosion, its position, type, size, and damage.
@@ -22,13 +8,6 @@ public static class DirectionExtensions
 /// </summary>
 public class TestExplosion : MonoBehaviour
 {
-    public GameObject source;
-    public Vector2Int position;
-    public ExplosionType explosionType;
-    public int sizeX = 1;
-    public int sizeY = 1;
-    public float damage = 1f;
-    public Direction direction = Direction.Up;
     private GridCell selectedCell;
 
     void Update()
@@ -60,15 +39,56 @@ public class TestExplosion : MonoBehaviour
         Debug.Log(selectedCell != null ? $"Selected cell: {selectedCell.name}" : "No cell selected");
         if (selectedCell)
         {
-            List<GridCell> affectedCells = Explosion.CreateExplosion(gameObject, selectedCell.GetCellPosition(), explosionType, direction.ToVector(), sizeX, sizeY, damage);
-            foreach (var cell in affectedCells)
-            {
-                Vector2Int cellPosition = cell.GetCellPosition();
-                Vector3 spawnTarget = new Vector3(cellPosition.x, cellPosition.y, -1);
-                // Debug.Log($"Creating Explosion at {spawnTarget}");
-                // Spawn prefabs
-                EntityManager.GetInstance().GetEntity(EntityType.ExplosionTest, spawnTarget, false, 0.5f);
-            }
+            // Cross 1,1
+            // new Explosion(
+            //     new ExplosionPatternCross(1, 1),
+            //     selectedCell.GetCellPosition(),
+            //     Particle.Base.ParticleType.SPARK,
+            //     new MutatorDamageScale(2f),
+            //     1f,
+            //     null
+            // ).Detonate();
+
+            // Cross 2, 2
+            // new Explosion(
+            //     new ExplosionPatternCross(2, 2),
+            //     selectedCell.GetCellPosition(),
+            //     Particle.Base.ParticleType.SPARK,
+            //     new MutatorDamageScale(2f),
+            //     1f,
+            //     null
+            // ).Detonate();
+
+            // Diagonal 2
+            // new Explosion(
+            //     new ExplosionPatternDiagonal(2),
+            //     selectedCell.GetCellPosition(),
+            //     Particle.Base.ParticleType.SPARK,
+            //     new MutatorDamageScale(2f),
+            //     1f,
+            //     null
+            // ).Detonate();
+
+            // Laser down 2
+            // new Explosion(
+            //     new ExplosionPatternLaser(Vector2Int.down, 2),
+            //     selectedCell.GetCellPosition(),
+            //     Particle.Base.ParticleType.SPARK,
+            //     new MutatorDamageScale(2f),
+            //     1f,
+            //     null
+            // ).Detonate();
+
+            // Quad 2, 2
+            new Explosion(
+                new ExplosionPatternQuad(2, 2),
+                selectedCell.GetCellPosition(),
+                Particle.Base.ParticleType.SPARK,
+                new MutatorDamageScale(2f),
+                1f,
+                null
+            ).Detonate();
+
             selectedCell = null;
         }
     }

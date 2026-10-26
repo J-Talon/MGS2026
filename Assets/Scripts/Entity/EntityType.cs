@@ -5,7 +5,6 @@ public enum EntityClassification
 {
     projectile,
     unit,
-    test,
 }
 
 public class EntityType
@@ -43,7 +42,4 @@ public class EntityType
     public static readonly EntityType ProjectileTestLinearSmooth = new EntityType("Entity/Projectile/Prefabs/ProjectileTestLinearSmooth", EntityClassification.projectile);
     public static readonly EntityType ProjectileTestZiggedGrid = new EntityType("Entity/Projectile/Prefabs/ProjectileTestZiggedGrid", EntityClassification.projectile);
     public static readonly EntityType ProjectileTestZiggedSmooth = new EntityType("Entity/Projectile/Prefabs/ProjectileTestZiggedSmooth", EntityClassification.projectile);
-
-    // For testing purposes
-    public static readonly EntityType ExplosionTest = new EntityType("Explosions/TestExplosionPrefab", EntityClassification.test);
 }
