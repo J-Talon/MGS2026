@@ -16,6 +16,8 @@ public class CrosshairController
     protected CellVFX crosshair;
     protected Transform crosshairTransform;
 
+    public Vector2Int GetPosition() {return new Vector2Int((int)crosshairTransform.position.x, (int)crosshairTransform.position.y);}
+
     // constructor, sets up the crosshair
     public CrosshairController(Vector2 initPosition)
     {
