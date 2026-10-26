@@ -33,7 +33,7 @@ public abstract class VisualEffectBase : MonoBehaviour
 
         // Get the behaviour of the VFX
         vfxBehaviour = GetComponent<VFXBehaviour>();
-        if (vfxBehaviour is null) // fallback
+        if (vfxBehaviour == null) // fallback
         {
             vfxBehaviour = gameObject.AddComponent<VFXSimple>();
         }

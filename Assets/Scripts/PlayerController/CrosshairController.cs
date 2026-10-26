@@ -23,7 +23,7 @@ public class CrosshairController
     {
         _prefab = Resources.Load<GameObject>(assetPath);
 
-        if (_prefab is null)
+        if (_prefab == null)
         {
             Debug.LogWarning($"{assetPath} does not exist (CrossHair)");
             return;
@@ -32,7 +32,7 @@ public class CrosshairController
         // Maybe should handle this through the VFX manager.
         crosshair = GameObject.Instantiate(_prefab).GetComponent<CellVFX>();
 
-        if (crosshair is null)
+        if (crosshair == null)
         {
             Debug.LogWarning($"{assetPath} does not have a CellVFX component (CrossHair)");
             return;
@@ -72,7 +72,7 @@ public class CrosshairController
         Vector2 newPos = crosshairPos += dir;
 
         GridCell gridCell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(newPos));
-        if (gridCell is null || gridCell.isFriendly)
+        if (gridCell == null || gridCell.isFriendly)
         {
             // Find the other side of the enemy grid.
             // Iterates through the row until we reach the end (either its null or its friendly)

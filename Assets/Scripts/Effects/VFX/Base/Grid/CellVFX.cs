@@ -17,7 +17,7 @@ public class CellVFX : VisualEffectBase
         Vector2Int fixedPos = Vector2Int.RoundToInt(initPosition);
         GridCell gridCell = gridManager.GetTileAtPosition(fixedPos);
 
-        if (gridCell is null)
+        if (gridCell == null)
         {
             Debug.LogWarning($"Cannot set up at {initPosition}, no grid cell at location {fixedPos}");
             return;
@@ -44,7 +44,7 @@ public class CellVFX : VisualEffectBase
         Vector2Int fixedPos = Vector2Int.RoundToInt(newPos);
         GridCell gridCell = gridManager.GetTileAtPosition(fixedPos);
 
-        if (gridCell is null)
+        if (gridCell == null)
         {
             Debug.LogWarning($"Cannot move to {newPos}, no grid cell at location {fixedPos}");
             return;
