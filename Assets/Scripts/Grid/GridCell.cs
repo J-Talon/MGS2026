@@ -1,4 +1,5 @@
 // Authors: [Jacky, Jeremy, Mark]
+// Added collectable entity occupation - Wilson October 26 2026
 using UnityEngine;
 
 /// </summary>
@@ -8,6 +9,7 @@ using UnityEngine;
 public class GridCell : MonoBehaviour
 {
     public EntityUnit occupiedUnit {get; private set;}
+    public CollectableEntity occupiedCollectable {get; private set;}
 
     public bool isOccupied = false;
     public bool isFriendly = false;
@@ -55,5 +57,15 @@ public class GridCell : MonoBehaviour
     {
         occupiedUnit = null;
         isOccupied = false;
+    }
+
+    public void CollectableOccupy(CollectableEntity collectable)
+    {
+        occupiedCollectable = collectable;
+    }
+
+    public void CollectableDespawn()
+    {
+        occupiedCollectable = null;
     }
 }

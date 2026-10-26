@@ -1,4 +1,5 @@
 // Authors: [Jacky, Jeremy, Mark]
+// Added collectable entity check - Wilson October 26 2026
 using System;
 using UnityEngine;
 
@@ -34,6 +35,13 @@ public class EntityUnit : Entity, IUnitMoveSnappy, IUnitMoveSmooth
         {
             GridCell oldCell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(oldPos));
             oldCell.EntityUnitLeave(); //unregister from old cell
+
+            // Check for any collectable entities
+            CollectableEntity collectable = newCell.occupiedCollectable;
+            if (collectable != null)
+            {
+                collectable.OnInteract(this);
+            }
 
             newCell.EntityUnitOccupy(this); //register self to new cell
             gameObject.transform.position = newPos;
