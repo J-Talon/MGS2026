@@ -13,6 +13,8 @@ namespace Event
         {
             public static readonly EventDispatcher<Vector2Int> movePressed = new EventDispatcher<Vector2Int>();
             public static readonly EventDispatcher<Vector2Int> moveReleased = new EventDispatcher<Vector2Int>();
+            public static readonly EventDispatcher<ValueTuple> crosshairLeftPressed = new EventDispatcher<ValueTuple>();
+            public static readonly EventDispatcher<ValueTuple> crosshairRightPressed = new EventDispatcher<ValueTuple>();
 
             public static readonly EventDispatcher<ValueTuple> interactPressed = new EventDispatcher<ValueTuple>();
 
@@ -99,4 +101,7 @@ This lets me have a buffer system
 Basically means that during the movement cooldown, if i am holding down another direction to move, it will execute that movement as soon as the cooldown ends
 And to account for someone changing their buffered input to a different one, the moveReleased deals with it (hence the name)
 For more details about this stuff, go to InputEvents.cs and PlayerController.cs
+
+Edited by Wilson - October 25 2025
+Added crosshair left and right pressed events
  */

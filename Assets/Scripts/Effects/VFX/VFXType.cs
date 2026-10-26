@@ -31,5 +31,5 @@ public class VFXType
     public GameObject GetPrefab() { return _prefab; }
 
     // TYPES add more if needed
-    public static readonly VFXType GridPersistant = new VFXType("VFX/Prefabs/GridPersistant");
+    public static readonly VFXType GridPersistent = new VFXType("VFX/Prefabs/GridPersistent");
 }

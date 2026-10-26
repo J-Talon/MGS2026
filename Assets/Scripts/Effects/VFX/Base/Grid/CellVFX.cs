@@ -11,7 +11,7 @@ public class CellVFX : VisualEffectBase
     IGridSystemView gridManager = GridManager.instance;
 
     // Attempts to set up a VFX on a grid.
-    // Fails if the inital position does not have a grid cell present there.
+    // Fails if the initial position does not have a grid cell present there.
     public override void Setup(VFXType effectType, Vector2 initPosition)
     {
         Vector2Int fixedPos = Vector2Int.RoundToInt(initPosition);

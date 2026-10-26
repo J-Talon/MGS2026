@@ -1,8 +1,10 @@
 // Authors: [Jacky, Jeremy, Mark]
 // edited by - Jordan October 14, 2026
 // Edit by Jeremy October 15, 2026
+// edited by - Wilson October 25, 2026
 using Event;
 
+using System;
 using Particle.Base;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,11 +17,13 @@ using static UnityEngine.Rendering.DebugUI;
 public class PlayerController : MonoBehaviour
 {
     protected EntityUnit parentUnit;
+    protected CrosshairController crosshairController;
     private float movementCooldownTimer = 0f; //a timer that actually keeps track of the remaining time before the next movement
 
     void Start()
     {
         parentUnit = GetComponent<EntityUnit>();
+        crosshairController = new CrosshairController(new Vector2(5,0));
     }
 
     //holds the direction for a buffered movement (if it exists).
@@ -31,6 +35,8 @@ public class PlayerController : MonoBehaviour
     {
         GameplayEvents.Input.movePressed.AddEventListener(OnMovePressed);
         GameplayEvents.Input.moveReleased.AddEventListener(OnMoveReleased);
+        GameplayEvents.Input.crosshairLeftPressed.AddEventListener(OnCrosshairLeft);
+        GameplayEvents.Input.crosshairRightPressed.AddEventListener(OnCrosshairRight);
     }
 
     //unsubscribe the events
@@ -38,6 +44,8 @@ public class PlayerController : MonoBehaviour
     {
         GameplayEvents.Input.movePressed.RemoveEventListener(OnMovePressed);
         GameplayEvents.Input.moveReleased.RemoveEventListener(OnMoveReleased);
+        GameplayEvents.Input.crosshairLeftPressed.RemoveEventListener(OnCrosshairLeft);
+        GameplayEvents.Input.crosshairRightPressed.RemoveEventListener(OnCrosshairRight);
         bufferedMovement = null;
     }
 
@@ -46,6 +54,8 @@ public class PlayerController : MonoBehaviour
     {
         GameplayEvents.Input.movePressed.RemoveEventListener(OnMovePressed);
         GameplayEvents.Input.moveReleased.RemoveEventListener(OnMoveReleased);
+        GameplayEvents.Input.crosshairLeftPressed.RemoveEventListener(OnCrosshairLeft);
+        GameplayEvents.Input.crosshairRightPressed.RemoveEventListener(OnCrosshairRight);
         bufferedMovement = null;
     }
 
@@ -92,16 +102,29 @@ public class PlayerController : MonoBehaviour
         {
             movementCooldownTimer = parentUnit.GetMovementTickTimer();
             parentUnit.MoveUnitSnappy(newPosition - currentPosition); // Move the player to the new position
+            crosshairController.UpdatePosition(newPosition); // update the crosshair position
         }
     }
 
     //added by Jordan
     //if the player is buffering a movement during cooldown, but lets go of it before the movementCooldownTimer finishes, cancel the future movement
-    private void OnMoveReleased(Vector2Int direction)
+    public void OnMoveReleased(Vector2Int direction)
     {
         if (bufferedMovement == direction)
         {
             bufferedMovement = null;
         }
+    }
+
+    // Moves crosshair left
+    public void OnCrosshairLeft(System.ValueTuple _)
+    {
+        crosshairController.MoveOnRow(Vector2Int.left);
+    }
+
+    // Moves crosshair right
+    private void OnCrosshairRight(System.ValueTuple _)
+    {
+        crosshairController.MoveOnRow(Vector2Int.right);
     }
 }
