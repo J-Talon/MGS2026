@@ -23,7 +23,7 @@ public abstract class Entity : MonoBehaviour
     [field: SerializeField] protected float movementTickTimer = 1f;
 
     [Header("Runtime Stats")]
-    protected float currentHealth;
+    [field: SerializeField] protected float currentHealth; // [field: SerializeField] just to see HP in editor
     public float spawnTime;
 
     #region instance variables
@@ -64,8 +64,7 @@ public abstract class Entity : MonoBehaviour
     protected virtual void Awake()
     {
         entityID = AssignUniqueID();
-        Debug.Log(entityID);
-
+        // Debug.Log(entityID);
         currentHealth = maxHealth;
         spawnTime = Time.time;
     }
