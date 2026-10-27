@@ -3,7 +3,8 @@ using UnityEngine;
 
 public enum EntityClassification
 {
-    projectile, unit
+    projectile,
+    unit,
 }
 
 public class EntityType
@@ -28,7 +29,7 @@ public class EntityType
             throw new MissingComponentException("The entity asset " + assetPath + " must have a EntityUnit component attached.");
     }
 
-    public EntityClassification GetEntityClassification(){ return _entityClassification; }
+    public EntityClassification GetEntityClassification() { return _entityClassification; }
     public string GetAssetPath() { return _assetPath; }
     public GameObject GetPrefab() { return _prefab; }
 
