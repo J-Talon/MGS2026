@@ -25,6 +25,11 @@ public abstract class UnitFire : MonoBehaviour
     /// </summary>
     private float timeLeft; //trigger firing immedietly?
 
+    /// <summary>
+    /// If unit chose to not fire during a cycle, instead run a firing check everyy frame now
+    /// </summary>
+    private bool heldFire = false;
+
     #endregion
 
     /// <summary>
@@ -39,10 +44,12 @@ public abstract class UnitFire : MonoBehaviour
     /// <summary>
     /// Main loop, decrements timer when still on firing cooldown
     /// Else, resets timer then calls the actual firing behaviour defined in a actual concrete class
+    /// 
+    /// IF unit chose not to fire previous cycle, also trigger firing routine check every frame until it does fire
     /// </summary>
     void Update()
     {
-        if (timeLeft > 0)
+        if (timeLeft > 0 && heldFire == false)
         {
             timeLeft -= Time.deltaTime;
         }
@@ -51,13 +58,20 @@ public abstract class UnitFire : MonoBehaviour
             timeLeft = fireCooldown;
 
             Tuple<Vector2Int, EntityType, bool> firedData = FireRoutine();
+
             if (firedData.Item3 == true)
             {
+                heldFire = false;
                 parentUnit.FireProjectile(firedData.Item1, firedData.Item2);
+            }
+            else
+            {
+                heldFire = true;
             }
             
         }
     }
+
 
     /// <summary>
     /// The actual firing behaviour to be implemented in a concrete class implementation.

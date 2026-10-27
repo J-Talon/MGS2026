@@ -55,11 +55,11 @@ public class PlayerTurretController : MonoBehaviour
         {
             if (targetTile.isOccupied == false && targetTile.isFriendly == true)
             {
-                EntityUnit spawnedTurret = (EntityUnit)EntityManager.GetInstance().GetEntity(EntityType.UnitTestTurret, new Vector3(frontOfPlayer.x, frontOfPlayer.y, -1), true, 0f);
+                EntityManager.GetInstance().GetEntity(EntityType.UnitTestTurret, new Vector3(frontOfPlayer.x, frontOfPlayer.y, -1), true, 0f);
             }
             else
             {
-                print("no spawn allowed");
+                //print("no spawn allowed");
             }
         }
     }

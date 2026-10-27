@@ -21,11 +21,11 @@ public class UnitFireCardinalPeas : UnitFire
         Vector2Int checkPos = Vector2Int.RoundToInt(parentUnit.GetPosition()) + fireDirection;
         IGridSystemView gridSystem = GridManager.instance;
         GridCell tile = gridSystem.GetTileAtPosition(checkPos);
-        while (true) //continue scanning the cardinal direction until unit is found or until end of grid boundaries (do not fire if )
+        while (true) //continue scanning the cardinal direction until unit is found (fire) or until end of grid boundaries (do not fire)
         {
             if (tile == null) //reached end, do not fire
             {
-                print("could not fire, reached end of grid");
+                //print("could not fire, reached end of grid");
                 return Tuple.Create(fireDirection, EntityType.ProjectileTestLinearGrid, false); 
             }
             else if (tile.isOccupied == true)
