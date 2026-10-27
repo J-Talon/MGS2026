@@ -5,14 +5,18 @@ using UnityEngine;
 /*
 Manages visual effects.
 Different from particle effects.
-Literally anything visual that particles cannot do (puddles, highlights, etc.)
-The VFX can include particles in them!
+Literally anything visual that particles cannot do (puddles, highlights, materials, etc.)
+In this case I am using a sprite for the player's crosshair.
+The VFX can include particles in them! (maybe)
 
 This is basically completely copied from EntityManager.cs (Oct 25 2026)
 (I'm sorry, I'm not writing another manager if there is one that exists and works. Please forgive me.)
 Some slight changes:
     - No factory script, it spawns the object here (Probably gonna change in the future oh well)
     - Added UniqueID assignment to the manager
+
+Sorry in advance if this architecture is horrible, I just needed something quick for the player's crosshair.
+If needed I'll scrap this entire thing and make the crosshair its own thing.
 
 @author Wilson (1oopy)
 */

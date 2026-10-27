@@ -17,4 +17,9 @@ public class VFXSimple : VFXBehaviour
     {
         visualEffect.gameObject.SetActive(false);
     }
+
+    public override void Tick()
+    {
+        // nothing
+    }
 }

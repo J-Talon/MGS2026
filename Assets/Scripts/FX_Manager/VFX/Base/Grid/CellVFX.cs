@@ -3,6 +3,7 @@ using UnityEngine;
 /*
 Grid VFX
 The vfx can only be played on the grid.
+(Stuff like decals, sprites...)
 @author Wilson (1oopy)
 */
 public class CellVFX : VisualEffectBase

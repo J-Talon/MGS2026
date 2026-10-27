@@ -15,7 +15,18 @@ public abstract class VFXBehaviour : MonoBehaviour
         visualEffect = GetComponent<VisualEffectBase>();
     }
 
+    // Behaviour on play
     public abstract void onPlay();
 
+    // Behaviour on stop
     public abstract void onStop();
+
+    // Tick function
+    public abstract void Tick();
+
+    // Do something like this in a vlass that needs it
+    // void Update()
+    // {
+    //     Tick();
+    // }
 }

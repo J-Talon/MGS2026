@@ -22,4 +22,9 @@ public class VFXPersistent : VFXBehaviour
     {
         visualEffect.gameObject.SetActive(false);
     }
+
+    public override void Tick()
+    {
+        // nothing
+    }
 }
