@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class UnitFireCardinalPeas : UnitFire
 {
-    [field: SerializeField] protected Vector2Int fireDirection;
+    [field: SerializeField] private Vector2Int fireDirection;
 
     protected override Tuple<Vector2Int, EntityType, bool> FireRoutine()
     {

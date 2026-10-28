@@ -5,7 +5,9 @@ using System.Numerics;
 using UnityEngine;
 
 /// <summary>
-/// Fire a projectile based on a timer
+/// Control firing behaviour of a unit based on various factors. Currently allows for firing on cooldown + holding fire (while checking every frame if can fire again)
+/// 
+/// Actual firing not handled here, instead data is passed to the attached entity unit for actual projectile creation
 /// </summary>
 public abstract class UnitFire : MonoBehaviour
 {

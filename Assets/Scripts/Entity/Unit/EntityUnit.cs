@@ -7,19 +7,22 @@ using UnityEngine;
 /// </summary>
 public class EntityUnit : Entity, IUnitMoveSnappy, IUnitMoveSmooth, IUnitFire
 {
-    public void FireProjectile(Vector2Int fireDirection, EntityType projectileType)
+    /// <summary>
+    /// Validates passed in firing data then creates projectile from factory
+    /// </summary>
+    /// <param name="deltaFiringPosition">The relative firing position to the unit</param>
+    /// <param name="projectileType">actual unit to spawn</param>
+    public void FireProjectile(Vector2Int deltaFiringPosition, EntityType projectileType)
     {
         bool projectileIsFreind = isFriendly;  
 
-        Vector2 firePos = gameObject.transform.position + (Vector3Int)fireDirection;
+        Vector2 firePos = gameObject.transform.position + (Vector3Int)deltaFiringPosition;
         IGridSystemView gridManager = GridManager.instance;
         GridCell newCell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(firePos));
         if (newCell != null) //new cell exists
         {
             EntityManager.GetInstance().GetEntity(projectileType, new Vector3(firePos.x, firePos.y, -1), projectileIsFreind);
         }
-
-
     }
 
     /// <summary>

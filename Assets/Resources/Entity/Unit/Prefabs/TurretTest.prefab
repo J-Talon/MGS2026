@@ -54,6 +54,7 @@ MonoBehaviour:
   speed: 1
   maxLifeSpan: 0
   movementTickTimer: 2
+  currentHealth: 0
   spawnTime: 0
 --- !u!212 &5353037503270121729
 SpriteRenderer:
