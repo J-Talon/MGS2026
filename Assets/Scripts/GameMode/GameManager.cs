@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
     public Transform PlayerPrefab;
     private EntityUnit unit;
     private EntityUnit demonUnit;
+    private CollectableEntity collectable;
 
     public void SpawnPlayer(Vector3 position)
     {
@@ -20,6 +21,7 @@ public class GameManager : MonoBehaviour
         SpawnPlayer(new Vector3(0, 0, -1));
         unit = (EntityUnit)EntityManager.GetInstance().GetEntity(EntityType.UnitTest, new Vector3(5, 2, -1), false, 0f);
         demonUnit = (EntityUnit)EntityManager.GetInstance().GetEntity(EntityType.UnitTestDemon, new Vector3(4, 0, -1), false, 0f);
+        collectable = (CollectableEntity)EntityManager.GetInstance().GetEntity(EntityType.CollectableTest, new Vector3(3, 3, -1), true, 0f);
     }
 
     void Update()

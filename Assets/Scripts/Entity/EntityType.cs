@@ -5,6 +5,7 @@ public enum EntityClassification
 {
     projectile,
     unit,
+    collectable
 }
 
 public class EntityType
@@ -42,4 +43,7 @@ public class EntityType
     public static readonly EntityType ProjectileTestLinearSmooth = new EntityType("Entity/Projectile/Prefabs/ProjectileTestLinearSmooth", EntityClassification.projectile);
     public static readonly EntityType ProjectileTestZiggedGrid = new EntityType("Entity/Projectile/Prefabs/ProjectileTestZiggedGrid", EntityClassification.projectile);
     public static readonly EntityType ProjectileTestZiggedSmooth = new EntityType("Entity/Projectile/Prefabs/ProjectileTestZiggedSmooth", EntityClassification.projectile);
+
+    // Example of predefined collectable type.
+    public static readonly EntityType CollectableTest = new EntityType("Entity/Collectable/Prefabs/TestCollectable", EntityClassification.collectable);
 }

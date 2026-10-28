@@ -1,5 +1,6 @@
 // Authors: Farbod
 //edited by - Jordan October 14, 2026
+// edited by - Wilson October 25, 2026
 
 using System;
 using System.Collections.Generic;
@@ -67,6 +68,9 @@ public class InputEvents : MonoBehaviour
             movementAction.canceled += OnMove;
         }
 
+        m_InputManager.Player.MoveCrosshairLeft.performed += OnCrosshairLeft;
+        m_InputManager.Player.MoveCrosshairRight.performed += OnCrosshairRight;
+
         m_InputManager.Enable();
     }
 
@@ -86,6 +90,9 @@ public class InputEvents : MonoBehaviour
             movementAction.performed -= OnMove;
             movementAction.canceled -= OnMove;
         }
+
+        m_InputManager.Player.MoveCrosshairLeft.performed -= OnCrosshairLeft;
+        m_InputManager.Player.MoveCrosshairRight.performed -= OnCrosshairRight;
 
         m_InputManager.Disable();
     }
@@ -117,6 +124,18 @@ public class InputEvents : MonoBehaviour
             GameplayEvents.Input.moveReleased.CallEvent(direction); //calls the event for the appropriate movement direction
         }
         
+    }
+
+    private void OnCrosshairLeft(InputAction.CallbackContext context)
+    {
+        if (debugActions) Debug.Log("CrosshairLeft Activated");
+        GameplayEvents.Input.crosshairLeftPressed.CallEvent(ValueTuple.Create());
+    }
+
+    private void OnCrosshairRight(InputAction.CallbackContext context)
+    {
+        if (debugActions) Debug.Log("CrosshairRight Activated");
+        GameplayEvents.Input.crosshairRightPressed.CallEvent(ValueTuple.Create());
     }
 
     private void OnInteract(InputAction.CallbackContext context)
