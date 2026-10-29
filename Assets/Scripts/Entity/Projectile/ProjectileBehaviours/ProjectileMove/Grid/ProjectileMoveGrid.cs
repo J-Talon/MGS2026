@@ -27,6 +27,7 @@ public abstract class ProjectileMoveGrid : MonoBehaviour
     void Start()
     {
         parentProjectile = GetComponent<EntityProjectile>();
+        timeLeft = parentProjectile.GetMovementTickTimer(); //ensure projectile doesn't move immedietly on spawn (assuming its initial position is technically fine)
     }
 
     /// <summary>
