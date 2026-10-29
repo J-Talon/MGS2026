@@ -4,6 +4,12 @@ using UnityEngine;
 
 /*
  * @Author Talon J
+ *
+ *  Particle wrapper base wraps unity's particle system
+ *  define subclasses of particle wrapper base for more complex functionality
+ *
+ *
+ * 
  */
 namespace Particle.Base
 {
