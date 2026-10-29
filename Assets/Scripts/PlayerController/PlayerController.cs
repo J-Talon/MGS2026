@@ -72,6 +72,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void OnMovePressed(Vector2Int moveDir)
     {
+        
+
         //movementCooldownTimer and buffer stuff added by Jordan
 
         //player inputs a buffered movement (aka pressing and holding a movement during movement cooldown)
@@ -93,6 +95,7 @@ public class PlayerController : MonoBehaviour
             movementCooldownTimer = parentUnit.GetMovementTickTimer();
             parentUnit.MoveUnitSnappy(newPosition - currentPosition); // Move the player to the new position
         }
+
     }
 
     //added by Jordan

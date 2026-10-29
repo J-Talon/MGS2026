@@ -60,6 +60,9 @@ public class MenuManager : MonoBehaviour
             {m_UIManager.UI.MoveRight, new Vector2Int(1, 0) },
         };
 
+        if (InputEvents.Instance != null)
+            InputEvents.Instance.OnDisable();
+
         // Instantiate the menus for any new ones that are made!!! ------------------
       //  pauseMenu = Instantiate(pauseMenu);
 
@@ -104,6 +107,7 @@ public class MenuManager : MonoBehaviour
         m_UIManager.UI.Submit.performed -= HandleSubmit;
         m_UIManager.UI.Cancel.performed -= HandleCancel;
 
+        InputEvents.Instance.OnEnable();
         m_UIManager.Disable();
     }
 
@@ -117,12 +121,17 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    /* EXAMPLE
     public void OpenSettings()
     {
-        OpenMenu(settingsMenu);
-    }*/
+        Debug.Log("Opening settings menu... [none currently]");
+        //OpenMenu(settingsMenu);
+    }
 
+    public void OpenCredits()
+    {
+        Debug.Log("Opening credits menu... [none currently]");
+       // OpenMenu(creditsMenu);
+    }
 
 
 
