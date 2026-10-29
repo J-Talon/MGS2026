@@ -1,6 +1,7 @@
 // Author: Jeremy
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Particle.Base;
 
 /// <summary>
 /// Test script for creating explosions in the game. This script allows you to specify the source of the explosion, its position, type, size, and damage.
@@ -39,11 +40,16 @@ public class TestExplosion : MonoBehaviour
         Debug.Log(selectedCell != null ? $"Selected cell: {selectedCell.name}" : "No cell selected");
         if (selectedCell)
         {
+            ExplosionVFX testVFX = new ExplosionVFX()
+                    .Add(ParticleType.SPARK, ExplosionVFXStep.PreMutate)
+                    .Add(ParticleType.SPARK, ExplosionVFXStep.PostMutate, 1f)
+                    .Add(ParticleType.SPARK, ExplosionVFXStep.PostMutate, 1f);
+
             // Cross 1,1
             // new Explosion(
             //     new ExplosionPatternCross(1, 1),
             //     selectedCell.GetCellPosition(),
-            //     Particle.Base.ParticleType.SPARK,
+            //     testVFX,
             //     new MutatorDamageScale(2f),
             //     1f,
             //     null
@@ -53,7 +59,7 @@ public class TestExplosion : MonoBehaviour
             // new Explosion(
             //     new ExplosionPatternCross(2, 2),
             //     selectedCell.GetCellPosition(),
-            //     Particle.Base.ParticleType.SPARK,
+            //     testVFX,
             //     new MutatorDamageScale(2f),
             //     1f,
             //     null
@@ -63,7 +69,7 @@ public class TestExplosion : MonoBehaviour
             // new Explosion(
             //     new ExplosionPatternDiagonal(2),
             //     selectedCell.GetCellPosition(),
-            //     Particle.Base.ParticleType.SPARK,
+            //     testVFX,
             //     new MutatorDamageScale(2f),
             //     1f,
             //     null
@@ -73,7 +79,7 @@ public class TestExplosion : MonoBehaviour
             // new Explosion(
             //     new ExplosionPatternLaser(Vector2Int.down, 2),
             //     selectedCell.GetCellPosition(),
-            //     Particle.Base.ParticleType.SPARK,
+            //     testVFX,
             //     new MutatorDamageScale(2f),
             //     1f,
             //     null
@@ -83,7 +89,7 @@ public class TestExplosion : MonoBehaviour
             new Explosion(
                 new ExplosionPatternQuad(2, 2),
                 selectedCell.GetCellPosition(),
-                Particle.Base.ParticleType.SPARK,
+                testVFX,
                 new MutatorDamageScale(2f),
                 1f,
                 null
