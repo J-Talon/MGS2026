@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5071743001550006925}
-  - component: {fileID: 7645781119891735906}
-  - component: {fileID: 3793609078325505280}
   - component: {fileID: 5353037503270121729}
+  - component: {fileID: 8051601326255769950}
+  - component: {fileID: 625528679891546255}
   m_Layer: 0
   m_Name: UnitTestDemon
   m_TagString: Untagged
@@ -34,39 +34,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7645781119891735906
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8447654008913998862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9612c2237f70c3540a41caf28ca72bd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntityUnit
-  isInvulnerable: 0
-  isFriendly: 0
-  isAlive: 1
-  maxHealth: 100
-  damage: 10
-  speed: 1
-  maxLifeSpan: 0
-  movementTickTimer: 1
-  spawnTime: 0
---- !u!114 &3793609078325505280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8447654008913998862}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c4f5d7148e775bb4cae7834a7323b4a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::UnitMoveSnappyRandom
 --- !u!212 &5353037503270121729
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -125,3 +92,38 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8051601326255769950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8447654008913998862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5474a764a25aa204da33ccb929e89335, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyBase
+  isInvulnerable: 0
+  isFriendly: 0
+  isAlive: 1
+  maxHealth: 100
+  damage: 10
+  speed: 1
+  maxLifeSpan: 0
+  movementTickTimer: 1
+  spawnTime: 0
+  ebehaviours:
+  - {fileID: 625528679891546255}
+--- !u!114 &625528679891546255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8447654008913998862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a6a5c352209b4246a682fc792fdf726, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyRandomMovement

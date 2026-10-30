@@ -5,6 +5,7 @@ using UnityEngine;
 /// Base class for snappy movement behaviour of units. This class is intended to be inherited by specific movement behaviour implementations.
 /// </summary>
 [RequireComponent(typeof(EntityUnit))]
+[System.Obsolete("This script is deprecated. Use methods found in EntityUnit")]
 public abstract class UnitMoveSnappy : MonoBehaviour
 {
     protected EntityUnit parentUnit;

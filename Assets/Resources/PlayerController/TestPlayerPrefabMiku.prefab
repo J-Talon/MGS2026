@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: -2332521726127746915}
   - component: {fileID: 6666874912454835544}
   - component: {fileID: 4189265674046521110}
+  - component: {fileID: 3859582042622848736}
   m_Layer: 0
   m_Name: TestPlayerPrefabMiku
   m_TagString: Player
@@ -221,3 +222,15 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &3859582042622848736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220599807332297726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 677cca8471eee7145bdafdf2ec206765, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerTurretController
