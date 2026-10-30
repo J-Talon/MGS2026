@@ -1,11 +1,13 @@
 // Authors: [Jacky, Jeremy, Mark]
+
+
+
 using UnityEngine;
-using System;
-using Event;
 
 /// <summary>
 /// Base class for all entities in the game, including players, enemies and projectiles. Contains common stats and properties that all entities share.
 /// </summary>
+
 public abstract class Entity : MonoBehaviour
 {
     [Header("Identifiers")]
@@ -24,7 +26,7 @@ public abstract class Entity : MonoBehaviour
 
     [Header("Runtime Stats")]
     [field: SerializeField] protected float currentHealth; // [field: SerializeField] just to see HP in editor
-    public float spawnTime;
+    public float spawnTime;   //the timestamp when the entity was "spawned"
 
     #region instance variables
     // Player position variables
@@ -72,15 +74,16 @@ public abstract class Entity : MonoBehaviour
     /// <summary>
     /// initial setup on first creation
     /// </summary>
-    public void Setup(bool isFriendly, EntityType entityType)
+    public void Setup(bool friendly, EntityType type)
     {
         //Debug.Log("first time setup");
-        this.entityType = entityType;
-        this.isFriendly = isFriendly;
+        this.entityType = type;
+        this.isFriendly = friendly;
     }
 
     /// <summary>
-    /// Resets this entity to base state by copying values from original Prefab. Should be overriden if specific reset behaviour beyond generic entity reset is needed
+    /// Resets this entity to base state by copying values from original Prefab.
+    /// Should be overriden if specific reset behaviour beyond generic entity reset is needed
     /// </summary>
     public virtual void ResetToOriginal()
     {
@@ -95,19 +98,29 @@ public abstract class Entity : MonoBehaviour
 
     /// <summary>
     /// Causes the entity to take damage. This method is called when the entity is hit by an attack.
+    /// Talon J: Return: True if the entity took damage, return false if it did not
+    /// 
     /// </summary>
-    /// <param name="amount">The amount of damage to take.</param>
-    public virtual void TakeDamage(float damage)
+    /// <param name="damage">The amount of damage to take.</param>
+    public virtual bool TakeDamage(float damage)
     {
-        if (!isAlive || isInvulnerable || damage <= 0f) return;
+        if (!isAlive || isInvulnerable || damage <= 0f) return false;
         currentHealth -= damage;
         if (currentHealth <= 0f) Die();
+        return true;
     }
 
-    public virtual void Heal(float amount)
+    /// <summary>
+    /// Modified: Talon J
+    /// Heals the entity, return true if was successfully healed
+    /// </summary>
+    /// <param name="amount"></param>
+    /// <returns></returns>
+    public virtual bool Heal(float amount)
     {
-        if (!isAlive || amount <= 0f) return;
+        if (!isAlive || amount <= 0f) return false;
         currentHealth = Mathf.Min(maxHealth, currentHealth + amount);
+        return true;
     }
 
     /// <summary>
@@ -118,7 +131,7 @@ public abstract class Entity : MonoBehaviour
         if (!isAlive) return;
         isAlive = false;
         // if the entity is a unit, unregister it from the grid cell it occupies
-        if (entityType.GetEntityClassification() == EntityClassification.unit)
+        if (entityType.GetEntityClassification() == EntityClassification.Unit)
         {
             IGridSystemView gridManager = GridManager.instance;
             GridCell gridPosition = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(gameObject.transform.position));
@@ -153,11 +166,13 @@ public abstract class Entity : MonoBehaviour
         return other != null && isFriendly != other.isFriendly;
     }
 
-    public virtual void Tick()
+    public abstract void Tick();
+
+    
+    //@Talon J
+    //update is valid here. No need to repeat it in subclasses
+    public void Update()
     {
-        if (maxLifeSpan > 0f && Time.time - spawnTime >= maxLifeSpan)
-        {
-            Die();
-        }
+        this.Tick();
     }
 }
