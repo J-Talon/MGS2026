@@ -5,13 +5,16 @@ using Particle.Base;
 
 /*
 HOW TO USE EXPLOSION VFX
-1) Create an ExplosionVFX and add particles with the step they play on and an optional delay
+Pass any of these as the vfx of an explosion:
+1) A preset from the bottom of this class
+    new Explosion(pattern, center, ExplosionVFX.SPARK_CHAIN, mutator, damage).Detonate();
+2) A single particle, which plays on PostMutate
+    new Explosion(pattern, center, ParticleType.SPARK, mutator, damage).Detonate();
+3) A custom sequence. If you reuse it, add it as a preset instead
     var vfx = new ExplosionVFX()
-        .Add(ParticleType.SPARK, ExplosionVFXStep.PreMutate)
-        .Add(ParticleType.FIRE, ExplosionVFXStep.PostMutate)
-        .Add(ParticleType.SPARK, ExplosionVFXStep.PostMutate, 0.2f);
-2) Pass it to an explosion:
-    new Explosion(pattern, center, vfx, mutator, damage, source).Detonate();
+        .Pre(ParticleType.SPARK)
+        .Post(ParticleType.FIRE)
+        .Post(ParticleType.SPARK, 0.2f);
 
 Particles on the same step play in the order they were added.
 Delay is the wait after the previous particle on the same step, so delays stack into a sequence.
@@ -58,6 +61,21 @@ public class ExplosionVFX
     }
 
     /// <summary>
+    /// Add a particle to play on the PreMutate step
+    /// </summary>
+    public ExplosionVFX Pre(ParticleType particle, float delay = 0f) => Add(particle, ExplosionVFXStep.PreMutate, delay);
+
+    /// <summary>
+    /// Add a particle to play on the PostMutate step
+    /// </summary>
+    public ExplosionVFX Post(ParticleType particle, float delay = 0f) => Add(particle, ExplosionVFXStep.PostMutate, delay);
+
+    /// <summary>
+    /// Lets a single ParticleType be passed anywhere an ExplosionVFX is expected. Plays on PostMutate.
+    /// </summary>
+    public static implicit operator ExplosionVFX(ParticleType particle) => new ExplosionVFX().Post(particle);
+
+    /// <summary>
     /// Play every particle on the given step at each cell
     /// </summary>
     public void Play(ExplosionVFXStep step, List<GridCell> cells)
@@ -82,4 +100,15 @@ public class ExplosionVFX
                 entry.Particle.Play(position.x, position.y, VfxDepth);
         }
     }
+
+    //==============================
+
+    // Example preset. Call anywhere like so - `ExplosionVFX.SPARK_CHAIN`
+    public static readonly ExplosionVFX SPARK_CHAIN = new ExplosionVFX()
+        .Pre(ParticleType.SPARK)
+        .Post(ParticleType.SPARK, 1f)
+        .Post(ParticleType.SPARK, 1f);
+
+    // Example preset for single effect
+    public static readonly ExplosionVFX SPARK_SINGLE = ParticleType.SPARK;
 }

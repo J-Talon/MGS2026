@@ -13,7 +13,7 @@ using UnityEngine;
 /// 6) Damage         - damage each allocated unit                                  <br></br>
 ///                                                                                 <br></br>
 /// Usage:                                                                          <br></br>
-/// new Explosion(pattern, center, vfx, mutator, damage, source).Detonate();
+/// new Explosion(pattern, vfx, mutator, damage, source).Detonate(center);
 /// </summary>
 public class Explosion
 {
@@ -21,20 +21,20 @@ public class Explosion
     private readonly IExplosionMutator _mutator;
 
     public ExplosionVFX ExplosionVFX { get; }
-    public Vector2Int Center { get; }
+    public Vector2Int Center { get; set; }
     [CanBeNull] public Entity Source { get; }
 
     // Exposed so mutators can modify them before damage is applied
     public List<GridCell> Cells { get; } = new();
     public List<EntityUnit> Units { get; } = new();
     public float Damage { get; set; }
+    public float FinalDamage { get; set; }
 
-    public Explosion(ExplosionPattern pattern, Vector2Int center, ExplosionVFX explosionVFX, IExplosionMutator mutator, float damage, [CanBeNull] Entity source = null)
+    public Explosion(ExplosionPattern pattern, ExplosionVFX explosionVFX, IExplosionMutator mutator, float damage, [CanBeNull] Entity source = null)
     {
         _pattern = pattern;
         _mutator = mutator;
         ExplosionVFX = explosionVFX;
-        Center = center;
         Damage = damage;
         Source = source;
     }
@@ -43,8 +43,9 @@ public class Explosion
     /// Run every layer of the explosion
     /// </summary>
     /// <returns>Final list of affected GridCells</returns>
-    public List<GridCell> Detonate()
+    public List<GridCell> Detonate(Vector2Int center)
     {
+        Center = center;
         AllocateCells();
         AllocateUnits();
         _mutator?.PreMutate(this);
@@ -87,6 +88,38 @@ public class Explosion
     private void ApplyDamage()
     {
         foreach (EntityUnit unit in Units)
-            unit.TakeDamage(Damage);
+            unit.TakeDamage(FinalDamage);
     }
+
+    //==============================
+    // Example presets. Call anywhere like so - `Explosion.QUAD_3x3.Detonate(center)`
+
+    public static readonly Explosion CROSS_3x3 = new Explosion(
+        new ExplosionPatternCross(1, 1),
+        ExplosionVFX.SPARK_SINGLE,
+        new MutatorDamageScale(2f),
+        1f
+    );
+
+    public static readonly Explosion DIAGONAL_3x3 = new Explosion(
+        new ExplosionPatternDiagonal(2),
+        ExplosionVFX.SPARK_SINGLE,
+        new MutatorDamageScale(2f),
+        1f
+    );
+
+    public static readonly Explosion LASER_DOWN_1x2 = new Explosion(
+        new ExplosionPatternLaser(Vector2Int.down, 1),
+        ExplosionVFX.SPARK_SINGLE,
+        new MutatorDamageScale(2f),
+        1f
+    );
+
+    public static readonly Explosion QUAD_3x3 = new Explosion(
+        new ExplosionPatternQuad(1, 1),
+        ExplosionVFX.SPARK_SINGLE,
+        new MutatorDamageScale(2f),
+        1f
+    );
+
 }

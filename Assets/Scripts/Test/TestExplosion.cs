@@ -1,11 +1,10 @@
 // Author: Jeremy
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Particle.Base;
 
 /// <summary>
-/// Test script for creating explosions in the game. This script allows you to specify the source of the explosion, its position, type, size, and damage.
-/// Click on a GridCell to spawn the explosion at that location. The explosion will be created based on the specified parameters.
+/// Test script for creating explosions in the game.
+/// Click on a GridCell to spawn the explosion at that location.
 /// </summary>
 public class TestExplosion : MonoBehaviour
 {
@@ -40,60 +39,19 @@ public class TestExplosion : MonoBehaviour
         Debug.Log(selectedCell != null ? $"Selected cell: {selectedCell.name}" : "No cell selected");
         if (selectedCell)
         {
-            ExplosionVFX testVFX = new ExplosionVFX()
-                    .Add(ParticleType.SPARK, ExplosionVFXStep.PreMutate)
-                    .Add(ParticleType.SPARK, ExplosionVFXStep.PostMutate, 1f)
-                    .Add(ParticleType.SPARK, ExplosionVFXStep.PostMutate, 1f);
+            Vector2Int center = selectedCell.GetCellPosition();
 
             // Cross 1,1
-            // new Explosion(
-            //     new ExplosionPatternCross(1, 1),
-            //     selectedCell.GetCellPosition(),
-            //     testVFX,
-            //     new MutatorDamageScale(2f),
-            //     1f,
-            //     null
-            // ).Detonate();
+            // Explosion.CROSS_3x3.Detonate(center);
 
-            // Cross 2, 2
-            // new Explosion(
-            //     new ExplosionPatternCross(2, 2),
-            //     selectedCell.GetCellPosition(),
-            //     testVFX,
-            //     new MutatorDamageScale(2f),
-            //     1f,
-            //     null
-            // ).Detonate();
+            // Diagonal 1
+            // Explosion.DIAGONAL_3x3.Detonate(center);
 
-            // Diagonal 2
-            // new Explosion(
-            //     new ExplosionPatternDiagonal(2),
-            //     selectedCell.GetCellPosition(),
-            //     testVFX,
-            //     new MutatorDamageScale(2f),
-            //     1f,
-            //     null
-            // ).Detonate();
+            // Laser down 1
+            // Explosion.LASER_DOWN_1x2.Detonate(center);
 
-            // Laser down 2
-            // new Explosion(
-            //     new ExplosionPatternLaser(Vector2Int.down, 2),
-            //     selectedCell.GetCellPosition(),
-            //     testVFX,
-            //     new MutatorDamageScale(2f),
-            //     1f,
-            //     null
-            // ).Detonate();
-
-            // Quad 2, 2
-            new Explosion(
-                new ExplosionPatternQuad(2, 2),
-                selectedCell.GetCellPosition(),
-                testVFX,
-                new MutatorDamageScale(2f),
-                1f,
-                null
-            ).Detonate();
+            // Quad 1,1
+            Explosion.QUAD_3x3.Detonate(center);
 
             selectedCell = null;
         }
