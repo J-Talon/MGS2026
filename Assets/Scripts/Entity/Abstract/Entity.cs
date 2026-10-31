@@ -14,6 +14,11 @@ public abstract class Entity : MonoBehaviour
     [field: SerializeField] protected bool isInvulnerable = false;
     [field: SerializeField] protected bool isFriendly = false;
     [field: SerializeField] protected bool isAlive = true;
+    // SG:
+    // properties for figuringing out the player and whether its holding the boomerang respectively
+    [field: SerializeField] protected bool isPlayer = false;
+    [field: SerializeField] protected bool isHoldingBoomerang = true;
+
     static protected int globalStaticIDCounter = 0;
     protected int entityID; // Unique identifier for the specific instance of the entity, useful for tracking and managing entities in the game world.
 
@@ -33,12 +38,17 @@ public abstract class Entity : MonoBehaviour
     protected EntityType entityType;
     #endregion
 
+    // SG: are these necessary for properties with a setter?
     // Setters and Getters for encapsulation
+    public bool GetIsHoldingBoomerang() { return isHoldingBoomerang; }
+    public void SetIsHoldingBoomerang(bool value) { isHoldingBoomerang = value; }
     public void SetIsFriendly(bool value) { isFriendly = value; }
     public void SetEntityType(EntityType type) { entityType = type; }
     public EntityType GetEntityType() { return entityType; }
     public bool GetIsFriendly() { return isFriendly; }
     public void SetMaxLifeSpan(float value) { maxLifeSpan = value; }
+    public bool GetIsPlayer() { return isPlayer; }
+    public void SetIsPlayer(bool value) { isPlayer = value; }
     public void SetSpeed(float value) { speed = value; }
     public float GetSpeed() { return speed; }
     public float GetMovementTickTimer() { return movementTickTimer; }
@@ -94,6 +104,8 @@ public abstract class Entity : MonoBehaviour
         isAlive = true;
         currentHealth = original.maxHealth;
         spawnTime = Time.time;
+        isHoldingBoomerang = false;
+        isPlayer = false;
     }
 
     /// <summary>

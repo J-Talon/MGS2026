@@ -1,9 +1,9 @@
 // Authors: [Jacky, Jeremy, Mark]
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 using Event;
 using UnityEngine.InputSystem;
-using System.Linq;
 
 /// <summary>
 /// This script manages the grid system of the game.
@@ -63,6 +63,40 @@ public class GridManager : MonoBehaviour, IGridSystemView
     }
 
     /// <summary>
+    /// Does a linear search to find every entity unit matching a criteria
+    /// </summary>
+    /// <param name="position">XY coordinate of GridCell</param>
+    /// <returns>GridCell object</returns>
+    public List<(Vector2Int, EntityUnit)> FindAllEntities(Func<EntityUnit, bool> criteria)
+    {
+        var units_with = new List<(Vector2Int, EntityUnit)>();
+        
+        for (int x = state.XMin; x < state.XMax+1; x++) {
+            for (int y = state.YMin; y < state.YMax+1; y++) {
+                var pos = new Vector2Int(x, y);
+                var cell = state.Cells[pos];
+
+                if (cell.occupiedUnit != null && criteria.Invoke(cell.occupiedUnit))
+                {
+                    units_with.Add((pos, cell.occupiedUnit));
+                }
+            }
+        }
+
+        return units_with;
+    }
+
+    /// <returns>If coordinate exists within grid bounds</returns>
+    public bool WithinGrid(Vector2Int position) {
+        return state.XMin <= position.x && position.x <= state.XMax && state.YMin <= position.y && position.y <= state.YMax;
+    }
+
+    /// <returns>If coordinate exists within grid bounds</returns>
+    public bool WithinGridSmooth(Vector2 position) {
+        return state.XMin-0.5 < position.x && position.x < state.XMax + 0.5 && state.YMin-0.5 < position.y && position.y < state.YMax+0.5;
+    }
+
+    /// <summary>
     /// Function to get a entity at the given grid cell
     /// It is a wrapper function using GetTileAtPosition
     /// </summary>
@@ -81,6 +115,8 @@ public class GridManager : MonoBehaviour, IGridSystemView
 
         return null; //return null if either no units on cell or cell itself doesn't exist at the given position
     }
+
+    public 
 
     // Re-centre the camera and recolour every cell after the grid changes
     void Redraw()
