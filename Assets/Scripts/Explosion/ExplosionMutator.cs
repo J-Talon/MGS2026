@@ -20,7 +20,9 @@ See Explosion.cs
 /// </summary>
 public interface IExplosionMutator
 {
+    public void PreMutate(Explosion explosion);
     public void Mutate(Explosion explosion);
+    public void PostMutate(Explosion explosion);
 }
 
 /// <summary>
@@ -29,14 +31,8 @@ public interface IExplosionMutator
 public class MutatorDamageScale : IExplosionMutator
 {
     private readonly float _multiplier;
-
-    public MutatorDamageScale(float multiplier)
-    {
-        _multiplier = multiplier;
-    }
-
-    public void Mutate(Explosion explosion)
-    {
-        explosion.Damage *= _multiplier;
-    }
+    public MutatorDamageScale(float multiplier) { _multiplier = multiplier; }
+    public void PreMutate(Explosion explosion) { explosion.ExplosionVFX?.Play(ExplosionVFXStep.PreMutate, explosion.Cells); }
+    public void Mutate(Explosion explosion) { explosion.FinalDamage = explosion.Damage * _multiplier; }
+    public void PostMutate(Explosion explosion) { explosion.ExplosionVFX?.Play(ExplosionVFXStep.PostMutate, explosion.Cells); }
 }
