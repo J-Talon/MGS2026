@@ -51,7 +51,10 @@ public class TestExplosion : MonoBehaviour
             // Explosion.LASER_DOWN_1x2.Detonate(center);
 
             // Quad 1,1
-            Explosion.QUAD_3x3.Detonate(center);
+            // Explosion.QUAD_3x3.Detonate(center);
+
+            // EXPERIMENTAL
+            Explosion.TEST.Detonate(center);
 
             selectedCell = null;
         }

@@ -93,6 +93,12 @@ public class Explosion
 
     //==============================
     // Example presets. Call anywhere like so - `Explosion.QUAD_3x3.Detonate(center)`
+    public static readonly Explosion TEST = new Explosion(
+        new ExplosionPatternQuad(0, 0),
+        ExplosionVFX.TEST,
+        new MutatorDamageScale(2f),
+        1f
+    );
 
     public static readonly Explosion CROSS_3x3 = new Explosion(
         new ExplosionPatternCross(1, 1),
@@ -121,5 +127,4 @@ public class Explosion
         new MutatorDamageScale(2f),
         1f
     );
-
 }

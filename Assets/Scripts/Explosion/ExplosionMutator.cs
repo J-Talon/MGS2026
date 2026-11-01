@@ -32,7 +32,7 @@ public class MutatorDamageScale : IExplosionMutator
 {
     private readonly float _multiplier;
     public MutatorDamageScale(float multiplier) { _multiplier = multiplier; }
-    public void PreMutate(Explosion explosion) { explosion.ExplosionVFX?.Play(ExplosionVFXStep.PreMutate, explosion.Cells); }
+    public void PreMutate(Explosion explosion) { explosion.ExplosionVFX?.Play(ExplosionVFXStep.PreMutate, explosion); }
     public void Mutate(Explosion explosion) { explosion.FinalDamage = explosion.Damage * _multiplier; }
-    public void PostMutate(Explosion explosion) { explosion.ExplosionVFX?.Play(ExplosionVFXStep.PostMutate, explosion.Cells); }
+    public void PostMutate(Explosion explosion) { explosion.ExplosionVFX?.Play(ExplosionVFXStep.PostMutate, explosion); }
 }
