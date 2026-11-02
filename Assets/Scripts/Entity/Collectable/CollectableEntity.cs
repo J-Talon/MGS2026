@@ -69,8 +69,5 @@ public class CollectableEntity : Entity
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        base.Tick();
-    }
+    public override void Tick() { }
 }

@@ -73,3 +73,6 @@ crashlytics-build.properties
 
 #(jacky) ignore "obsidian" note taker application cache stuff
 .obsidian
+
+# the vscode folder stuff needa go, its annoying
+.vscode/
