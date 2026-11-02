@@ -1,4 +1,5 @@
 // Authors: [Jacky, Jeremy, Mark]
+// Added viewing the grid boundaries: -Wilson Nov 1 2026
 using UnityEngine;
 using System.Collections.Generic;
 using Event;
@@ -80,6 +81,31 @@ public class GridManager : MonoBehaviour, IGridSystemView
         }
 
         return null; //return null if either no units on cell or cell itself doesn't exist at the given position
+    }
+
+    /// <summary>
+    /// Function to get the bounds of the grid
+    /// </summary>
+    /// <returns>Bounds of the grid as a ValueTuple with the min and max bounds as Vector2Int: (Min Bounds, Max Bounds)</returns>
+    public (Vector2Int min, Vector2Int max) GetGridBounds()
+    {
+        return (new Vector2Int(state.XMin, state.YMin), new Vector2Int(state.XMax, state.YMax));
+    }
+
+    /// Function to get the bounds of the friendly grid
+    /// </summary>
+    /// <returns>Bounds of the grid as a ValueTuple with the min and max bounds as Vector2Int: (Min Bounds, Max Bounds)</returns>
+    public (Vector2Int min, Vector2Int max) GetFriendlyGridBounds()
+    {
+        return (new Vector2Int(state.XMin, state.YMin), new Vector2Int(state.Border, state.YMax));
+    }
+
+    /// Function to get the bounds of the enemy grid
+    /// </summary>
+    /// <returns>Bounds of the grid as a ValueTuple with the min and max bounds as Vector2Int: (Min Bounds, Max Bounds)</returns>
+    public (Vector2Int min, Vector2Int max) GetEnemyGridBounds()
+    {
+        return (new Vector2Int(state.Border + 1, state.YMin), new Vector2Int(state.XMax, state.YMax));
     }
 
     // Re-centre the camera and recolour every cell after the grid changes

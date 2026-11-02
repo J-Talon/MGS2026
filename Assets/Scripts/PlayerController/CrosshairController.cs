@@ -50,7 +50,7 @@ public class CrosshairController
 
     public void UpdatePosition(Vector2Int playerPos)
     {
-        if (crosshairTransform.position.y != playerPos.y)
+        if (Math.Abs(crosshairTransform.position.y - playerPos.y) > 0.01)
         {
             crosshair.MoveToSnappy(new Vector2(crosshairTransform.position.x, playerPos.y));
         }
@@ -59,7 +59,7 @@ public class CrosshairController
     // Moves the crosshair when grids are captured only if it lands on a friendly or null cell.
     public void UpdateOnGridCapture()
     {
-        // TODO: Implement this
+        // TODO: Implement this when grid capturing is added
     }
 
     // Moves crosshair left and right
@@ -72,33 +72,24 @@ public class CrosshairController
         Vector2 newPos = crosshairPos += dir;
 
         GridCell gridCell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(newPos));
+
+        // If we have reached the end of the enemy grid
         if (gridCell == null || gridCell.isFriendly)
         {
-            // Find the other side of the enemy grid.
-            // Iterates through the row until we reach the end (either its null or its friendly)
-            // THERE HAS TO BE A BETTER WAY OF DOING THIS. RIGHT NOW THE GRID MANAGER IS HIDING THE GRID STATE WHYYYYYYY???
-            // anyways I don't want to touch the grid manager, perhaps this gets fixed later
-            // TODO: maybe fix
+            var enemyBounds = gridManager.GetEnemyGridBounds();
 
-            Vector2Int testPos = Vector2Int.RoundToInt(crosshairPos);
-            Vector2Int step = -dir;
-
-            // scary do while loop. this CANNOT go wrong....
-            // Im scared
-            int iter = 100;
-            int count = 0;
-            do
+            if (dir == Vector2Int.right)
             {
-                count++;
-                testPos += step;
-                gridCell = gridManager.GetTileAtPosition(testPos + step);
-            } while ((count < iter) && ((gridCell && !gridCell.isFriendly) && (gridCell != null)));
-
-            crosshair.MoveToSnappy(testPos);
-        } 
-        else
-        {
-            crosshair.MoveToSnappy(newPos);
+                // Move to the left of the enemy grid boundary
+                newPos = new Vector2(enemyBounds.min.x ,newPos.y);
+            }
+            else
+            {
+                // Move to the right of the enemy grid boundary
+                newPos = new Vector2(enemyBounds.max.x ,newPos.y);
+            }
         }
+
+        crosshair.MoveToSnappy(newPos);
     }
 }

@@ -15,9 +15,6 @@ Some slight changes:
     - No factory script, it spawns the object here (Probably gonna change in the future oh well)
     - Added UniqueID assignment to the manager
 
-Sorry in advance if this architecture is horrible, I just needed something quick for the player's crosshair.
-If needed I'll scrap this entire thing and make the crosshair its own thing.
-
 @author Wilson (1oopy)
 */
 public class VisualEffectsManager
@@ -86,9 +83,12 @@ public class VisualEffectsManager
     If effect with matching type exists in pool, reset it and return it.
     Else create a new one and return it
     */
-    public VisualEffectBase GetVisualEffect(VFXType type, Vector3 position)
+    public VisualEffectBase GetVisualEffect(VFXType type, Vector3? initPosition = null, GameObject otherObject = null)
     {
+        Vector3 position = initPosition ?? Vector3.zero;
+
         VisualEffectBase vfx = null;
+        
         if (reservePool.ContainsKey(type) != true) //pool list for this specific effect doesn't even exist
         {
             reservePool.Add(type, new Queue<VisualEffectBase>());
@@ -106,13 +106,13 @@ public class VisualEffectsManager
             vfx = Object.Instantiate(prefabToSpawn, position, Quaternion.identity).GetComponent<VisualEffectBase>();
             Object.DontDestroyOnLoad(vfx); //ensure vfx that is part of pool system cannot be destroyed via scene change
 
-            vfx.Setup(type, (Vector2)position);
+            vfx.Setup(type, position, otherObject);
         }
         else
         { //can remove from pool, set up and return it
             vfx = reservePool[type].Dequeue();
             
-            vfx.Setup(type, (Vector2)position);
+            vfx.Setup(type, position, otherObject);
         }
 
         //Debug.Log("adding " + entity.GetEntityID());

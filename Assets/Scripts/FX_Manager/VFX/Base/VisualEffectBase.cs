@@ -3,15 +3,13 @@ using UnityEngine;
 /*
 Abstract base class for vfx
 Should not allow other functions to run in its entirety without Setup being ran once
+
 TODO: Materials, Movement behaviours
 
 @author Wilson (1oopy)
 */
 public abstract class VisualEffectBase : MonoBehaviour
 {
-    // References
-    protected VFXBehaviour vfxBehaviour;
-
     // Materials
     protected Renderer[] activeRenderers;
     protected Renderer[] selfRenderers; // if you want to change the effect materials go ahead
@@ -26,74 +24,61 @@ public abstract class VisualEffectBase : MonoBehaviour
 
     public int GetVFXID() {return _vfxID;}
     public VFXType GetVFXType() {return _effectType;}
+    public Renderer[] GetActiveRenderers() {return activeRenderers;}
+    public void SetActiveRenderers(Renderer[] renderers) {activeRenderers = renderers;} 
 
     protected virtual void Awake()
     {
         // Set up reference to self renderers
         selfRenderers = GetComponentsInChildren<Renderer>();
         // Make a new material property block
-        _propBlock = new MaterialPropertyBlock();
+        _propBlock = GetPropBlock();
     }
 
-    public virtual void Setup(VFXType effectType, Vector2 initPosition)
+    // Set up
+    // Pass an object reference through to set the vfx active renderer to the objects.
+    public virtual void Setup(VFXType effectType, Vector2 initPosition, GameObject otherObject = null)
     {
+        // reset
+        Reset();
+
         // assign a unique id on setup
         _vfxID = VisualEffectsManager.GetUniqueID();
 
         _effectType = effectType;
         _initPosition = initPosition; // stored just in case
 
-        // Get the behaviour of the VFX
-        vfxBehaviour = GetComponent<VFXBehaviour>();
-        if (vfxBehaviour == null) // fallback
+        if (otherObject != null)
         {
-            vfxBehaviour = gameObject.AddComponent<VFXSimple>();
+            // Set to change other object material
+            activeRenderers = otherObject.GetComponentsInChildren<Renderer>();
         }
-
-        // Default to setting its on materials
-        activeRenderers = selfRenderers;
-
+        else
+        {
+            // Default to setting its on materials
+            activeRenderers = selfRenderers;  
+        }
+        
         gameObject.transform.position = initPosition;
 
         ready = true;
     }
 
-    // Target some other objects materials (overloaded)
-    public virtual void Setup(VFXType effectType, GameObject otherObject)
-    {
-        // assign a unique id on setup
-        _vfxID = VisualEffectsManager.GetUniqueID();
-
-        _effectType = effectType;
-        _initPosition = otherObject.transform.position;
-
-         // Get the behaviour of the VFX
-        vfxBehaviour = GetComponent<VFXBehaviour>();
-        if (vfxBehaviour == null) // fallback
-        {
-            vfxBehaviour = gameObject.AddComponent<VFXSimple>();
-        }
-
-        activeRenderers = otherObject.GetComponentsInChildren<Renderer>();
-
-        gameObject.transform.position = _initPosition;
-
-        ready = true;
-    }
-
-    public virtual void Play()
+    public void Play()
     {
         if (!ready) {return;}
-        vfxBehaviour.onPlay();
         playing = true;
+        OnPlay();
     }
-
-    public virtual void Stop()
+    public void Stop()
     {
         if (!ready) {return;}
-        vfxBehaviour.onStop();
-        Reset();
+        playing = false;
+        OnStop();
     }
+
+    protected abstract void OnPlay();
+    protected abstract void OnStop();
 
     public virtual void Reset()
     {
@@ -111,8 +96,14 @@ public abstract class VisualEffectBase : MonoBehaviour
         activeRenderers = null;
     }
 
+    protected virtual MaterialPropertyBlock GetPropBlock()
+    {
+        MaterialPropertyBlock propBlock = new MaterialPropertyBlock();
+        return propBlock;
+    }
+
     // TODO
-    // Applies mater
+    // Applies material
     // public void ApplyMaterial()
 
     // Im sorry. I will not implement all movement types.
@@ -124,4 +115,7 @@ public abstract class VisualEffectBase : MonoBehaviour
         if (!ready) {return;}
         gameObject.transform.position = newPos;
     }
+
+    // Tick function
+    protected virtual void Tick(){}
 }

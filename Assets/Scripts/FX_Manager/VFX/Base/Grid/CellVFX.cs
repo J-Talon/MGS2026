@@ -13,7 +13,7 @@ public class CellVFX : VisualEffectBase
 
     // Attempts to set up a VFX on a grid.
     // Fails if the initial position does not have a grid cell present there.
-    public override void Setup(VFXType effectType, Vector2 initPosition)
+    public override void Setup(VFXType effectType, Vector2 initPosition, GameObject otherObject = null)
     {
         Vector2Int fixedPos = Vector2Int.RoundToInt(initPosition);
         GridCell gridCell = gridManager.GetTileAtPosition(fixedPos);
@@ -24,17 +24,17 @@ public class CellVFX : VisualEffectBase
             return;
         }
 
-        base.Setup(effectType, initPosition);
+        base.Setup(effectType, initPosition, otherObject);
     }
 
-    public override void Play()
+    protected override void OnPlay()
     {
-        base.Play();
+        gameObject.SetActive(true);
     }
 
-    public override void Stop()
+    protected override void OnStop()
     {
-        base.Stop();
+        gameObject.SetActive(false);
     }
 
     // Attempts to find a grid cell present at the newPos location and move to it.
