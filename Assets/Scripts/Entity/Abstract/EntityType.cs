@@ -5,7 +5,7 @@ public enum EntityClassification
 {
     Projectile,
     Unit,
-    collectable
+    Collectable
 }
 
 public class EntityType
@@ -37,6 +37,11 @@ public class EntityType
                 if (_prefab.GetComponent<EntityProjectile>() == null) 
                     throw new MissingComponentException("[EntityType] Entities of type Projectile must have a class extending from type EntityProjectile:" + assetPath);
                 break;
+
+            case EntityClassification.Collectable:
+                if (_prefab.GetComponent<CollectableEntity>() == null) 
+                    throw new MissingComponentException("[EntityType] Entities of type Projectile must have a class extending from type CollectableEntity:" + assetPath);
+                break;
             
             default:
                 throw new MissingComponentException(
@@ -60,5 +65,5 @@ public class EntityType
     public static readonly EntityType ProjectileTestZiggedSmooth = new EntityType("Entity/Projectile/Prefabs/ProjectileTestZiggedSmooth", EntityClassification.Projectile);
 
     // Example of predefined collectable type.
-    public static readonly EntityType CollectableTest = new EntityType("Entity/Collectable/Prefabs/TestCollectable", EntityClassification.collectable);
+    public static readonly EntityType CollectableTest = new EntityType("Entity/Collectable/Prefabs/TestCollectable", EntityClassification.Collectable);
 }
