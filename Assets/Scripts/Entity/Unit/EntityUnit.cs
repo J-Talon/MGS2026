@@ -1,12 +1,28 @@
 // Authors: [Jacky, Jeremy, Mark]
-using System;
+
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
 /// Base unit class. Will make use of composition for specific behaviours
 /// </summary>
-public class EntityUnit : Entity, IUnitMoveSnappy, IUnitMoveSmooth
+public class EntityUnit : Entity, IUnitMoveSnappy, IUnitMoveSmooth, IUnitFire
 {
+    /// <summary>
+    /// Validates passed in firing data then creates projectile from factory
+    /// </summary>
+    /// <param name="deltaFiringPosition">The relative firing position to the unit</param>
+    /// <param name="projectileType">actual unit to spawn</param>
+    public void FireProjectile(Vector2Int deltaFiringPosition, EntityType projectileType)
+    {
+        Vector2 firePos = gameObject.transform.position + (Vector3Int)deltaFiringPosition;
+        IGridSystemView gridManager = GridManager.instance;
+        GridCell newCell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(firePos));
+        if (newCell != null) //new cell exists
+            EntityManager.GetInstance().GetEntity(projectileType, new Vector3(firePos.x, firePos.y, -1), isFriendly);
+        
+    }
+
     /// <summary>
     /// Implementation of continuous movement
     /// </summary>
@@ -18,13 +34,13 @@ public class EntityUnit : Entity, IUnitMoveSnappy, IUnitMoveSmooth
 
     /// <summary>
     /// Implementation of snappy based movement (int)
-    /// 
-    /// also registers self to grid cell while also preventing movement if new grid cell is occupied 
-    /// 
+    /// also registers self to grid cell while also preventing movement if new grid cell is occupied
     /// To account for possible 0 delta movement, unregistration is done first to grid cell before registration to avoid unit accidentlaly unoccuppying its current cell
+    ///
+    /// Talon J: Add return true or false for whether the movement was successful
     /// </summary>
     /// <param name="deltaMovement"></param>
-    public void MoveUnitSnappy(Vector2Int deltaMovement)
+    public bool MoveUnitSnappy(Vector2Int deltaMovement)
     {
         Vector2 oldPos = gameObject.transform.position;
         Vector2 newPos = gameObject.transform.position + (Vector3Int)deltaMovement;
@@ -37,6 +53,7 @@ public class EntityUnit : Entity, IUnitMoveSnappy, IUnitMoveSmooth
 
             newCell.EntityUnitOccupy(this); //register self to new cell
             gameObject.transform.position = newPos;
+            return true;
 
             /*
             //debugging code for ensuring new and old cells change occupation status
@@ -46,10 +63,7 @@ public class EntityUnit : Entity, IUnitMoveSnappy, IUnitMoveSmooth
             Debug.Log("-----");
             */
         }
-        else
-        {
-            //do nothing ig
-        }
+        return false;
 
     }
 
@@ -75,9 +89,5 @@ public class EntityUnit : Entity, IUnitMoveSnappy, IUnitMoveSmooth
         //Debug.Log(cell.isOccupied);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        base.Tick();
-    }
+    public override void Tick() { }
 }

@@ -1,6 +1,7 @@
 // Authors: [Jacky, Jeremy, Mark]
 using UnityEngine;
 
+[System.Obsolete("This script is deprecated. Use methods found in EntityUnit")]
 public class UnitMoveSnappyRandom : UnitMoveSnappy
 {
     readonly IGridSystemView gridView = GridManager.instance;

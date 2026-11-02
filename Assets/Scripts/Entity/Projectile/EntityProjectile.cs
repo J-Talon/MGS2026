@@ -31,9 +31,18 @@ public class EntityProjectile : Entity, IProjectileMoveGrid, IProjectileMoveSmoo
         base.Start();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Tick()
     {
-        base.Tick();
+        if (maxLifeSpan > 0f && Time.time - spawnTime >= maxLifeSpan)
+        {
+            Die();
+        }
     }
+
+
+    // // Update is called once per frame
+    // void Update()
+    // {
+    //     base.Tick();
+    // }
 }

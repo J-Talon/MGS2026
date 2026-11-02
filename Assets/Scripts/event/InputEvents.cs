@@ -12,7 +12,7 @@ using UnityEngine.InputSystem;
 /// by forwarding input actions to GameplayEvents.
 /// </summary>
 public class InputEvents : MonoBehaviour
-{
+{ 
     private InputSystemActions m_InputManager;
     public static InputEvents Instance { get; private set; }
     

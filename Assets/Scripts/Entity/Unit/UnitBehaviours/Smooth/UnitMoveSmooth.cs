@@ -5,6 +5,7 @@ using UnityEngine;
 /// Base class for smooth movement behaviour of units. This class is intended to be inherited by specific movement behaviour implementations.
 /// </summary>
 [RequireComponent(typeof(EntityUnit))]
+[System.Obsolete("This script is deprecated. Use methods found in EntityUnit")]
 public abstract class UnitMoveSmooth : MonoBehaviour
 {
     protected EntityUnit parentUnit;

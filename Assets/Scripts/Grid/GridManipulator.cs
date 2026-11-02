@@ -197,9 +197,11 @@ public class GridManipulator : IGridSystemControl
         GridCell newCell = Object.Instantiate(cellPrefab, new Vector3(x, y, 0), Quaternion.identity, cellContainer);
         // Name the cell for easier identification in the hierarchy
         newCell.name = $"GridCell_{x}_{y}";
+        Vector2Int position = new Vector2Int(x, y);
+        newCell.SetCellPosition(position);
         newCell.isFriendly = x <= state.Border;
         // Store the cell in the grid cells dictionary for easy access later
-        state.Cells[new Vector2Int(x, y)] = newCell;
+        state.Cells[position] = newCell;
     }
 
     // Destroy a single grid cell at the given coordinate, if it exists
