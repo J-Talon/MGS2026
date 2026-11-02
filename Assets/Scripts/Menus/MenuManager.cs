@@ -88,7 +88,6 @@ public class MenuManager : MonoBehaviour
         foreach (InputAction movementAction in movementDirections.Keys)
         {
             movementAction.performed += OnMove;
-            movementAction.canceled += OnMove;
         }
         m_UIManager.UI.Submit.performed += HandleSubmit;
         m_UIManager.UI.Cancel.performed += HandleCancel;
@@ -108,7 +107,7 @@ public class MenuManager : MonoBehaviour
         m_UIManager.UI.Cancel.performed -= HandleCancel;
 
         InputEvents.Instance.OnEnable();
-        m_UIManager.Disable();
+      //  m_UIManager.Disable();
     }
 
 
