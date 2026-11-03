@@ -1,37 +1,44 @@
 // Authors: [Jacky, Jeremy, Mark]
 // using UnityEditor.Experimental.GraphView; - This does not allow the game to build for some reason. - Wilson
+
+using System;
 using UnityEngine;
 
-/// <summary>
-/// abstract class for projectile movement behaviour. Used abstract due to common stuff for all projectile movements (i.e timer tracking between movements)
-/// TEST BEHAVIOUR FOR CHECKING ARCHITECTURE
-/// </summary>
-public abstract class ProjectileMoveSmooth : MonoBehaviour
+namespace Entity.Projectile.ProjectileBehaviours.ProjectileMove.Smooth
 {
     /// <summary>
-    /// reference for controlling the projectile
+    /// abstract class for projectile movement behaviour. Used abstract due to common stuff for all projectile movements (i.e timer tracking between movements)
+    /// TEST BEHAVIOUR FOR CHECKING ARCHITECTURE
     /// </summary>
-    protected EntityProjectile parentProjectile;
 
-    /// <summary>
-    /// Setup internal cooldown tracker and interface getting
-    /// </summary>
-    void Start()
+    [Obsolete]
+    public abstract class ProjectileMoveSmooth : MonoBehaviour
     {
-        parentProjectile = GetComponent<EntityProjectile>();
-    }
+        /// <summary>
+        /// reference for controlling the projectile
+        /// </summary>
+        protected EntityProjectile parentProjectile;
 
-    /// <summary>
-    /// Main loop, decrements timer when still on movement cooldown
-    /// Else, resets timer then calls the actual movement behaviour defined in a actual concrete class
-    /// </summary>
-    void Update()
-    {
-        parentProjectile.MoveProjectileSmooth(MovementRoutine());
-    }
+        /// <summary>
+        /// Setup internal cooldown tracker and interface getting
+        /// </summary>
+        void Start()
+        {
+            parentProjectile = GetComponent<EntityProjectile>();
+        }
 
-    /// <summary>
-    /// The actual movement behaviour to be implemented in a concrete class implementation.
-    /// </summary>
-    protected abstract Vector2 MovementRoutine();
+        /// <summary>
+        /// Main loop, decrements timer when still on movement cooldown
+        /// Else, resets timer then calls the actual movement behaviour defined in a actual concrete class
+        /// </summary>
+        void Update()
+        {
+            parentProjectile.MoveProjectileSmooth(MovementRoutine());
+        }
+
+        /// <summary>
+        /// The actual movement behaviour to be implemented in a concrete class implementation.
+        /// </summary>
+        protected abstract Vector2 MovementRoutine();
+    }
 }

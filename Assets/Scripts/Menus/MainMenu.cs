@@ -14,6 +14,8 @@ public class MainMenu : BaseMenu
     // attach the button objects in the inspector to these
      [Header("Button References")]
     [SerializeField] private Button playButton;
+    [SerializeField] private Button settingsButton;
+    [SerializeField] private Button creditsButton;
     [SerializeField] private Button quitButton;
 
     //starting index
@@ -28,12 +30,13 @@ public class MainMenu : BaseMenu
         base.Awake();
 
         //attach any new buttons the this array (be aware of the order for the HandleNavigate method)
-        buttons = new[] { playButton, quitButton};
+        buttons = new[] { playButton, settingsButton, creditsButton, quitButton};
 
 
         // attach a click action to the button to do what is in the method
         playButton.onClick.AddListener(OnPlay);
-        //EXAMPLE: settingsButton.onClick.AddListener(OpenSettings);
+        settingsButton.onClick.AddListener(OpenSettings);
+        creditsButton.onClick.AddListener(OpenCredits);
         quitButton.onClick.AddListener(OnQuit);
     }
 
@@ -71,11 +74,11 @@ public class MainMenu : BaseMenu
     {
         if (direction.y > 0.5f) //up
         {
-            selectedIndex = 0; 
+            selectedIndex = (selectedIndex - 1 + buttons.Length) % buttons.Length;
         }
         else if (direction.y < -0.5f) //down
         {
-            selectedIndex = 1;
+            selectedIndex =  (selectedIndex + 1) % buttons.Length;
         }
         else if (direction.x > 0.5f) //right
         {
@@ -117,13 +120,17 @@ public class MainMenu : BaseMenu
     }
 
 
-
-    /* EXAMPLE
    private void OpenSettings()
     {
         Debug.Log("Opening settings menu...");
         MenuManager.Instance.OpenSettings();
-    }*/
+    }
+
+    private void OpenCredits()
+    {
+        Debug.Log("Opening credits menu...");
+        MenuManager.Instance.OpenCredits();
+    }
 
     //play button
     private void OnPlay()

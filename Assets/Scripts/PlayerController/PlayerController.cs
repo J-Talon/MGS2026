@@ -2,6 +2,9 @@
 // edited by - Jordan October 14, 2026
 // Edit by Jeremy October 15, 2026
 // edited by - Wilson October 25, 2026
+
+using Entity.Spells;
+using Entity.Unit;
 using Event;
 
 using System;
@@ -9,6 +12,8 @@ using Particle.Base;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEngine.Rendering.DebugUI;
+using System;
+using System.Collections.Generic;
 
 /// <summary>
 /// This script manages the player controller, handling player input and movement within the game.
@@ -19,11 +24,16 @@ public class PlayerController : MonoBehaviour
     protected EntityUnit parentUnit;
     protected CrosshairController crosshairController;
     private float movementCooldownTimer = 0f; //a timer that actually keeps track of the remaining time before the next movement
-
+    
+    //temporary for now
+    private SpellManager spellManager; //todo remove
+    
+    
     void Start()
     {
         parentUnit = GetComponent<EntityUnit>();
         crosshairController = new CrosshairController(new Vector2(5,0));
+        spellManager = new  SpellManager();  //you don't need a monobehaviour for everything you know
     }
 
     //holds the direction for a buffered movement (if it exists).
@@ -37,6 +47,9 @@ public class PlayerController : MonoBehaviour
         GameplayEvents.Input.moveReleased.AddEventListener(OnMoveReleased);
         GameplayEvents.Input.crosshairLeftPressed.AddEventListener(OnCrosshairLeft);
         GameplayEvents.Input.crosshairRightPressed.AddEventListener(OnCrosshairRight);
+        
+        GameplayEvents.Input.spell1Pressed.AddEventListener(this.OnSpell1);  //todo remove
+        GameplayEvents.Input.spell2Pressed.AddEventListener(this.OnSpell2);
     }
 
     //unsubscribe the events
@@ -46,6 +59,10 @@ public class PlayerController : MonoBehaviour
         GameplayEvents.Input.moveReleased.RemoveEventListener(OnMoveReleased);
         GameplayEvents.Input.crosshairLeftPressed.RemoveEventListener(OnCrosshairLeft);
         GameplayEvents.Input.crosshairRightPressed.RemoveEventListener(OnCrosshairRight);
+        
+        GameplayEvents.Input.spell1Pressed.AddEventListener(this.OnSpell1);  //todo remove
+        GameplayEvents.Input.spell2Pressed.AddEventListener(this.OnSpell2);
+        
         bufferedMovement = null;
     }
 
@@ -58,6 +75,22 @@ public class PlayerController : MonoBehaviour
         GameplayEvents.Input.crosshairRightPressed.RemoveEventListener(OnCrosshairRight);
         bufferedMovement = null;
     }
+
+  
+
+    //todo remove
+    //this is temporary; remove when true architecture is out
+    void OnSpell1(System.ValueTuple _) {  //beware of Widget.ValueTuple
+        spellManager.onSpell1(parentUnit);
+    }
+
+    private void OnSpell2(System.ValueTuple _) {
+        spellManager.onSpell2(parentUnit);
+    }
+
+
+
+
 
     //added by Jordan
     private void Update()
@@ -82,6 +115,8 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void OnMovePressed(Vector2Int moveDir)
     {
+        
+
         //movementCooldownTimer and buffer stuff added by Jordan
 
         //player inputs a buffered movement (aka pressing and holding a movement during movement cooldown)
@@ -104,6 +139,7 @@ public class PlayerController : MonoBehaviour
             parentUnit.MoveUnitSnappy(newPosition - currentPosition); // Move the player to the new position
             crosshairController.UpdatePosition(newPosition); // update the crosshair position
         }
+
     }
 
     //added by Jordan
