@@ -3,7 +3,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
-using Entity.Unit;
+using Entities.Unit;
 using Event;
 using JetBrains.Annotations;
 using UnityEngine.InputSystem;

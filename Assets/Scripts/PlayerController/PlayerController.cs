@@ -3,17 +3,11 @@
 // Edit by Jeremy October 15, 2026
 // edited by - Wilson October 25, 2026
 
-using Entity.Spells;
-using Entity.Unit;
 using Event;
 
-using System;
-using Particle.Base;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using static UnityEngine.Rendering.DebugUI;
-using System;
-using System.Collections.Generic;
+using Entities.Spells;
+using Entities.Unit;
 
 /// <summary>
 /// This script manages the player controller, handling player input and movement within the game.

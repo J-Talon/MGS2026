@@ -1,7 +1,8 @@
 // Authors: [Jacky, Jeremy, Mark]
 // Added collectable entity occupation - Wilson October 26 2026
 
-using Entity.Unit;
+using Entities.Collectable;
+using Entities.Unit;
 using UnityEngine;
 
 /// </summary>

@@ -1,4 +1,5 @@
 using System.IO;
+using FX_Manager.VFX.Base;
 using UnityEngine;
 
 /*
@@ -9,27 +10,30 @@ The VFX can include particles in them!
 
 @author Wilson (1oopy)
 */
-public class VFXType
+namespace FX_Manager.VFX
 {
-    private readonly string _assetPath;
-    private readonly GameObject _prefab;
-
-    public VFXType(string assetPath)
+    public class VFXType
     {
-        _assetPath = assetPath;
-        _prefab = Resources.Load<GameObject>(assetPath);
+        private readonly string _assetPath;
+        private readonly GameObject _prefab;
+
+        public VFXType(string assetPath)
+        {
+            _assetPath = assetPath;
+            _prefab = Resources.Load<GameObject>(assetPath);
         
-        // Yells at you
-        if (_prefab == null) 
-            throw new FileNotFoundException("Could not find the VFX asset:"+assetPath);
+            // Yells at you
+            if (_prefab == null) 
+                throw new FileNotFoundException("Could not find the VFX asset:"+assetPath);
             
-        if (_prefab.GetComponent<VisualEffectBase>() == null)
-            throw new MissingComponentException("The particle asset "+assetPath+" must have a visual effect component");
+            if (_prefab.GetComponent<VisualEffectBase>() == null)
+                throw new MissingComponentException("The particle asset "+assetPath+" must have a visual effect component");
+        }
+
+        public string GetAssetPath() {return _assetPath;}
+        public GameObject GetPrefab() { return _prefab; }
+
+        // TYPES add more if needed
+        public static readonly VFXType GridPersistent = new VFXType("VFX/Prefabs/GridPersistent");
     }
-
-    public string GetAssetPath() {return _assetPath;}
-    public GameObject GetPrefab() { return _prefab; }
-
-    // TYPES add more if needed
-    public static readonly VFXType GridPersistent = new VFXType("VFX/Prefabs/GridPersistent");
 }

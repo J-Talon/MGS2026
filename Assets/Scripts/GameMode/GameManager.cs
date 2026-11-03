@@ -1,7 +1,8 @@
 // Authors: [Jacky, Jeremy, Mark]
 
-using Entity.Abstract;
-using Entity.Unit;
+using Entities.Abstract;
+using Entities.Collectable;
+using Entities.Unit;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
