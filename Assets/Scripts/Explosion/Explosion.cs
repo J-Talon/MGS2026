@@ -1,5 +1,6 @@
 // Author: Jeremy
 using System.Collections.Generic;
+using Entity.Unit;
 using JetBrains.Annotations;
 using UnityEngine;
 
@@ -22,7 +23,7 @@ public class Explosion
 
     public ExplosionVFX ExplosionVFX { get; }
     public Vector2Int Center { get; set; }
-    [CanBeNull] public Entity Source { get; }
+    [CanBeNull] public Entity.Abstract.Entity Source { get; }
 
     // Exposed so mutators can modify them before damage is applied
     public List<GridCell> Cells { get; } = new();
@@ -30,7 +31,7 @@ public class Explosion
     public float Damage { get; set; }
     public float FinalDamage { get; set; }
 
-    public Explosion(ExplosionPattern pattern, ExplosionVFX explosionVFX, IExplosionMutator mutator, float damage, [CanBeNull] Entity source = null)
+    public Explosion(ExplosionPattern pattern, ExplosionVFX explosionVFX, IExplosionMutator mutator, float damage, [CanBeNull] Entity.Abstract.Entity source = null)
     {
         _pattern = pattern;
         _mutator = mutator;

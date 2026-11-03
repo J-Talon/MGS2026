@@ -1,4 +1,7 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System;
+using Entity.Unit;
 
 /// <summary>
 /// Interface for grid system. Contains definitions for viewing current grid system state
@@ -19,4 +22,20 @@ public interface IGridSystemView
     /// <param name="position">Vector2Int position (should ensure its within current grid size</param>
     /// <returns>Entity if one exists there (using a snappy movement type), null otherwise</returns>
     EntityUnit GetEntityAtTilePosition(Vector2Int position);
+    
+    /// <summary>
+    /// Does a linear search to find every entity matching a criteria
+    /// </summary>
+    /// <param name="position">XY coordinate of GridCell</param>
+    /// <returns>GridCell object</returns>
+    List<(Vector2Int, EntityUnit)> FindAllEntities(Func<EntityUnit, bool> criteria);
+    
+    /// <summary>
+    /// </summary>
+    /// <returns>If coordinate exists within grid bounds</returns>
+    bool WithinGrid(Vector2Int position);
+
+
+    /// <returns>If coordinate exists within grid bounds</returns>
+    bool WithinGridSmooth(Vector2 position);
 }

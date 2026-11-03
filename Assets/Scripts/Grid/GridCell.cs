@@ -1,4 +1,6 @@
 // Authors: [Jacky, Jeremy, Mark]
+
+using Entity.Unit;
 using UnityEngine;
 
 /// </summary>
@@ -51,7 +53,6 @@ public class GridCell : MonoBehaviour
     /// <summary>
     /// Updates the texture of the cell based on its state (friendly or enemy) and whether it is offset.
     /// </summary>
-    /// <param name="isOffset">Indicates whether the cell is offset.</param>
     public void EntityUnitOccupy(EntityUnit unit)
     {
         occupiedUnit = unit;
@@ -61,7 +62,6 @@ public class GridCell : MonoBehaviour
     /// <summary>
     /// Updates the texture of the cell based on its state (friendly or enemy) and whether it is offset.
     /// </summary>
-    /// <param name="isOffset">Indicates whether the cell is offset.</param>
     public void EntityUnitLeave()
     {
         occupiedUnit = null;
