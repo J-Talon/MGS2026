@@ -1,24 +1,30 @@
 // Authors: [Jacky, Jeremy, Mark]
+
+using System;
 using UnityEngine;
 
-/// <summary>
-/// Implements linear movement behaviour (in a line)
-/// Switches direction based on fired projectile friendly status
-/// </summary>
-public class ProjectileMoveLinearSmooth : ProjectileMoveSmooth
+namespace Entity.Projectile.ProjectileBehaviours.ProjectileMove.Smooth
 {
-    protected override Vector2 MovementRoutine()
+    /// <summary>
+    /// Implements linear movement behaviour (in a line)
+    /// Switches direction based on fired projectile friendly status
+    /// </summary>
+    [Obsolete]
+    public class ProjectileMoveLinearSmooth : ProjectileMoveSmooth
     {
-        Vector2 deltaVector = new Vector2(0, 0);
-        if (parentProjectile.GetIsFriendly() == true)
+        protected override Vector2 MovementRoutine()
         {
-            deltaVector.x += parentProjectile.GetSpeed() * Time.deltaTime;
+            Vector2 deltaVector = new Vector2(0, 0);
+            if (parentProjectile.GetIsFriendly() == true)
+            {
+                deltaVector.x += parentProjectile.GetSpeed() * Time.deltaTime;
+            }
+            else
+            {
+                deltaVector.x -= parentProjectile.GetSpeed() * Time.deltaTime;
+            }
+            return deltaVector;
         }
-        else
-        {
-            deltaVector.x -= parentProjectile.GetSpeed() * Time.deltaTime;
-        }
-        return deltaVector;
-    }
 
+    }
 }

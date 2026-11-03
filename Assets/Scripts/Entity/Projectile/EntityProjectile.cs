@@ -1,48 +1,46 @@
 // Authors: [Jacky, Jeremy, Mark]
+
+using Entity.Projectile.Interfaces;
 using UnityEngine;
 
-/// <summary>
-/// Base projectile class. Will make use of composition for specific behaviours
-/// </summary>
-public class EntityProjectile : Entity, IProjectileMoveGrid, IProjectileMoveSmooth
+namespace Entity.Projectile
 {
     /// <summary>
-    /// Implementation of continuous movement
+    /// Base projectile class. Will make use of composition for specific behaviours
     /// </summary>
-    /// <param name="deltaMovement"></param>
-    public void MoveProjectileSmooth(Vector2 deltaMovement)
+    public class EntityProjectile : Abstract.Entity, IProjectileMoveGrid, IProjectileMoveSmooth
     {
-        gameObject.transform.position = gameObject.transform.position + (Vector3)deltaMovement;
-    }
-
-    /// <summary>
-    /// Implementation of grid based movement (int)
-    /// </summary>
-    /// <param name="deltaMovement"></param>
-    public void MoveProjectileGridSnap(Vector2Int deltaMovement)
-    {
-        gameObject.transform.position = gameObject.transform.position + (Vector3Int)deltaMovement;
-        //call validation method here or smth
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    new void Start()
-    {
-        base.Start();
-    }
-
-    public override void Tick()
-    {
-        if (maxLifeSpan > 0f && Time.time - spawnTime >= maxLifeSpan)
+        /// <summary>
+        /// Implementation of continuous movement
+        /// </summary>
+        /// <param name="deltaMovement"></param>
+        public void MoveProjectileSmooth(Vector2 deltaMovement)
         {
-            Die();
+            gameObject.transform.position = gameObject.transform.position + (Vector3)deltaMovement;
+        }
+
+        /// <summary>
+        /// Implementation of grid based movement (int)
+        /// </summary>
+        /// <param name="deltaMovement"></param>
+        public void MoveProjectileGridSnap(Vector2Int deltaMovement)
+        {
+            gameObject.transform.position = gameObject.transform.position + (Vector3Int)deltaMovement;
+            //call validation method here or smth
+        }
+        
+        
+
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        public override void OnStart() { }
+
+
+        public override void Tick()
+        {
+            if (maxLifeSpan > 0f && Time.time - spawnTime >= maxLifeSpan)
+            {
+                Die();
+            }
         }
     }
-
-
-    // // Update is called once per frame
-    // void Update()
-    // {
-    //     base.Tick();
-    // }
 }

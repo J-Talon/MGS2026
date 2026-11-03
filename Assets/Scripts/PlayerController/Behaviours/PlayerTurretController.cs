@@ -1,5 +1,7 @@
 // Authors: [Jacky]
 using System;
+using Entity.Abstract;
+using Entity.Unit;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using Entity.Unit;
 
 /// <summary>
 /// Interface for grid system. Contains definitions for viewing current grid system state

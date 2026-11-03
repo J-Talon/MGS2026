@@ -2,7 +2,9 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using Entity.Unit;
 using Event;
+using JetBrains.Annotations;
 using UnityEngine.InputSystem;
 
 /// <summary>
@@ -62,11 +64,7 @@ public class GridManager : MonoBehaviour, IGridSystemView
         return null; // Return null if the position is out of bounds
     }
 
-    /// <summary>
-    /// Does a linear search to find every entity unit matching a criteria
-    /// </summary>
-    /// <param name="position">XY coordinate of GridCell</param>
-    /// <returns>GridCell object</returns>
+    
     public List<(Vector2Int, EntityUnit)> FindAllEntities(Func<EntityUnit, bool> criteria)
     {
         var units_with = new List<(Vector2Int, EntityUnit)>();
@@ -115,11 +113,10 @@ public class GridManager : MonoBehaviour, IGridSystemView
 
         return null; //return null if either no units on cell or cell itself doesn't exist at the given position
     }
-
-    public 
+    
 
     // Re-centre the camera and recolour every cell after the grid changes
-    void Redraw()
+    public void Redraw()
     {
         CenterCamera();
         UpdateGridTextures();
@@ -188,20 +185,5 @@ public class GridManager : MonoBehaviour, IGridSystemView
         eventHandler?.Unsubscribe();
         instance = null;
     }
-
-    /*
-    //debug stuff
-    void Update()
-    {
-        if (Keyboard.current.uKey.wasReleasedThisFrame)
-        {
-            for (int i = 0; i < state.Cells.Count; i = i + 1)
-            {
-                var a = state.Cells.Values.ToList()[i];
-                var b = state.Cells.Values.ToList()[i].isOccupied;
-                Debug.Log($"{a} + {b}");
-            }
-        }
-    }
-    */
+    
 }
