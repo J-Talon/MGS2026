@@ -1,6 +1,9 @@
 // Authors: [Jacky, Jeremy, Mark]
 // Added collectable entity check - Wilson October 26 2026
 
+using System;
+using System.Collections.Generic;
+using Effect.Abstract;
 using Entities.Abstract;
 using Entities.Collectable;
 using Entities.Unit.Behaviour.Interfaces;
@@ -14,6 +17,17 @@ namespace Entities.Unit
     /// </summary>
     public class EntityUnit : Abstract.Entity, IUnitMoveSnappy, IUnitMoveSmooth, IUnitFire
     {
+        
+        protected List<EntityEffect> effects;
+        
+        public override void OnStart()
+        {
+            effects = new List<EntityEffect>();
+            IGridSystemView gridManager = GridManager.instance;   
+            GridCell cell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(gameObject.transform.position));
+            cell.EntityUnitOccupy(this); //register self to new cell
+        }
+
         
         
         /// <summary>
@@ -49,6 +63,22 @@ namespace Entities.Unit
             Vector2Int rounded = Vector2Int.RoundToInt(pos);
             return GridManager.instance.GetTileAtPosition(rounded);
         }
+        
+        
+        
+        public sealed override bool TakeDamage(float damage)  
+        {
+            if (!isAlive || isInvulnerable || damage <= 0f) return false;
+            currentHealth -= damage;
+            if (currentHealth <= 0f) Die();
+            return true;
+        }
+
+
+        public virtual bool TakeDamage(float damage, [CanBeNull] Entity source)
+        {
+            return this.TakeDamage(damage);
+        }
 
 
         /// <summary>
@@ -82,16 +112,7 @@ namespace Entities.Unit
             }
             return false;
         }
-
-
-
-        public override void OnStart()
-        {
-            IGridSystemView gridManager = GridManager.instance;   
-            GridCell cell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(gameObject.transform.position));
-            cell.EntityUnitOccupy(this); //register self to new cell
-        }
-    
+        
     
 
         public override void Die()
@@ -106,13 +127,28 @@ namespace Entities.Unit
         public override void Tick()
         {
             if (!this.isAlive) return;
+            
+            int size = effects.Count;
+            for (int index = size; index >= 0; index--) {
+                EntityEffect effect = effects[index];
 
+                if (effect.IsSpent()) {
+                    effect.OnEnd();
+                    effects.RemoveAt(index);
+                }
+                else
+                    effect.Tick(Time.deltaTime);
+            }
+            
+            
             if (!this.isInvulnerable && this.currentHealth <= 0) {
                 this.Die();
             }
         }
-    
-    
+        
+
+
+
         public bool MoveUp()
         {
             return TryMoving(Vector2Int.up);

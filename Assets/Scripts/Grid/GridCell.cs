@@ -3,6 +3,7 @@
 
 using Entities.Collectable;
 using Entities.Unit;
+using JetBrains.Annotations;
 using UnityEngine;
 
 /// </summary>
@@ -11,8 +12,8 @@ using UnityEngine;
 /// </summary>
 public class GridCell : MonoBehaviour
 {
-    public EntityUnit occupiedUnit { get; private set; }
-    public CollectableEntity occupiedCollectable { get; private set; }
+    [CanBeNull] public EntityUnit occupiedUnit { get; private set; }
+    [CanBeNull] public CollectableEntity occupiedCollectable { get; private set; }
 
     public bool isOccupied = false;
     public bool isFriendly = false;

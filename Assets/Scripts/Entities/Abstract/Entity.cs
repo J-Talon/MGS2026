@@ -114,13 +114,15 @@ namespace Entities.Abstract
         /// 
         /// </summary>
         /// <param name="damage">The amount of damage to take.</param>
-        public virtual bool TakeDamage(float damage)
+        public virtual bool TakeDamage(float damage)  
         {
             if (!isAlive || isInvulnerable || damage <= 0f) return false;
             currentHealth -= damage;
             if (currentHealth <= 0f) Die();
             return true;
         }
+        
+        
 
         /// <summary>
         /// Modified: Talon J

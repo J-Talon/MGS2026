@@ -10,7 +10,8 @@ namespace Entities.Collectable
     public class CollectableEntity : Entity
     {
         // references
-        protected ICollectableOnInteract behaviour;
+        //by the way this really isn't necessary, I may refactor this in the future
+        protected ICollectableOnInteract behaviour;   
         protected IGridSystemView gridManager = GridManager.instance;   
         protected GridCell cell;
 
@@ -56,10 +57,9 @@ namespace Entities.Collectable
 
         public void OnInteract(Entity entity)
         {
-            // TODO: Change this when we have a player entity ID or type!
-            // Right now the player entity is created first so it will always have an id of 1. This may not be the case in the future.
-     
-            if (entity.GetEntityType().Equals(EntityType.Player))
+            
+            
+            if (EntityType.Player.Equals(entity.GetEntityType()))
             {
                 OnCollect((EntityUnit)entity);
             }
