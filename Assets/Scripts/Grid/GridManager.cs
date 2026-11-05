@@ -1,9 +1,12 @@
 // Authors: [Jacky, Jeremy, Mark]
+// Added viewing the grid boundaries: -Wilson Nov 1 2026
 using UnityEngine;
 using System.Collections.Generic;
+using System;
+using Entities.Unit;
 using Event;
+using JetBrains.Annotations;
 using UnityEngine.InputSystem;
-using System.Linq;
 
 /// <summary>
 /// This script manages the grid system of the game.
@@ -62,6 +65,36 @@ public class GridManager : MonoBehaviour, IGridSystemView
         return null; // Return null if the position is out of bounds
     }
 
+    
+    public List<(Vector2Int, EntityUnit)> FindAllEntities(Func<EntityUnit, bool> criteria)
+    {
+        var units_with = new List<(Vector2Int, EntityUnit)>();
+        
+        for (int x = state.XMin; x < state.XMax+1; x++) {
+            for (int y = state.YMin; y < state.YMax+1; y++) {
+                var pos = new Vector2Int(x, y);
+                var cell = state.Cells[pos];
+
+                if (cell.occupiedUnit != null && criteria.Invoke(cell.occupiedUnit))
+                {
+                    units_with.Add((pos, cell.occupiedUnit));
+                }
+            }
+        }
+
+        return units_with;
+    }
+
+    /// <returns>If coordinate exists within grid bounds</returns>
+    public bool WithinGrid(Vector2Int position) {
+        return state.XMin <= position.x && position.x <= state.XMax && state.YMin <= position.y && position.y <= state.YMax;
+    }
+
+    /// <returns>If coordinate exists within grid bounds</returns>
+    public bool WithinGridSmooth(Vector2 position) {
+        return state.XMin-0.5 < position.x && position.x < state.XMax + 0.5 && state.YMin-0.5 < position.y && position.y < state.YMax+0.5;
+    }
+
     /// <summary>
     /// Function to get a entity at the given grid cell
     /// It is a wrapper function using GetTileAtPosition
@@ -81,9 +114,35 @@ public class GridManager : MonoBehaviour, IGridSystemView
 
         return null; //return null if either no units on cell or cell itself doesn't exist at the given position
     }
+    
+
+    /// <summary>
+    /// Function to get the bounds of the grid
+    /// </summary>
+    /// <returns>Bounds of the grid as a ValueTuple with the min and max bounds as Vector2Int: (Min Bounds, Max Bounds)</returns>
+    public (Vector2Int min, Vector2Int max) GetGridBounds()
+    {
+        return (new Vector2Int(state.XMin, state.YMin), new Vector2Int(state.XMax, state.YMax));
+    }
+
+    /// Function to get the bounds of the friendly grid
+    /// </summary>
+    /// <returns>Bounds of the grid as a ValueTuple with the min and max bounds as Vector2Int: (Min Bounds, Max Bounds)</returns>
+    public (Vector2Int min, Vector2Int max) GetFriendlyGridBounds()
+    {
+        return (new Vector2Int(state.XMin, state.YMin), new Vector2Int(state.Border, state.YMax));
+    }
+
+    /// Function to get the bounds of the enemy grid
+    /// </summary>
+    /// <returns>Bounds of the grid as a ValueTuple with the min and max bounds as Vector2Int: (Min Bounds, Max Bounds)</returns>
+    public (Vector2Int min, Vector2Int max) GetEnemyGridBounds()
+    {
+        return (new Vector2Int(state.Border + 1, state.YMin), new Vector2Int(state.XMax, state.YMax));
+    }
 
     // Re-centre the camera and recolour every cell after the grid changes
-    void Redraw()
+    public void Redraw()
     {
         CenterCamera();
         UpdateGridTextures();
@@ -152,20 +211,5 @@ public class GridManager : MonoBehaviour, IGridSystemView
         eventHandler?.Unsubscribe();
         instance = null;
     }
-
-    /*
-    //debug stuff
-    void Update()
-    {
-        if (Keyboard.current.uKey.wasReleasedThisFrame)
-        {
-            for (int i = 0; i < state.Cells.Count; i = i + 1)
-            {
-                var a = state.Cells.Values.ToList()[i];
-                var b = state.Cells.Values.ToList()[i].isOccupied;
-                Debug.Log($"{a} + {b}");
-            }
-        }
-    }
-    */
+    
 }

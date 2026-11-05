@@ -1,5 +1,7 @@
 // Author: Jeremy
 using System.Collections.Generic;
+using Entities.Abstract;
+using Entities.Unit;
 using JetBrains.Annotations;
 using Particle.Base;
 using UnityEngine;

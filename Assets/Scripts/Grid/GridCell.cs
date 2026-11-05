@@ -1,4 +1,10 @@
 // Authors: [Jacky, Jeremy, Mark]
+// Added collectable entity occupation - Wilson October 26 2026
+
+using Effect.Abstract;
+using Entities.Collectable;
+using Entities.Unit;
+using JetBrains.Annotations;
 using UnityEngine;
 
 /// </summary>
@@ -7,12 +13,16 @@ using UnityEngine;
 /// </summary>
 public class GridCell : MonoBehaviour
 {
-    public EntityUnit occupiedUnit { get; private set; }
+    [CanBeNull] public EntityUnit occupiedUnit { get; private set; }
+    [CanBeNull] public CollectableEntity occupiedCollectable { get; private set; }
 
     public bool isOccupied = false;
     public bool isFriendly = false;
     private Vector2Int cellPosition;
 
+    private LocalizedEffectManager<GridEffect> _effectManager;
+    
+    
     // Plain colors for different states of the cell. Mainly for testing purposes. Can be removed later when we have proper textures.
     private Color friendlyColor = Color.green;
     private Color friendlyOffsetColor = new Color(0f, 0.5f, 0f, 1f);
@@ -29,12 +39,25 @@ public class GridCell : MonoBehaviour
 
     // Reference to the SpriteRenderer component for updating the cell's appearance
     public SpriteRenderer spriteRenderer;
-
+    
     // Setter/Getters
     public bool GetIsOccupied() { return isOccupied; }
     public bool GetIsFriendly() { return isFriendly; }
     public Vector2Int GetCellPosition() { return cellPosition; }
     public void SetCellPosition(Vector2Int value) { cellPosition = value; }
+
+    
+    private void Awake() {
+        _effectManager = new LocalizedEffectManager<GridEffect>();
+    }
+
+    private void FixedUpdate() {
+        _effectManager.Tick(Time.deltaTime);
+    }
+
+    public bool AddEffect(GridEffect effect) {
+        return _effectManager.AddEffect(effect);
+    }
 
     /// <summary>
     /// Updates the texture of the cell based on its state (friendly or enemy) and whether it is offset.
@@ -51,9 +74,11 @@ public class GridCell : MonoBehaviour
     /// <summary>
     /// Updates the texture of the cell based on its state (friendly or enemy) and whether it is offset.
     /// </summary>
-    /// <param name="isOffset">Indicates whether the cell is offset.</param>
     public void EntityUnitOccupy(EntityUnit unit)
     {
+        //(Talon J) effect system
+        _effectManager.EffectCallback((effect) => effect.OnEntityEnter(unit));
+        
         occupiedUnit = unit;
         isOccupied = true;
     }
@@ -61,10 +86,22 @@ public class GridCell : MonoBehaviour
     /// <summary>
     /// Updates the texture of the cell based on its state (friendly or enemy) and whether it is offset.
     /// </summary>
-    /// <param name="isOffset">Indicates whether the cell is offset.</param>
     public void EntityUnitLeave()
     {
+        //(Talon J) effect system
+        _effectManager.EffectCallback((effect) => effect.OnEntityLeave(occupiedUnit));
+        
         occupiedUnit = null;
         isOccupied = false;
+    }
+
+    public void CollectableOccupy(CollectableEntity collectable)
+    {
+        occupiedCollectable = collectable;
+    }
+
+    public void CollectableDespawn()
+    {
+        occupiedCollectable = null;
     }
 }

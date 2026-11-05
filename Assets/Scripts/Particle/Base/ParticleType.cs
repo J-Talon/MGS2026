@@ -123,12 +123,11 @@ namespace Particle.Base
         
         //sample particle system that plays indefinitely
         public static readonly ParticleType FIRE = new ParticleType("VFX/Particle/ParticleFireRepeat");
+
+        public static readonly ParticleType DEBUG = new ParticleType("VFX/Particle/ParticleDebugSquare");
         
 
-
-
-        
-        
-        
+        //particle system that plays indefinitely
+        public static readonly ParticleType PEASHOOTER = new ParticleType("VFX/Particle/ParticlePeaShooter");
     }
 }
