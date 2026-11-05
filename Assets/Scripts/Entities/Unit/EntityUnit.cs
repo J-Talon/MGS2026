@@ -1,8 +1,7 @@
 // Authors: [Jacky, Jeremy, Mark]
 // Added collectable entity check - Wilson October 26 2026
 
-using System;
-using System.Collections.Generic;
+
 using Effect.Abstract;
 using Entities.Abstract;
 using Entities.Collectable;
@@ -18,11 +17,13 @@ namespace Entities.Unit
     public class EntityUnit : Abstract.Entity, IUnitMoveSnappy, IUnitMoveSmooth, IUnitFire
     {
         
-        protected List<EntityEffect> effects;
+        //(Talon J) effect system
+        protected LocalizedEffectManager<EntityEffect> effectManager;
         
         public override void OnStart()
         {
-            effects = new List<EntityEffect>();
+            effectManager = new  LocalizedEffectManager<EntityEffect>();
+            
             IGridSystemView gridManager = GridManager.instance;   
             GridCell cell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(gameObject.transform.position));
             cell.EntityUnitOccupy(this); //register self to new cell
@@ -45,6 +46,13 @@ namespace Entities.Unit
         
         }
 
+
+        public bool AddEffect(EntityEffect effect) {
+            return this.effectManager.AddEffect(effect);
+        }
+
+
+
         /// <summary>
         /// Implementation of continuous movement
         /// </summary>
@@ -53,7 +61,6 @@ namespace Entities.Unit
         {
             gameObject.transform.position = gameObject.transform.position + (Vector3)deltaMovement;
         }
-
 
 
         [CanBeNull]
@@ -66,18 +73,23 @@ namespace Entities.Unit
         
         
         
-        public sealed override bool TakeDamage(float damage)  
-        {
-            if (!isAlive || isInvulnerable || damage <= 0f) return false;
-            currentHealth -= damage;
-            if (currentHealth <= 0f) Die();
-            return true;
+        public sealed override bool TakeDamage(float attackDamage) {
+            return this.TakeDamage(attackDamage, null);
         }
 
 
-        public virtual bool TakeDamage(float damage, [CanBeNull] Entity source)
+        public virtual bool TakeDamage(float attackDamage, [CanBeNull] Entity source)
         {
-            return this.TakeDamage(damage);
+            if (!isAlive || isInvulnerable || attackDamage <= 0f) return false;
+            
+            //(Talon J) effect system
+            bool isCancelled = false;
+            effectManager.EffectCallback((effect) => { effect.PreOnEntityDamage(source, ref attackDamage, ref isCancelled); });
+            if (isCancelled) return false;
+            
+            currentHealth -= attackDamage;
+            if (currentHealth <= 0f) Die();
+            return true;
         }
 
 
@@ -95,22 +107,31 @@ namespace Entities.Unit
             Vector2 newPos = gameObject.transform.position + (Vector3Int)deltaMovement;
             IGridSystemView gridManager = GridManager.instance;
             GridCell newCell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(newPos));
-            if (newCell.isOccupied == false) //new cell is not occupied, can move there
-            {
-                GridCell oldCell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(oldPos));
-                oldCell.EntityUnitLeave(); //unregister from old cell
+            
+            
+            if (newCell.isOccupied) //new cell is not occupied, can move there
+                return false;
+            
+            GridCell oldCell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(oldPos));
+            
+             //   (Talon J) effect system
+             bool isCancelled = false;
+             effectManager.EffectCallback((effect) => { effect.PreOnGridMove(oldCell, newCell, deltaMovement, ref isCancelled); });
+             if (isCancelled) return false;
+            
+            
+            oldCell.EntityUnitLeave(); //unregister from old cell
 
-                CollectableEntity collectable = newCell.occupiedCollectable;
-                if (collectable != null)
-                {
-                    collectable.OnInteract(this);
-                }
-                
-                newCell.EntityUnitOccupy(this); //register self to new cell
-                gameObject.transform.position = newPos;
-                return true;
+            CollectableEntity collectable = newCell.occupiedCollectable;
+            if (collectable != null)
+            {
+                collectable.OnInteract(this);
             }
-            return false;
+            
+            newCell.EntityUnitOccupy(this); //register self to new cell
+            gameObject.transform.position = newPos;
+            return true;
+                
         }
         
     
@@ -128,18 +149,7 @@ namespace Entities.Unit
         {
             if (!this.isAlive) return;
             
-            int size = effects.Count;
-            for (int index = size; index >= 0; index--) {
-                EntityEffect effect = effects[index];
-
-                if (effect.IsSpent()) {
-                    effect.OnEnd();
-                    effects.RemoveAt(index);
-                }
-                else
-                    effect.Tick(Time.deltaTime);
-            }
-            
+            effectManager.Tick(Time.deltaTime);
             
             if (!this.isInvulnerable && this.currentHealth <= 0) {
                 this.Die();
@@ -170,7 +180,7 @@ namespace Entities.Unit
         }
 
         // function to try to move in a direction, if it can it will
-        protected bool TryMoving(Vector2Int dir)
+        public bool TryMoving(Vector2Int dir)
         {
             Vector2Int currentPosition = Vector2Int.RoundToInt(GetPosition());
             Vector2Int newPosition = currentPosition + dir;   
@@ -178,7 +188,7 @@ namespace Entities.Unit
             IGridSystemView gridView = GridManager.instance;
             GridCell targetTile = gridView.GetTileAtPosition(newPosition);
 
-            if (targetTile != null && !targetTile.isFriendly && !targetTile.isOccupied)
+            if (targetTile != null && targetTile.isFriendly == this.isFriendly && !targetTile.isOccupied)
             {
                 MoveUnitSnappy(newPosition-currentPosition);
                 return true;

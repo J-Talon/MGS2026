@@ -54,8 +54,21 @@ namespace Particle.Base
             gameObject.SetActive(false);
             particleEmitter.Stop();
             gameObject.transform.SetParent(null); //if for some reason people attach them to objects
+            gameObject.transform.localScale = Vector3.one;
 
         }
+
+
+        public void SetScaledParent(Transform parent)
+        {
+            Transform form = gameObject.transform;
+            Vector3 lossyScale = form.lossyScale;
+            
+            form.parent = parent;
+            form.localScale = lossyScale;
+        }
+        
+        
 
         /**
          * UNDER NO CIRCUMSTANCE should you call this function by itself if you want it to be automatically handled
@@ -66,6 +79,8 @@ namespace Particle.Base
         {
             transform.SetParent(null);  //if for some reason people attach them to objects
             gameObject.SetActive(true);
+            transform.localScale = Vector3.one;
+            
             if (particleEmitter.isEmitting) return;
             particleEmitter.Play();
             this.OnPlay();

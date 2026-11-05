@@ -9,16 +9,17 @@ namespace Effect.Abstract
         
         protected GridCell affector;
 
-        public GridEffect(GridCell affector, double duration, bool finite) : base(duration, finite) {
+        public GridEffect(GridCell affector, double duration, bool finite = true) : base(duration, finite) {
             this.affector = affector;
         }
+        
+        //these events are not cancellable because they are performed immediately after validity checks
+        
+        //called when an entity enters the grid cell
+        public virtual void OnEntityEnter(EntityUnit unit) { }
 
-        //if the entity just spawned in then yeah previous cell is null
-        public virtual void PreOnEntityEnter(EntityUnit unit, [CanBeNull] GridCell previousCell, ref bool isCancelled) { }
-
-        public virtual void PreOnEntityLeave(EntityUnit unit, [CanBeNull] GridCell previousCell, ref bool isCancelled) { }
-
-        public virtual void OnCollectableEnter(CollectableEntity collectable, ref bool isCancelled) { }
+        //called when an entity exits the grid cell
+        public virtual void OnEntityLeave(EntityUnit unit) { }
         
     }
 }

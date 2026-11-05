@@ -113,11 +113,11 @@ namespace Entities.Abstract
         /// Talon J: Return: True if the entity took damage, return false if it did not
         /// 
         /// </summary>
-        /// <param name="damage">The amount of damage to take.</param>
-        public virtual bool TakeDamage(float damage)  
+        /// <param name="attackDamage">The amount of damage to take.</param>
+        public virtual bool TakeDamage(float attackDamage)  
         {
-            if (!isAlive || isInvulnerable || damage <= 0f) return false;
-            currentHealth -= damage;
+            if (!isAlive || isInvulnerable || attackDamage <= 0f) return false;
+            currentHealth -= attackDamage;
             if (currentHealth <= 0f) Die();
             return true;
         }
