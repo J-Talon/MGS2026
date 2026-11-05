@@ -1,5 +1,6 @@
 using System;
 using Particle.Base;
+using UnityEditor;
 using UnityEngine;
 
 namespace Entities.Projectile.ProjectileTypes
@@ -23,14 +24,25 @@ namespace Entities.Projectile.ProjectileTypes
 
         Vector2 CalculateTrajectory(Vector2Int start, Vector2Int end, float height, float time) {
             var startVec = new Vector2(start.x, start.y);
-            var endVec = new Vector2(end.x, end.y);
+            var endVec = new Vector2(end.x, start.y);
             var delta = endVec - startVec;
+
+            float deltaY = (new Vector2(0, end.y) - new Vector2(0, start.y)).y;
+
+            // the total y distance scaled by the height
+            var normalizedEndY = deltaY / height;
 
             // get a value perpendicular to direct path from start to end in order to create the illusion of fligh
             var tangent = Vector2.Perpendicular(delta.normalized);
 
-            // at 0 its 0 at 0.5 its 1 and at 1 its 0 again
-            var timeCurved = -4 * Math.Pow(time - 0.5, 2)+1;
+            //default arc that basically just has a vertex at y = 1
+            float arc = 4.0f * time * (1.0f - time);
+
+            //line that goes from start point to endpoint
+            float riseY = normalizedEndY * time;
+
+            // basically prevents a super high porabala when below
+            var timeCurved = arc * (1.0f - normalizedEndY) + riseY;
 
             return tangent * (float)timeCurved * height + delta * time + startVec;
         }
