@@ -1,6 +1,8 @@
 // Authors: [Jacky, Jeremy, Mark]
 // Added collectable entity check - Wilson October 26 2026
 
+
+using Effect.Abstract;
 using Entities.Abstract;
 using Entities.Collectable;
 using Entities.Unit.Behaviour.Interfaces;
@@ -14,6 +16,19 @@ namespace Entities.Unit
     /// </summary>
     public class EntityUnit : Abstract.Entity, IUnitMoveSnappy, IUnitMoveSmooth, IUnitFire
     {
+        
+        //(Talon J) effect system
+        protected LocalizedEffectManager<EntityEffect> effectManager;
+        
+        public override void OnStart()
+        {
+            effectManager = new  LocalizedEffectManager<EntityEffect>();
+            
+            IGridSystemView gridManager = GridManager.instance;   
+            GridCell cell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(gameObject.transform.position));
+            cell.EntityUnitOccupy(this); //register self to new cell
+        }
+
         
         
         /// <summary>
@@ -31,6 +46,13 @@ namespace Entities.Unit
         
         }
 
+
+        public bool AddEffect(EntityEffect effect) {
+            return this.effectManager.AddEffect(effect);
+        }
+
+
+
         /// <summary>
         /// Implementation of continuous movement
         /// </summary>
@@ -41,13 +63,33 @@ namespace Entities.Unit
         }
 
 
-
         [CanBeNull]
         public GridCell GetCurrentCell()
         {
             Vector2 pos = gameObject.transform.position;
             Vector2Int rounded = Vector2Int.RoundToInt(pos);
             return GridManager.instance.GetTileAtPosition(rounded);
+        }
+        
+        
+        
+        public sealed override bool TakeDamage(float attackDamage) {
+            return this.TakeDamage(attackDamage, null);
+        }
+
+
+        public virtual bool TakeDamage(float attackDamage, [CanBeNull] Entity source)
+        {
+            if (!isAlive || isInvulnerable || attackDamage <= 0f) return false;
+            
+            //(Talon J) effect system
+            bool isCancelled = false;
+            effectManager.EffectCallback((effect) => { effect.PreOnEntityDamage(source, ref attackDamage, ref isCancelled); });
+            if (isCancelled) return false;
+            
+            currentHealth -= attackDamage;
+            if (currentHealth <= 0f) Die();
+            return true;
         }
 
 
@@ -65,33 +107,33 @@ namespace Entities.Unit
             Vector2 newPos = gameObject.transform.position + (Vector3Int)deltaMovement;
             IGridSystemView gridManager = GridManager.instance;
             GridCell newCell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(newPos));
-            if (newCell.isOccupied == false) //new cell is not occupied, can move there
+            
+            
+            if (newCell.isOccupied) //new cell is not occupied, can move there
+                return false;
+            
+            GridCell oldCell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(oldPos));
+            
+             //   (Talon J) effect system
+             bool isCancelled = false;
+             effectManager.EffectCallback((effect) => { effect.PreOnGridMove(oldCell, newCell, deltaMovement, ref isCancelled); });
+             if (isCancelled) return false;
+            
+            
+            oldCell.EntityUnitLeave(); //unregister from old cell
+
+            CollectableEntity collectable = newCell.occupiedCollectable;
+            if (collectable != null)
             {
-                GridCell oldCell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(oldPos));
-                oldCell.EntityUnitLeave(); //unregister from old cell
-
-                CollectableEntity collectable = newCell.occupiedCollectable;
-                if (collectable != null)
-                {
-                    collectable.OnInteract(this);
-                }
-                
-                newCell.EntityUnitOccupy(this); //register self to new cell
-                gameObject.transform.position = newPos;
-                return true;
+                collectable.OnInteract(this);
             }
-            return false;
+            
+            newCell.EntityUnitOccupy(this); //register self to new cell
+            gameObject.transform.position = newPos;
+            return true;
+                
         }
-
-
-
-        public override void OnStart()
-        {
-            IGridSystemView gridManager = GridManager.instance;   
-            GridCell cell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(gameObject.transform.position));
-            cell.EntityUnitOccupy(this); //register self to new cell
-        }
-    
+        
     
 
         public override void Die()
@@ -106,13 +148,17 @@ namespace Entities.Unit
         public override void Tick()
         {
             if (!this.isAlive) return;
-
+            
+            effectManager.Tick(Time.deltaTime);
+            
             if (!this.isInvulnerable && this.currentHealth <= 0) {
                 this.Die();
             }
         }
-    
-    
+        
+
+
+
         public bool MoveUp()
         {
             return TryMoving(Vector2Int.up);
@@ -134,7 +180,7 @@ namespace Entities.Unit
         }
 
         // function to try to move in a direction, if it can it will
-        protected bool TryMoving(Vector2Int dir)
+        public bool TryMoving(Vector2Int dir)
         {
             Vector2Int currentPosition = Vector2Int.RoundToInt(GetPosition());
             Vector2Int newPosition = currentPosition + dir;   
@@ -142,7 +188,7 @@ namespace Entities.Unit
             IGridSystemView gridView = GridManager.instance;
             GridCell targetTile = gridView.GetTileAtPosition(newPosition);
 
-            if (targetTile != null && !targetTile.isFriendly && !targetTile.isOccupied)
+            if (targetTile != null && targetTile.isFriendly == this.isFriendly && !targetTile.isOccupied)
             {
                 MoveUnitSnappy(newPosition-currentPosition);
                 return true;

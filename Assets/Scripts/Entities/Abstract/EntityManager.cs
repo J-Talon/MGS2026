@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 namespace Entities.Abstract
@@ -109,6 +110,14 @@ namespace Entities.Abstract
 
             //Debug.Log("adding " + entity.GetEntityID());
             _activeEntities.Add(entity.GetEntityID(), entity); //add to active dictionary for tracking
+            return entity;
+        }
+
+
+
+        [CanBeNull]
+        public Entity GetEntityById(int id) {
+            _activeEntities.TryGetValue(id, out Entity entity);
             return entity;
         }
 
