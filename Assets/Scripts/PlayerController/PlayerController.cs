@@ -3,6 +3,10 @@
 // Edit by Jeremy October 15, 2026
 // edited by - Wilson October 25, 2026
 
+using System;
+using System.Runtime.CompilerServices;
+using Effect.EntityEffect;
+using Effect.GridEffect;
 using Event;
 
 using UnityEngine;
@@ -81,9 +85,7 @@ public class PlayerController : MonoBehaviour
     private void OnSpell2(System.ValueTuple _) {
         spellManager.onSpell2(parentUnit);
     }
-
-
-
+    
 
 
     //added by Jordan
@@ -121,18 +123,29 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        // used to check whether the square tile is friendly
-        Vector2Int currentPosition = Vector2Int.RoundToInt(parentUnit.GetPosition());
-        Vector2Int newPosition = currentPosition + moveDir;
+        // // used to check whether the square tile is friendly
+        // Vector2Int currentPosition = Vector2Int.RoundToInt(parentUnit.GetPosition());
+        // Vector2Int newPosition = currentPosition + moveDir;
+        
+        bool result = parentUnit.TryMoving(moveDir);
+        if (!result) return;
+        
 
-        IGridSystemView gridView = GridManager.instance;
-        GridCell targetTile = gridView.GetTileAtPosition(newPosition);
-        if (targetTile != null && targetTile.isFriendly)
-        {
-            movementCooldownTimer = parentUnit.GetMovementTickTimer();
-            parentUnit.MoveUnitSnappy(newPosition - currentPosition); // Move the player to the new position
-            crosshairController.UpdatePosition(newPosition); // update the crosshair position
-        }
+        movementCooldownTimer = parentUnit.GetMovementTickTimer();
+        GridCell cell = parentUnit.GetCurrentCell();
+        
+        if (cell != null)
+            crosshairController.UpdatePosition(cell.GetCellPosition());
+        
+
+        // IGridSystemView gridView = GridManager.instance;
+        // GridCell targetTile = gridView.GetTileAtPosition(newPosition);
+        // if (targetTile != null && targetTile.isFriendly)
+        // {
+        //     movementCooldownTimer = parentUnit.GetMovementTickTimer();
+        //     parentUnit.MoveUnitSnappy(newPosition - currentPosition); // Move the player to the new position
+        //     crosshairController.UpdatePosition(newPosition); // update the crosshair position
+        // }
 
     }
 

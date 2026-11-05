@@ -53,6 +53,14 @@ PrefabInstance:
       value: ParticleDebugSquare
       objectReference: {fileID: 0}
     - target: {fileID: 7577199323669138850, guid: dc2101158f78434f3ad17dda3fe517db, type: 3}
+      propertyPath: SizeModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7577199323669138850, guid: dc2101158f78434f3ad17dda3fe517db, type: 3}
+      propertyPath: SizeModule.separateAxes
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7577199323669138850, guid: dc2101158f78434f3ad17dda3fe517db, type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 1
       objectReference: {fileID: 0}

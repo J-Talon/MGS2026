@@ -12,6 +12,8 @@ using Event;
 /// currently just a behaviour kind of script (no management) and can be plug and played
 /// on top of player controller
 /// </summary>
+///
+//todo replace with spell architecture
 [RequireComponent(typeof(PlayerController))]
 public class PlayerTurretController : MonoBehaviour
 {
