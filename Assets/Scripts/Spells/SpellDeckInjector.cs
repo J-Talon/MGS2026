@@ -13,6 +13,7 @@ using UnityEngine;
 //explosion
 //cooldown, startupDelay (optional)
 //endingSettings) (optional)
+
 public class SpellDeckInjector : MonoBehaviour
 {
     private List<SpellDeck> spellDecks = new List<SpellDeck>
