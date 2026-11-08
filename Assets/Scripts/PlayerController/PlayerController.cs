@@ -78,7 +78,6 @@ public class PlayerController : MonoBehaviour
         bufferedMovement = null;
     }
 
-    //added by Jordan
     private void Update()
     {
         //checks the movementCooldownTimer. If the countdown is greater than 0, continue counting down
@@ -106,8 +105,6 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Movement Locked");
             return;
         }
-
-        //movementCooldownTimer and buffer stuff added by Jordan
 
         //player inputs a buffered movement (aka pressing and holding a movement during movement cooldown)
         //exits the function after setting the buffer direction as the player cant move yet
@@ -177,4 +174,4 @@ public class PlayerController : MonoBehaviour
 //added movement buffering stuff and fixed situations with multiple inputs pressed and held
 //
 //Jordan Nov 08, 2026
-//added the spellCast stuff
+//added the spellCast stuff, removed the temp SpellManager stuff
