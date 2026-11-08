@@ -7,10 +7,12 @@ public class Spell
 {
     //this is a spell wrapper thing
 
-    //beginning action. Basically what the player does before the actual attack/explosion happens (like the lob, dash forward, etc). Check SpellActionBeginning.cs and SpellAction.cs
+    //beginning action
+    //basically what the player does before the actual attack/explosion happens (like the lob, dash forward, etc). Check SpellActionBeginning.cs and SpellAction.cs
     private SpellActionBeginning beginning;
 
-    //ending action. Basically what the player does after the actual attack/explosion happens (like a dash back, anchoring movement, etc). Check SpellActionEnding.cs and SpellAction.cs
+    //ending action
+    //basically what the player does after the actual attack/explosion happens (like a dash back, anchoring movement, etc). Check SpellActionEnding.cs and SpellAction.cs
     private SpellActionEnding ending; 
 
     private SpellAction currentAction; //the current performing action. It will be set to either of the 2 variables above, when its their turn to perform.
@@ -42,7 +44,7 @@ public class Spell
         }
     }
 
-    //tells the SpellCaster to StartSpell, passing the who and the where (aka who is casting the spell, and the crosshair the spell will aim at if applicable). See SpellCaster.cs
+    //tells the SpellCaster to StartSpell, passing the who and the where (aka who cast the spell, and crosshair the spell aims at if applicable). See SpellCaster.cs
     public void StartSpell(EntityUnit spellCaster, CrosshairController crosshair)
     {
         //set stuff
