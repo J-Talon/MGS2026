@@ -1,5 +1,6 @@
 // Authors: [Jacky, Jeremy, Mark]
 // Added viewing the grid boundaries: -Wilson Nov 1 2026
+// Basic OnDrawGizmos implementation: -Jophiel Nov 8th 2026
 using UnityEngine;
 using System.Collections.Generic;
 using System;
@@ -24,7 +25,6 @@ public class GridManager : MonoBehaviour, IGridSystemView
     /// grid specific level data
     /// </summary>
     public GridManagerLevelData gridLevelData;
-
     // References
     public GridCell gridCellPrefab;
     public Transform cameraTransform;
@@ -168,6 +168,49 @@ public class GridManager : MonoBehaviour, IGridSystemView
                 cell.UpdateTexture(isOffset);
             }
         }
+    }
+
+    /// OnDrawGizmos - Renders the grid in-editor by taking 'gridLevelData' parameters and displaying them with cubes.
+    /// Notes:  doesn't update to Grid-scaling once adjusted in 'Game';
+    ///         work on implementation to update grid bounds in 'Scene' while GridManipulator builds. 
+    ///         Also, improve system for showing icons at special squares (e.g. player, enemy, flora).
+    void OnDrawGizmos()
+    {
+        // take grid bounds from gridLevelData object 
+        int gridBoundX = gridLevelData.gridSize.x;
+        int gridBoundY = gridLevelData.gridSize.y;
+
+        // surpassing this value means you've entered a uncapturable grid section
+        int gridOOB = gridBoundX - gridLevelData.uncapturableColumns; // OOB means "out of bounds"
+
+        // to render the x and y components, draw rows then draw next column 
+        for (int x = 0; x < gridBoundX; x++) {
+            for (int y = 0; y < gridBoundY; y++) {
+
+                Vector3 positionCell = new Vector3(x, y, 0); // localized position vector
+
+                // since enemy field begins rendering at a halfway point,
+                // start recording red after reaching halfway across the x-bound
+
+                if (x == 0 && y == 0) { // check for player tile (usually first tile created)
+                    Gizmos.color = Color.grey;
+                    Gizmos.DrawIcon(new Vector3(x, y, -1), "TestPlayerModel.png"); // function currently can't pull image
+                } 
+                else if (x < (gridBoundX/2)) {    // check for player area; needs modification depending on 'Game' actions
+                    Gizmos.color = Color.green;
+                } 
+                else if (x >= gridOOB) {          // check for uncaptureable tiles
+                    Gizmos.color = Color.darkRed;
+                } 
+                else {                            // assume you are in enemy territory
+                    Gizmos.color = Color.red; 
+                }
+
+                // draw a SQUARE to show the grid 
+                Gizmos.DrawCube(positionCell, new Vector3(0.9f, 0.9f, 0));
+                Gizmos.DrawWireCube(positionCell, new Vector3(1, 1, 0)); // aesthetical frame
+            } // build next column by incrementing X
+        }        
     }
 
     /// <summary>
