@@ -189,20 +189,15 @@ public class GridManager : MonoBehaviour, IGridSystemView
 
                 Vector3 positionCell = new Vector3(x, y, 0); // localized position vector
 
-                // since enemy field begins rendering at a halfway point,
-                // start recording red after reaching halfway across the x-bound
-
                 if (x == 0 && y == 0) { // check for player tile (usually first tile created)
                     Gizmos.color = Color.grey;
                     Gizmos.DrawIcon(new Vector3(x, y, -1), "TestPlayerModel.png"); // function currently can't pull image
-                } 
-                else if (x < (gridBoundX/2)) {    // check for player area; needs modification depending on 'Game' actions
+                } else if (x < gridLevelData.startingFriendlyColumns) {    
+                    // crafts player area; needs modification depending on 'Game' actions
                     Gizmos.color = Color.green;
-                } 
-                else if (x >= gridOOB) {          // check for uncaptureable tiles
+                } else if (x >= gridOOB) {          // check for uncaptureable tiles
                     Gizmos.color = Color.darkRed;
-                } 
-                else {                            // assume you are in enemy territory
+                } else {                            // assume you are in enemy territory
                     Gizmos.color = Color.red; 
                 }
 
