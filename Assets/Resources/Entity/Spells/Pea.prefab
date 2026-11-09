@@ -108,11 +108,11 @@ MonoBehaviour:
   isAlive: 1
   isPlayer: 0
   maxHealth: 100
-  damage: 10
+  damage: 1
   speed: 0.3
   maxLifeSpan: 10
   movementTickTimer: 1
+  currentHealth: 0
   spawnTime: 0
-  direction: {x: 0, y: 0}
   wiggleFactor: 0.0125
   wiggleSpeed: 10

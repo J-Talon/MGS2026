@@ -1,7 +1,8 @@
 // Authors: [Jacky, Jeremy, Mark]
-// edited by - Jordan October 14, 2026
+//edited by - Jordan October 14, 2026
 // Edit by Jeremy October 15, 2026
 // edited by - Wilson October 25, 2026
+//edited by - Jordan Nov 08, 2026
 
 using System;
 using System.Runtime.CompilerServices;
@@ -22,16 +23,18 @@ public class PlayerController : MonoBehaviour
     protected EntityUnit parentUnit;
     protected CrosshairController crosshairController;
     private float movementCooldownTimer = 0f; //a timer that actually keeps track of the remaining time before the next movement
-    
-    //temporary for now
-    private SpellManager spellManager; //todo remove
-    
-    
+    private SpellCaster spellCaster;
+
+    public void Awake()
+    {
+        spellCaster = GetComponent<SpellCaster>();
+    }
+
     void Start()
     {
         parentUnit = GetComponent<EntityUnit>();
         crosshairController = new CrosshairController(new Vector2(5,0));
-        spellManager = new  SpellManager();  //you don't need a monobehaviour for everything you know
+        spellCaster.SetCrossHair(crosshairController);
     }
 
     //holds the direction for a buffered movement (if it exists).
@@ -45,9 +48,8 @@ public class PlayerController : MonoBehaviour
         GameplayEvents.Input.moveReleased.AddEventListener(OnMoveReleased);
         GameplayEvents.Input.crosshairLeftPressed.AddEventListener(OnCrosshairLeft);
         GameplayEvents.Input.crosshairRightPressed.AddEventListener(OnCrosshairRight);
-        
-        GameplayEvents.Input.spell1Pressed.AddEventListener(this.OnSpell1);  //todo remove
-        GameplayEvents.Input.spell2Pressed.AddEventListener(this.OnSpell2);
+
+        GameplayEvents.Input.spellPressed.AddEventListener(OnSpellCast);
     }
 
     //unsubscribe the events
@@ -57,10 +59,9 @@ public class PlayerController : MonoBehaviour
         GameplayEvents.Input.moveReleased.RemoveEventListener(OnMoveReleased);
         GameplayEvents.Input.crosshairLeftPressed.RemoveEventListener(OnCrosshairLeft);
         GameplayEvents.Input.crosshairRightPressed.RemoveEventListener(OnCrosshairRight);
-        
-        GameplayEvents.Input.spell1Pressed.AddEventListener(this.OnSpell1);  //todo remove
-        GameplayEvents.Input.spell2Pressed.AddEventListener(this.OnSpell2);
-        
+
+        GameplayEvents.Input.spellPressed.RemoveEventListener(OnSpellCast);
+
         bufferedMovement = null;
     }
 
@@ -71,24 +72,12 @@ public class PlayerController : MonoBehaviour
         GameplayEvents.Input.moveReleased.RemoveEventListener(OnMoveReleased);
         GameplayEvents.Input.crosshairLeftPressed.RemoveEventListener(OnCrosshairLeft);
         GameplayEvents.Input.crosshairRightPressed.RemoveEventListener(OnCrosshairRight);
+
+        GameplayEvents.Input.spellPressed.RemoveEventListener(OnSpellCast);
+
         bufferedMovement = null;
     }
 
-  
-
-    //todo remove
-    //this is temporary; remove when true architecture is out
-    void OnSpell1(System.ValueTuple _) {  //beware of Widget.ValueTuple
-        spellManager.onSpell1(parentUnit);
-    }
-
-    private void OnSpell2(System.ValueTuple _) {
-        spellManager.onSpell2(parentUnit);
-    }
-    
-
-
-    //added by Jordan
     private void Update()
     {
         //checks the movementCooldownTimer. If the countdown is greater than 0, continue counting down
@@ -111,9 +100,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void OnMovePressed(Vector2Int moveDir)
     {
-        
-
-        //movementCooldownTimer and buffer stuff added by Jordan
+        if (spellCaster.IsMovementLocked() == true)
+        {
+            Debug.Log("Movement Locked");
+            return;
+        }
 
         //player inputs a buffered movement (aka pressing and holding a movement during movement cooldown)
         //exits the function after setting the buffer direction as the player cant move yet
@@ -149,7 +140,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    //added by Jordan
     //if the player is buffering a movement during cooldown, but lets go of it before the movementCooldownTimer finishes, cancel the future movement
     public void OnMoveReleased(Vector2Int direction)
     {
@@ -170,4 +160,18 @@ public class PlayerController : MonoBehaviour
     {
         crosshairController.MoveOnRow(Vector2Int.right);
     }
+
+    //when a spell is cast
+    public void OnSpellCast(int deckIndex)
+    {
+        spellCaster.CastDeckSpell(deckIndex);
+    }
 }
+
+//CHANGELOG
+//
+//Jordan October 14, 2026
+//added movement buffering stuff and fixed situations with multiple inputs pressed and held
+//
+//Jordan Nov 08, 2026
+//added the spellCast stuff, removed the temp SpellManager stuff
