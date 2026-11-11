@@ -1,4 +1,6 @@
 // Authors: [Jacky, Jeremy, Mark]
+//edited by Jordan - Nov 08, 2026
+
 using UnityEngine;
 
 namespace Entities.Abstract
@@ -16,7 +18,6 @@ namespace Entities.Abstract
         // SG:
         // properties for figuringing out the player and whether its holding the boomerang respectively
         [field: SerializeField] protected bool isPlayer = false;
-        [field: SerializeField] protected bool isHoldingBoomerang = true;
 
         static protected int globalStaticIDCounter = 0;
         protected int entityID; // Unique identifier for the specific instance of the entity, useful for tracking and managing entities in the game world.
@@ -42,8 +43,6 @@ namespace Entities.Abstract
 
         // SG: are these necessary for properties with a setter?
         // Setters and Getters for encapsulation
-        public bool GetIsHoldingBoomerang() { return isHoldingBoomerang; }
-        public void SetIsHoldingBoomerang(bool value) { isHoldingBoomerang = value; }
         public void SetIsFriendly(bool value) { isFriendly = value; }
         public void SetEntityType(EntityType type) { entityType = type; }
         public EntityType GetEntityType() { return entityType; }
@@ -110,7 +109,6 @@ namespace Entities.Abstract
             isAlive = true;
             currentHealth = original.maxHealth;
             spawnTime = Time.time;
-            isHoldingBoomerang = false;
             isPlayer = false;
         }
 
@@ -191,3 +189,7 @@ namespace Entities.Abstract
         }
     }
 }
+
+//CHANGELOG
+//
+//removed the whack boomerang shit

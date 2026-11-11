@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e6935c46f5072ed499a46dc88301bf9d
+guid: d08adcf81db391345aad7b61a30f843f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5943522229249044237
-    second: miku stick figure square more hair_0
+      213: -1372612399798223446
+    second: ribombee_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: miku stick figure square more hair_0
+      name: ribombee_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 90
         y: 0
-        width: 640
-        height: 640
+        width: 1296
+        height: 1476
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d0fe6053af1ab7250800000000000000
-      internalID: 5943522229249044237
+      spriteID: aadfab77b4083fce0800000000000000
+      internalID: -1372612399798223446
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      miku stick figure square more hair_0: 5943522229249044237
+      ribombee_0: -1372612399798223446
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

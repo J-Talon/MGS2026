@@ -1,3 +1,6 @@
+//who the fuck authored this file?
+//edited by - Jordan Nov 08, 2026
+
 using System;
 using Particle.Base;
 using UnityEditor;
@@ -10,6 +13,11 @@ namespace Entities.Projectile.ProjectileTypes
         public Vector2Int start;
         public float height;
         private float nextHeight;
+
+        public void SetDamage(float directDamage)
+        {
+            damage = directDamage;
+        }
 
         public override void OnStart() {
             var h = UnityEngine.Random.Range(height, height/2);
@@ -83,3 +91,8 @@ namespace Entities.Projectile.ProjectileTypes
         }
     }
 }
+
+//CHANGELOG
+//
+//Jordan Nov 08, 2026
+//added a SetDamage() function so the bomb spells can have different direct lob hit damage

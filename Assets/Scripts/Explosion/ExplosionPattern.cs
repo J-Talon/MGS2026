@@ -119,12 +119,12 @@ public class ExplosionPatternDiagonal : ExplosionPattern
 /// <summary>
 /// Single straight line from the center in a direction. length = number of cells past the center.
 /// </summary>
-public class ExplosionPatternLaser : ExplosionPattern
+public class ExplosionPatternLazer : ExplosionPattern
 {
     private readonly Vector2Int _direction;
     private readonly int _length;
 
-    public ExplosionPatternLaser(Vector2Int direction, int length = 1)
+    public ExplosionPatternLazer(Vector2Int direction, int length = 1)
     {
         _direction = direction;
         _length = length;
