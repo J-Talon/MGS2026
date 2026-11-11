@@ -35,10 +35,24 @@ public class SpellEndingRetreat : SpellActionEnding
         travelTimer = travelTimer - Time.deltaTime;
         Retreat();
 
-        //done travelling? end the spell
+        //done travelling? end the action
         if (travelTimer < 0f)
         {
-            EndSpell();
+            EndAction();
+        }
+    }
+
+    //override the IsMovementLocked() to instead check if the entire action itself is still running or not. If still going, lockMovement, if not you can move
+    public override bool IsMovementLocked()
+    {
+        if (IsActionFinished() == false)
+        {
+            return true;
+        }
+
+        else
+        {
+            return false;
         }
     }
 

@@ -11,7 +11,7 @@ public class SpellBeginningPlaceTurret : SpellActionBeginning
     public override void OnPerformAction()
     {
         MakeTurret();
-        EndSpell(); //set the finish flag
+        EndAction(); //set the finish flag
     }
 
     //make Turret

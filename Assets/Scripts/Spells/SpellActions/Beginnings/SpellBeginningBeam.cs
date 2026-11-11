@@ -9,6 +9,6 @@ public class SpellBeginningBeam : SpellActionBeginning
     public override void OnPerformAction()
     {
         explosion.StartExplosion(castingData.casterGrid, castingData);
-        EndSpell();
+        EndAction();
     }
 }

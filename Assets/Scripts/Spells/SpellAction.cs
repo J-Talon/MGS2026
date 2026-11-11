@@ -105,14 +105,14 @@ public abstract class SpellAction
         }
     }
 
-    //easy way to flag that the spell is done with in other files
-    public void EndSpell()
+    //easy way to flag that the action is done with in other files
+    public void EndAction()
     {
         isFinished = true;
     }
 
-    //returns info about if the spell is done or no
-    public bool IsSpellFinished()
+    //returns info about if the action is done or no
+    public bool IsActionFinished()
     {
         return isFinished;
     }

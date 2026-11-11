@@ -44,8 +44,22 @@ public class SpellBeginningDash : SpellActionBeginning
             if (slashTimer <= 0f)
             {
                 explosion.StartExplosion(castingData.targetGrid, castingData); //call explosion
-                EndSpell(); //set end flag
+                EndAction(); //set end flag
             }
+        }
+    }
+
+    //override the IsMovementLocked() to instead check if the entire action itself is still running or not. If still going, lockMovement, if not you can move
+    public override bool IsMovementLocked()
+    {
+        if (IsActionFinished() == false)
+        {
+            return true;
+        }
+
+        else
+        {
+            return false;
         }
     }
 

@@ -12,7 +12,7 @@ public class SpellBeginningShoot : SpellActionBeginning
     public override void OnPerformAction()
     {
         MakePea();
-        EndSpell(); //set the finish flag
+        EndAction(); //set the finish flag
     }
 
     //make Pea
