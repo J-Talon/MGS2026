@@ -21,17 +21,21 @@ public class PlayerController : MonoBehaviour
 {
     protected EntityUnit parentUnit;
     protected CrosshairController crosshairController;
+    public Vector2Int GetCrosshairPosition() { return crosshairController.GetPosition(); }
     private float movementCooldownTimer = 0f; //a timer that actually keeps track of the remaining time before the next movement
-    
+
     //temporary for now
     private SpellManager spellManager; //todo remove
-    
-    
+
+    void Awake()
+    {
+        crosshairController = new CrosshairController(new Vector2(5, 0));
+    }
+
     void Start()
     {
         parentUnit = GetComponent<EntityUnit>();
-        crosshairController = new CrosshairController(new Vector2(5,0));
-        spellManager = new  SpellManager();  //you don't need a monobehaviour for everything you know
+        spellManager = new SpellManager();  //you don't need a monobehaviour for everything you know
     }
 
     //holds the direction for a buffered movement (if it exists).
@@ -45,7 +49,7 @@ public class PlayerController : MonoBehaviour
         GameplayEvents.Input.moveReleased.AddEventListener(OnMoveReleased);
         GameplayEvents.Input.crosshairLeftPressed.AddEventListener(OnCrosshairLeft);
         GameplayEvents.Input.crosshairRightPressed.AddEventListener(OnCrosshairRight);
-        
+
         GameplayEvents.Input.spell1Pressed.AddEventListener(this.OnSpell1);  //todo remove
         GameplayEvents.Input.spell2Pressed.AddEventListener(this.OnSpell2);
     }
@@ -57,10 +61,10 @@ public class PlayerController : MonoBehaviour
         GameplayEvents.Input.moveReleased.RemoveEventListener(OnMoveReleased);
         GameplayEvents.Input.crosshairLeftPressed.RemoveEventListener(OnCrosshairLeft);
         GameplayEvents.Input.crosshairRightPressed.RemoveEventListener(OnCrosshairRight);
-        
+
         GameplayEvents.Input.spell1Pressed.AddEventListener(this.OnSpell1);  //todo remove
         GameplayEvents.Input.spell2Pressed.AddEventListener(this.OnSpell2);
-        
+
         bufferedMovement = null;
     }
 
@@ -74,18 +78,20 @@ public class PlayerController : MonoBehaviour
         bufferedMovement = null;
     }
 
-  
+
 
     //todo remove
     //this is temporary; remove when true architecture is out
-    void OnSpell1(System.ValueTuple _) {  //beware of Widget.ValueTuple
+    void OnSpell1(System.ValueTuple _)
+    {  //beware of Widget.ValueTuple
         spellManager.onSpell1(parentUnit);
     }
 
-    private void OnSpell2(System.ValueTuple _) {
+    private void OnSpell2(System.ValueTuple _)
+    {
         spellManager.onSpell2(parentUnit);
     }
-    
+
 
 
     //added by Jordan
@@ -111,7 +117,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void OnMovePressed(Vector2Int moveDir)
     {
-        
+
 
         //movementCooldownTimer and buffer stuff added by Jordan
 
@@ -126,17 +132,17 @@ public class PlayerController : MonoBehaviour
         // // used to check whether the square tile is friendly
         // Vector2Int currentPosition = Vector2Int.RoundToInt(parentUnit.GetPosition());
         // Vector2Int newPosition = currentPosition + moveDir;
-        
+
         bool result = parentUnit.TryMoving(moveDir);
         if (!result) return;
-        
+
 
         movementCooldownTimer = parentUnit.GetMovementTickTimer();
         GridCell cell = parentUnit.GetCurrentCell();
-        
+
         if (cell != null)
             crosshairController.UpdatePosition(cell.GetCellPosition());
-        
+
 
         // IGridSystemView gridView = GridManager.instance;
         // GridCell targetTile = gridView.GetTileAtPosition(newPosition);

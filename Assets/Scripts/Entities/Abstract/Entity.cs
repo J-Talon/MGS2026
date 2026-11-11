@@ -1,6 +1,4 @@
 // Authors: [Jacky, Jeremy, Mark]
-
-
 using UnityEngine;
 
 namespace Entities.Abstract
@@ -29,10 +27,13 @@ namespace Entities.Abstract
         [field: SerializeField] protected float speed = 1f;
         [field: SerializeField] protected float maxLifeSpan = 0f; // 0 means infinite lifespan
         [field: SerializeField] protected float movementTickTimer = 1f;
+        [Range(0f, 1f)][field: SerializeField] protected float movementProficiency = 1f; // a value that determines how successful the enemy is to perform a behaviour (0-1), higher means more likely
+        [Range(0f, 1f)][field: SerializeField] protected float attackProficiency = 1f; // a value that determines how successful the enemy is to perform a behaviour (0-1), higher means more likely
 
         [Header("Runtime Stats")]
         [field: SerializeField] protected float currentHealth; // [field: SerializeField] just to see HP in editor
         public float spawnTime;   //the timestamp when the entity was "spawned"
+        protected float movementCooldownTimer; //a timer that actually keeps track of the remaining time before the next movement
 
         #region instance variables
         // Player position variables
@@ -53,6 +54,10 @@ namespace Entities.Abstract
         public void SetSpeed(float value) { speed = value; }
         public float GetSpeed() { return speed; }
         public float GetMovementTickTimer() { return movementTickTimer; }
+        public float GetMovementCooldownTimer() { return movementCooldownTimer; }
+        public void SetMovementCooldownTimer(float value) { movementCooldownTimer = value; }
+        public float GetMovementProficiency() { return movementProficiency; }
+        public float GetAttackProficiency() { return attackProficiency; }
         public Vector3 GetPosition() { return transform.position; }
         public int GetEntityID() { return entityID; }
 
@@ -66,7 +71,8 @@ namespace Entities.Abstract
         /// <summary>
         /// Common start up for entity
         /// </summary>
-        private void Start() {
+        private void Start()
+        {
             this.OnStart();
         }
 
@@ -114,15 +120,15 @@ namespace Entities.Abstract
         /// 
         /// </summary>
         /// <param name="attackDamage">The amount of damage to take.</param>
-        public virtual bool TakeDamage(float attackDamage)  
+        public virtual bool TakeDamage(float attackDamage)
         {
             if (!isAlive || isInvulnerable || attackDamage <= 0f) return false;
             currentHealth -= attackDamage;
             if (currentHealth <= 0f) Die();
             return true;
         }
-        
-        
+
+
 
         /// <summary>
         /// Modified: Talon J

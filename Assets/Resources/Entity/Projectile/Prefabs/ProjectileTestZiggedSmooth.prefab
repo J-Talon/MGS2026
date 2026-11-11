@@ -50,11 +50,16 @@ MonoBehaviour:
   isInvulnerable: 0
   isFriendly: 0
   isAlive: 1
+  isPlayer: 0
+  isHoldingBoomerang: 1
   maxHealth: 100
   damage: 10
   speed: 1
   maxLifeSpan: 10
   movementTickTimer: 1
+  behaviourProficiency: 1
+  currentHealth: 0
+  spawnTime: 0
 --- !u!114 &298701433461384458
 MonoBehaviour:
   m_ObjectHideFlags: 0

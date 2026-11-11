@@ -22,8 +22,9 @@ namespace Entities.Abstract
         /// Key of entity type to check specific lists for those specific entities
         /// </summary>
         private readonly Dictionary<EntityType, Queue<Entity>> _reservePool;
-
         private readonly Dictionary<int, Entity> _activeEntities;
+        private readonly Dictionary<int, Entity> players = new Dictionary<int, Entity>();
+        public IReadOnlyCollection<Entity> GetPlayers() { return players.Values; }
 
         private EntityManager()
         {
@@ -110,13 +111,15 @@ namespace Entities.Abstract
 
             //Debug.Log("adding " + entity.GetEntityID());
             _activeEntities.Add(entity.GetEntityID(), entity); //add to active dictionary for tracking
+            if (type == EntityType.Player) players.Add(entity.GetEntityID(), entity); // for tracking references to players
             return entity;
         }
 
 
 
         [CanBeNull]
-        public Entity GetEntityById(int id) {
+        public Entity GetEntityById(int id)
+        {
             _activeEntities.TryGetValue(id, out Entity entity);
             return entity;
         }
@@ -128,6 +131,7 @@ namespace Entities.Abstract
         public void ReturnEntity(Entity entity)
         {
             _activeEntities.Remove(entity.GetEntityID()); //remove from active dictionary
+            players.Remove(entity.GetEntityID()); // remove from players dictionary if it is a player entity
 
             //disable and ensure it won't be removed on scene change, etc...
             entity.gameObject.SetActive(false);
@@ -146,6 +150,7 @@ namespace Entities.Abstract
         public void Unregister(Entity entity)
         {
             _activeEntities.Remove(entity.GetEntityID());
+            players.Remove(entity.GetEntityID()); // remove from players dictionary if it is a player entity
         }
 
         #endregion Pooling

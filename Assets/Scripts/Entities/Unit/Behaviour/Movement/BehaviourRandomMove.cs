@@ -10,24 +10,27 @@ namespace Entities.Unit.Behaviour.Movement
 {
     public class BehaviourRandomMove : EntityBehaviour
     {
-        private float movementCooldownTimer = 0f; //a timer that actually keeps track of the remaining time before the next movement
+        public override BehaviourAction BehaviourAction { get; } = BehaviourAction.Move;
+        public override BehaviourType BehaviourType { get; } = BehaviourType.Neutral;
+        public override BehaviourPriority BehaviourPriority { get; } = BehaviourPriority.Low;
 
         // ovverided tick function
-        public override void Tick()
+        public override bool Tick()
         {
             //checks the movementCooldownTimer. If the countdown is greater than 0, continue counting down
-            if (movementCooldownTimer > 0f)
+            if (unit.GetMovementCooldownTimer() > 0f)
             {
-                movementCooldownTimer -= Time.deltaTime;
-                return;
+                unit.SetMovementCooldownTimer(unit.GetMovementCooldownTimer() - Time.deltaTime);
+                return false;
             }
-            movementCooldownTimer = unit.GetMovementTickTimer();
-        
-            RandomlyMove(unit);
+
+            bool attempt = RandomlyMove(unit);
+            if (attempt) unit.SetMovementCooldownTimer(unit.GetMovementTickTimer()); // If successful, reset the cooldown timer
+            return attempt;
         }
 
         // Function for the enemy to make a single random valid move
-        private void RandomlyMove(EntitySentient enemy)
+        private bool RandomlyMove(EntitySentient enemy)
         {
             // list of all possible movements, not all may be valid ones
             List<Func<bool>> movements = new List<Func<bool>>
@@ -51,8 +54,9 @@ namespace Entities.Unit.Behaviour.Movement
                 movements.RemoveAt(movementIndex);
 
                 // if it was valid, that means the enemy has moved and no need to keep looping
-                if (movement()) return;
+                if (movement()) return true;
             }
+            return false;
         }
     }
 }
