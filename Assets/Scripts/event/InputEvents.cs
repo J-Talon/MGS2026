@@ -1,6 +1,7 @@
 // Authors: Farbod
 //edited by - Jordan October 14, 2026
 // edited by - Wilson October 25, 2026
+//edited by - Jordan Nov 08 2026
 
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,7 @@ public class InputEvents : MonoBehaviour
     [SerializeField] private bool debugActions;  // do you want console to output the button data
 
     private Dictionary<InputAction, Vector2Int> movementDirections; //holds the 4 directions we want to move. Grabs the InputAction from the inputactions file and associates it with a direction
+    private Dictionary<InputAction, int> spellDecks;
 
     private void Awake()
     {
@@ -46,7 +48,17 @@ public class InputEvents : MonoBehaviour
             {m_InputManager.Player.MoveLeft, new Vector2Int(-1, 0) },
             {m_InputManager.Player.MoveRight, new Vector2Int(1, 0) },
         };
+
+        spellDecks = new Dictionary<InputAction, int>
+        {
+            {m_InputManager.Player.BasicShot, 0},
+            {m_InputManager.Player.SpawnTurret, 1},
+            {m_InputManager.Player.Spell1, 2},
+            {m_InputManager.Player.Spell2, 3},
+            {m_InputManager.Player.Spell3, 4}
+        };
     }
+
     private void OnDestroy()
     {
         m_InputManager?.Dispose();
@@ -57,9 +69,11 @@ public class InputEvents : MonoBehaviour
     {
         m_InputManager.Player.Interact.performed += OnInteract;
 
-        m_InputManager.Player.Spell1.performed += OnSpell1;
-        m_InputManager.Player.Spell2.performed += OnSpell2;
-        m_InputManager.Player.Spell3.performed += OnSpell3;
+        foreach (InputAction spellAction in spellDecks.Keys)
+        {
+            spellAction.performed += OnSpell;
+        }
+
         m_InputManager.Player.SpawnTurret.performed += OnSpawnTurret;
 
         foreach (InputAction movementAction in movementDirections.Keys)
@@ -79,9 +93,10 @@ public class InputEvents : MonoBehaviour
     {
         m_InputManager.Player.Interact.performed -= OnInteract;
 
-        m_InputManager.Player.Spell1.performed -= OnSpell1;
-        m_InputManager.Player.Spell2.performed -= OnSpell2;
-        m_InputManager.Player.Spell3.performed -= OnSpell3;
+        foreach (InputAction spellAction in spellDecks.Keys)
+        {
+            spellAction.performed -= OnSpell;
+        }
 
         m_InputManager.Player.SpawnTurret.performed -= OnSpawnTurret;
 
@@ -144,22 +159,12 @@ public class InputEvents : MonoBehaviour
         GameplayEvents.Input.interactPressed.CallEvent(ValueTuple.Create());
     }
 
-    private void OnSpell1(InputAction.CallbackContext context)
+    private void OnSpell(InputAction.CallbackContext context)
     {
-        if (debugActions) Debug.Log("Spell1 Activated");
-        GameplayEvents.Input.spell1Pressed.CallEvent(ValueTuple.Create());
-    }
+        if (debugActions) Debug.Log("A Spell Activated");
 
-    private void OnSpell2(InputAction.CallbackContext context)
-    {
-        if (debugActions) Debug.Log("Spell2 Activated");
-        GameplayEvents.Input.spell2Pressed.CallEvent(ValueTuple.Create());
-    }
-
-    private void OnSpell3(InputAction.CallbackContext context)
-    {
-        if (debugActions) Debug.Log("Spell3 Activated");
-        GameplayEvents.Input.spell3Pressed.CallEvent(ValueTuple.Create());
+        int deckNumber = spellDecks[context.action];
+        GameplayEvents.Input.spellPressed.CallEvent(deckNumber);
     }
 
     private void OnSpawnTurret(InputAction.CallbackContext context)
@@ -168,3 +173,11 @@ public class InputEvents : MonoBehaviour
         GameplayEvents.Input.spawnTurretPressed.CallEvent(ValueTuple.Create());
     }
 }
+
+//CHANGELOG
+//
+//Jordan - Nov 08, 2026
+//simplified the movement event stuff so its easier to do stuff here with. Aka the list
+//
+//Jordan - Nov 08, 2026
+//simplified the spell event stuff so its easier if we need more spellDeck and buttons. Aka, the same thing i did for the Oct 14 2026 movement stuff, but for spells. Aka the list
