@@ -33,7 +33,7 @@ public class SpellBeginningLob : SpellActionBeginning
         if (travelTimer < 0 )
         {
             explosion.StartExplosion(castingData.targetGrid, castingData);
-            EndSpell();
+            EndAction();
         } 
     }
 

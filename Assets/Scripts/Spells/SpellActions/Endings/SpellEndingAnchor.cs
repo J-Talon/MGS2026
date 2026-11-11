@@ -12,6 +12,6 @@ public class SpellEndingAnchor : SpellActionEnding
 
     public override void OnPerformAction()
     {
-        EndSpell();
+        EndAction();
     }
 }

@@ -67,7 +67,7 @@ public class Spell
     //tells us if spell is finished being cast
     public bool IsSpellFinished() 
     {
-        return currentAction.IsSpellFinished();
+        return currentAction.IsActionFinished();
     }
 
     //tells us if our movement is locked (aka, we the player cannot move the character)
@@ -79,7 +79,7 @@ public class Spell
     //checks if the beginning action is done, if so, set the currentActionendingAction to 
     private void StartEnding()
     {
-        if (currentAction == beginning && beginning.IsSpellFinished() == true && ending != null)
+        if (currentAction == beginning && beginning.IsActionFinished() == true && ending != null)
         {
             currentAction = ending;
             currentAction.PerformAction();
