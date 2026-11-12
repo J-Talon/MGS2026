@@ -13,16 +13,8 @@ namespace Entities.Unit.Behaviour.Movement
 
         public override bool Tick()
         {
-            //checks the movementCooldownTimer. If the countdown is greater than 0, continue counting down
-            if (unit.GetMovementCooldownTimer() > 0f)
-            {
-                unit.SetMovementCooldownTimer(unit.GetMovementCooldownTimer() - Time.deltaTime);
-                return false;
-            }
-
-            bool attempt = DodgeColumn();
-            if (attempt) unit.SetMovementCooldownTimer(unit.GetMovementTickTimer()); // If successful, reset the cooldown timer
-            return attempt;
+            if (!base.RollProficiency()) return false;
+            return DodgeColumn();
         }
 
         private bool DodgeColumn()

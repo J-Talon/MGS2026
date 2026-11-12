@@ -28,8 +28,6 @@ namespace Entities.Abstract
         [field: SerializeField] protected float speed = 1f;
         [field: SerializeField] protected float maxLifeSpan = 0f; // 0 means infinite lifespan
         [field: SerializeField] protected float movementTickTimer = 1f;
-        [Range(0f, 1f)][field: SerializeField] protected float movementProficiency = 1f; // a value that determines how successful the enemy is to perform a behaviour (0-1), higher means more likely
-        [Range(0f, 1f)][field: SerializeField] protected float attackProficiency = 1f; // a value that determines how successful the enemy is to perform a behaviour (0-1), higher means more likely
 
         [Header("Runtime Stats")]
         [field: SerializeField] protected float currentHealth; // [field: SerializeField] just to see HP in editor
@@ -55,8 +53,7 @@ namespace Entities.Abstract
         public float GetMovementTickTimer() { return movementTickTimer; }
         public float GetMovementCooldownTimer() { return movementCooldownTimer; }
         public void SetMovementCooldownTimer(float value) { movementCooldownTimer = value; }
-        public float GetMovementProficiency() { return movementProficiency; }
-        public float GetAttackProficiency() { return attackProficiency; }
+        public void ResetMovementCooldownTimer() { movementCooldownTimer = movementTickTimer; }
         public Vector3 GetPosition() { return transform.position; }
         public int GetEntityID() { return entityID; }
 

@@ -89,6 +89,12 @@ namespace Entities.Abstract
         public static readonly EntityType UnitTestDodgeAll =
             new EntityType("Entity/Unit/Prefabs/UnitTestDodgeAll", EntityClassification.Unit);
 
+        public static readonly EntityType UnitTestMoveInward =
+            new EntityType("Entity/Unit/Prefabs/UnitTestMoveInward", EntityClassification.Unit);
+
+        public static readonly EntityType UnitTestBuddha =
+            new EntityType("Entity/Unit/Prefabs/UnitTestBuddha", EntityClassification.Unit);
+
         public static readonly EntityType UnitTestDemon =
             new EntityType("Entity/Unit/Prefabs/UnitTestDemon", EntityClassification.Unit);
 
