@@ -55,11 +55,20 @@ public class SpellCaster : MonoBehaviour
     //cast a spell from a deck
     public void CastDeckSpell(int deckIndex)
     {
+        //if player is not allowed to control their character at the moment, then no spell cast
+        if (IsActionable() == false)
+        {
+            return;
+        }
+
         //deck on cooldown, no spell cast
         if (deckCooldowns[deckIndex] > 0f)
         {
             return;
         }
+
+        //cancel any active spells that are of the endless variant
+        CancelEndlessSpells(); 
 
         //grab the spell we gonna use
         SpellCard spellCard = decks[deckIndex].GetCurrentSpell();
@@ -126,5 +135,28 @@ public class SpellCaster : MonoBehaviour
         }
 
         return false;
+    }
+
+    //checks if one of the spells locks player from controlling their character
+    public bool IsActionable()
+    {
+        for (int i = 0; i < activeSpells.Count; i = i + 1)
+        {
+            if (activeSpells[i].IsActionable() == false)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    //if there are any active spells that are of the endless variant (most likely a ShootingStar spell), then finish them. See SpellActionEndless.cs
+    public void CancelEndlessSpells()
+    {
+        for (int i = 0; i < activeSpells.Count; i = i + 1)
+        {
+            activeSpells[i].CancelSpell();
+        }
     }
 }
