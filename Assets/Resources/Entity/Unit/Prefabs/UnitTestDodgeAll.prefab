@@ -110,14 +110,11 @@ MonoBehaviour:
   isFriendly: 0
   isAlive: 1
   isPlayer: 0
-  isHoldingBoomerang: 1
   maxHealth: 100
   damage: 10
   speed: 1
   maxLifeSpan: 0
   movementTickTimer: 5
-  movementProficiency: 1
-  attackProficiency: 1
   currentHealth: 0
   spawnTime: 0
 --- !u!114 &1950990903082159641
@@ -132,6 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6a5c352209b4246a682fc792fdf726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entities.Unit.Behaviour.Movement.BehaviourRandomMove
+  Proficiency: 0.2
 --- !u!114 &6240352860801482530
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -144,6 +142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa540fa099bc7a4f8226c7124c8e0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entities.Unit.Behaviour.Movement.BehaviourDodgeRow
+  Proficiency: 1
 --- !u!114 &4662608593237963761
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,3 +155,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07ff2e50cae684f4eb454332d415d1a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entities.Unit.Behaviour.Movement.BehaviourDodgeColumn
+  Proficiency: 1

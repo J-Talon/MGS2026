@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6a5c352209b4246a682fc792fdf726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entities.Unit.Behaviour.Movement.BehaviourRandomMove
-  Proficiency: 1
+  Proficiency: 0.2
 --- !u!114 &-6972520156513224864
 MonoBehaviour:
   m_ObjectHideFlags: 0

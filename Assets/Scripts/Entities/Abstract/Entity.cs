@@ -81,6 +81,7 @@ namespace Entities.Abstract
             // Debug.Log(entityID);
             currentHealth = maxHealth;
             spawnTime = Time.time;
+            movementCooldownTimer = movementTickTimer;
         }
 
         /// <summary>
