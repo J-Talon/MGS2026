@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 5353037503270121729}
   - component: {fileID: 8051601326255769950}
   - component: {fileID: 998917784521254167}
+  - component: {fileID: -5450025666251046806}
   - component: {fileID: -2448264314187438962}
+  - component: {fileID: -9197601732725314204}
   m_Layer: 0
   m_Name: UnitTestBuddha
   m_TagString: Untagged
@@ -113,7 +115,7 @@ MonoBehaviour:
   damage: 10
   speed: 1
   maxLifeSpan: 0
-  movementTickTimer: 5
+  movementTickTimer: 1
   currentHealth: 0
   spawnTime: 0
 --- !u!114 &998917784521254167
@@ -128,6 +130,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6a5c352209b4246a682fc792fdf726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entities.Unit.Behaviour.Movement.BehaviourRandomMove
+  Proficiency: 0.2
+--- !u!114 &-5450025666251046806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8447654008913998862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc50d896d11c348459d4e2305dff000b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Entities.Unit.Behaviour.Movement.BehaviourMoveInward
+  Proficiency: 1
 --- !u!114 &-2448264314187438962
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,3 +156,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfa540fa099bc7a4f8226c7124c8e0ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Entities.Unit.Behaviour.Movement.BehaviourDodgeRow
+  Proficiency: 1
+--- !u!114 &-9197601732725314204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8447654008913998862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07ff2e50cae684f4eb454332d415d1a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Entities.Unit.Behaviour.Movement.BehaviourDodgeColumn
+  Proficiency: 1

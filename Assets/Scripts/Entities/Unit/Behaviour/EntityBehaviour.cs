@@ -54,7 +54,7 @@ namespace Entities.Unit.Behaviour
         public bool RollProficiency()
         {
             float roll = Random.Range(0f, 1f);
-            Debug.Log($"Rolling for proficiency: {Proficiency}, rolled: {roll}");
+            // Debug.Log($"Rolling for proficiency: {Proficiency}, rolled: {roll}");
             if (roll <= Proficiency) return true;
             return false;
         }
