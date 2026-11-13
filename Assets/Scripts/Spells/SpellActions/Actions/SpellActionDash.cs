@@ -3,63 +3,54 @@
 using UnityEngine;
 
 //dashing forward
-public class SpellBeginningDash : SpellActionBeginning
+public class SpellActionDash : SpellAction
 {
     //time it takes to reach the targetGrid
     //maybe better to replace with a speed, because its always the same duration no matter distance, it looks really slow for closer distance targets
     private float travelTime; 
     private float travelTimer; //timer to help with teh above
-    private float slashDelay; //time it takes before the slash happens (after the travelling)
-    private float slashTimer; //timer to help with the above
+    private Vector2 startPosition; //tracks the startingPosition (mostly for chaining dashes, so the the code knows where to do teh Lerp stuff on the player thats already away from origin)
 
     //set the stuff from the settings. See DashSettings.cs
-    public SpellBeginningDash(DashSettings dashSettings)
+    public SpellActionDash(DashSettings dashSettings)
     {
         travelTime = dashSettings.travelTime;
-        slashDelay = dashSettings.slashDelay;
     }
 
-    //more setting of stuff, overriden function, see SpellAction.cs and SpellActionBeginning.cs
+    //more setting of stuff, overriden function, see SpellAction.cs
     public override void OnPerformAction()
     {
+        SetTargetGrid();
         travelTimer = travelTime;
-        slashTimer = slashDelay;
+        startPosition = castingData.spellCaster.transform.position;
     }
 
     //more setting of stuff, overriden function, see SpellAction.cs
     public override void OnTick()
     {
         //do the time stuff for the travelling
-        if (travelTimer > 0)
-        {
-            travelTimer = travelTimer - Time.deltaTime;
-            Dash();
-        }
+        travelTimer = travelTimer - Time.deltaTime;
+        Dash();
 
         //travelling is done, now do the time stuff for the startupDelay of the slash
-        else
+        if (travelTimer <= 0f)
         {
-            slashTimer = slashTimer - Time.deltaTime;
-
-            if (slashTimer <= 0f)
-            {
-                explosion.StartExplosion(castingData.targetGrid, castingData); //call explosion
-                EndAction(); //set end flag
-            }
+            EndAction(); //set end flag
         }
     }
 
-    //override the IsMovementLocked() to instead check if the entire action itself is still running or not. If still going, lockMovement, if not you can move
-    public override bool IsMovementLocked()
+    //override the IsActionable() to instead check if the entire action itself is still running or not. If still going, stop player from controlling, if not you can control them
+    //does not apply to reticle movement
+    public override bool IsActionable()
     {
         if (IsActionFinished() == false)
         {
-            return true;
+            return false;
         }
 
         else
         {
-            return false;
+            return true;
         }
     }
 
@@ -69,6 +60,6 @@ public class SpellBeginningDash : SpellActionBeginning
     {
         float lerpTime = 1f - (travelTimer / travelTime);
 
-        castingData.spellCaster.transform.position = Vector2.Lerp(castingData.casterGrid, castingData.targetGrid - castingData.direction, lerpTime);
+        castingData.spellCaster.transform.position = Vector2.Lerp(startPosition, castingData.targetGrid - castingData.direction, lerpTime);
     }
 }

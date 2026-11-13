@@ -1,46 +1,31 @@
 //author - Jordan -> Nov 08, 2026
 
 using Entities.Unit;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Spell
 {
     //this is a spell wrapper thing
 
-    //beginning action
-    //basically what the player does before the actual attack/explosion happens (like the lob, dash forward, etc). Check SpellActionBeginning.cs and SpellAction.cs
-    private SpellActionBeginning beginning;
-
-    //ending action
-    //basically what the player does after the actual attack/explosion happens (like a dash back, anchoring movement, etc). Check SpellActionEnding.cs and SpellAction.cs
-    private SpellActionEnding ending; 
-
-    private SpellAction currentAction; //the current performing action. It will be set to either of the 2 variables above, when its their turn to perform.
-
+    private List<SpellAction> actionList; //a list tht holds all the actions
+    private int actionIndex = 0; //keeps track of where in the actionList we are
+    private SpellAction currentAction; //the current performing action
     private SpellCastingData castingData; //data relating to teh spellCaster (aka the unit who uses the spells). Check SpellCastingData.cs
 
     //the makings of a spell.
-    //a spell is composed of a beginning action (mandatory), an explosion (optional), and an ending (optional).
-    //think of the spell being made up of the windup before the attack, the attack itself, and the accompanying finishing after the fact
+    //a spell is composed of a a List of Actions, see SpellAction.cs and the related folders.
+    //think of the spell being split into multiple parts/components where each action is each specific thing the spell does throughout
     //it uses SpellCastingData to determine certain factors (like direction)
-    public Spell(SpellActionBeginning spellBeginning, SpellActionEnding spellEnding, SpellCastingData spellCastingData, SpellExplosion spellExplosion) 
+    public Spell(List<SpellAction> spellActions, SpellCastingData spellCastingData) 
     {
         //set stuff
-        beginning = spellBeginning;
-        ending = spellEnding;
+        actionList = spellActions;
         castingData = spellCastingData;
 
-        beginning.SetCastingData(castingData);
-
-        if (spellExplosion != null )
+        for (int i = 0; i < actionList.Count; i = i + 1)
         {
-            beginning.SetExplosion(spellExplosion);
-        }
-
-        if (ending != null)
-        {
-            ending.SetCastingData(castingData);
-            //ending.SetExplosion(spellExplosion);
+            actionList[i].SetCastingData(castingData);
         }
     }
 
@@ -50,18 +35,16 @@ public class Spell
         //set stuff
         castingData.SetSpellCaster(spellCaster, crosshair);
 
-        //sets the currentAction to beginningAction and does it, go figure
-        currentAction = beginning;
+        actionIndex = 0;
+        currentAction = actionList[0]; //sets currentAction to the start of the list
         currentAction.PerformAction();
-
-        //safeguard cause theres a frame where the ending doesnt get called, leaving a slight gap, so it calls here just in case
-        StartEnding();
+        StartNextAction();
     }
 
     public void Tick() //calls the action tick
     {
         currentAction.Tick();
-        StartEnding(); //start endingAction when its time for it
+        StartNextAction(); //start endingAction when its time for it
     }
 
     //tells us if spell is finished being cast
@@ -76,12 +59,28 @@ public class Spell
         return currentAction.IsMovementLocked();
     }
 
-    //checks if the beginning action is done, if so, set the currentActionendingAction to 
-    private void StartEnding()
+    //tells us if the player can or cannot do stuff with the player character (besides move the reticle). Aka, can they move, shoot, etc.
+    public bool IsActionable()
     {
-        if (currentAction == beginning && beginning.IsActionFinished() == true && ending != null)
+        return currentAction.IsActionable();
+    }
+
+    //tells us if the spell can be cancelled via doing anything with the player character, like move, shoot, etc. Does not count moving the reticle
+    public void CancelSpell()
+    {
+        if (currentAction.IsCancelledOnAction() == true)
         {
-            currentAction = ending;
+            currentAction.EndAction();
+        }
+    }
+
+    //tries to start the next action if the current one is done (assuming there is another action to do)
+    public void StartNextAction()
+    {
+        while (currentAction.IsActionFinished() == true && actionIndex < actionList.Count - 1)
+        {
+            actionIndex = actionIndex + 1;
+            currentAction = actionList[actionIndex];
             currentAction.PerformAction();
         }
     }

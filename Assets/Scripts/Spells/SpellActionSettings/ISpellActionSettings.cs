@@ -3,7 +3,7 @@
 using UnityEngine;
 
 //interface. Fancy spells probs need to make their own thing based off this to hold their special specific parameters
-public interface ISpellBeginningSettings
+public interface ISpellActionSettings
 {
-    SpellActionBeginning CreateBeginning();
+    SpellAction CreateAction(); //create action using this settings
 }
