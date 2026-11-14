@@ -12,11 +12,12 @@ namespace Entities.Unit.Behaviour.Movement.Base.Smooth
     public abstract class UnitMoveSmooth : EntityBehaviour
     {
 
-        public override void Tick()
+        public override bool Tick()
         {
             this.unit.MoveUnitSmooth(MovementRoutine());
+            return true; // Always return true since smooth movement is continuous and does not have a cooldown
         }
-        
+
         /// <summary>
         /// The actual movement behaviour to be implemented in a concrete class implementation.
         /// </summary>
