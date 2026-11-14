@@ -6,7 +6,7 @@ using UnityEngine;
 
 //beginning action
 //for placing a turret in front of the player, basically only for the turret, go figure
-public class SpellBeginningPlaceTurret : SpellActionBeginning
+public class SpellActionPlaceTurret : SpellAction
 {
     public override void OnPerformAction()
     {

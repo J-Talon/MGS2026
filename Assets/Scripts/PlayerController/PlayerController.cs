@@ -100,7 +100,11 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     public void OnMovePressed(Vector2Int moveDir)
     {
-        if (spellCaster.IsMovementLocked() == true)
+        //if there are any endless spells (aka ShootingStar spells), cancel because you just tried to move
+        spellCaster.CancelEndlessSpells();
+
+        //if your movement is locked or player is not allowed to control their character because of the spell, block the movement attempt
+        if (spellCaster.IsMovementLocked() == true || spellCaster.IsActionable() == false)
         {
             Debug.Log("Movement Locked");
             return;

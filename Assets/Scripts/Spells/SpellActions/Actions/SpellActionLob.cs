@@ -5,14 +5,14 @@ using Entities.Projectile.ProjectileTypes;
 using UnityEngine;
 
 //lobbing, so when the player needs to lob a projectile. Kinda hard coded for bomb for now, whoops
-public class SpellBeginningLob : SpellActionBeginning
+public class SpellActionLob : SpellAction
 {
     private float travelTime; //time taken for bomb to travel to its destination
     private float travelTimer; //timer to help with teh above
     private float directDamage; //the lob itself dealing damage when it lands on an enemy (not the explosion, think of extra damage from the bomb itself bonking on top your head)
-    
-    //sets the info needed (see ISpellBeginningSettings.cs and LobSettings.cs)
-    public SpellBeginningLob(LobSettings lobSettings)
+
+    //set the stuff from the settings. See LobSettings.cs
+    public SpellActionLob(LobSettings lobSettings)
     {
         travelTime = lobSettings.travelTime;
         directDamage = lobSettings.directDamage;
@@ -21,6 +21,7 @@ public class SpellBeginningLob : SpellActionBeginning
     //overrides the func from SpellAction.cs. Sets the timer and makes the bomb projectile
     public override void OnPerformAction()
     {
+        SetTargetGrid();
         MakeBomb();
         travelTimer = travelTime;
     }
@@ -30,9 +31,8 @@ public class SpellBeginningLob : SpellActionBeginning
     {
         travelTimer = travelTimer - Time.deltaTime;
 
-        if (travelTimer < 0 )
+        if (travelTimer < 0f)
         {
-            explosion.StartExplosion(castingData.targetGrid, castingData);
             EndAction();
         } 
     }
