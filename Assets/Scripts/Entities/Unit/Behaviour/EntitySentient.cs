@@ -73,7 +73,11 @@ namespace Entities.Unit.Behaviour
             foreach (BehaviourPriority priority in System.Enum.GetValues(typeof(BehaviourPriority)))
             {
                 List<Func<bool>> behaviours = new List<Func<bool>>();
-                foreach (EntityBehaviour behaviour in behavioursDict[priority]) behaviours.Add(behaviour.Tick);
+                foreach (EntityBehaviour behaviour in behavioursDict[priority])
+                {
+                    // Add to list if component is enabled
+                    if (behaviour.enabled) behaviours.Add(behaviour.Tick);
+                }
 
                 while (behaviours.Count > 0)
                 {

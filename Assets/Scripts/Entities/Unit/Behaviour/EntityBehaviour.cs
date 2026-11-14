@@ -34,10 +34,13 @@ namespace Entities.Unit.Behaviour
     public abstract class EntityBehaviour : MonoBehaviour
     {
         protected EntitySentient unit;
+        [Range(0f, 1f)] public float Proficiency = 1f;
+
+        // Define these in your subclasses. Otherwise default to below. See movement behaviours as examples.
+        [Header("Classifications")]
         public virtual BehaviourAction BehaviourAction { get; } = BehaviourAction.None;
         public virtual BehaviourType BehaviourType { get; } = BehaviourType.Neutral;
         public virtual BehaviourPriority BehaviourPriority { get; } = BehaviourPriority.Medium;
-        [Range(0f, 1f)] public float Proficiency = 1f;
 
         private void Awake()
         {
