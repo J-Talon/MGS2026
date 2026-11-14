@@ -107,14 +107,16 @@ MonoBehaviour:
   isInvulnerable: 0
   isFriendly: 0
   isAlive: 1
+  isPlayer: 0
+  isHoldingBoomerang: 1
   maxHealth: 100
   damage: 10
   speed: 1
   maxLifeSpan: 0
   movementTickTimer: 1
+  behaviourProficiency: 1
+  currentHealth: 0
   spawnTime: 0
-  ebehaviours:
-  - {fileID: 625528679891546255}
 --- !u!114 &625528679891546255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -127,3 +129,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6a5c352209b4246a682fc792fdf726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyRandomMovement
+  behaviourType: 1
+  behaviourPriority: 2

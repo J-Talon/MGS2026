@@ -22,18 +22,19 @@ public class PlayerController : MonoBehaviour
 {
     protected EntityUnit parentUnit;
     protected CrosshairController crosshairController;
+    public Vector2Int GetCrosshairPosition() { return crosshairController.GetPosition(); }
     private float movementCooldownTimer = 0f; //a timer that actually keeps track of the remaining time before the next movement
     private SpellCaster spellCaster;
 
     public void Awake()
     {
         spellCaster = GetComponent<SpellCaster>();
+        crosshairController = new CrosshairController(new Vector2(5, 0));
     }
 
     void Start()
     {
         parentUnit = GetComponent<EntityUnit>();
-        crosshairController = new CrosshairController(new Vector2(5,0));
         spellCaster.SetCrossHair(crosshairController);
     }
 
@@ -117,17 +118,17 @@ public class PlayerController : MonoBehaviour
         // // used to check whether the square tile is friendly
         // Vector2Int currentPosition = Vector2Int.RoundToInt(parentUnit.GetPosition());
         // Vector2Int newPosition = currentPosition + moveDir;
-        
+
         bool result = parentUnit.TryMoving(moveDir);
         if (!result) return;
-        
+
 
         movementCooldownTimer = parentUnit.GetMovementTickTimer();
         GridCell cell = parentUnit.GetCurrentCell();
-        
+
         if (cell != null)
             crosshairController.UpdatePosition(cell.GetCellPosition());
-        
+
 
         // IGridSystemView gridView = GridManager.instance;
         // GridCell targetTile = gridView.GetTileAtPosition(newPosition);
