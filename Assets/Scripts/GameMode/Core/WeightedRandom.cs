@@ -13,7 +13,6 @@ namespace Gameplay.Core
     public class WeightedRandom<T>
     {
         private readonly List<WeightedItem<T>> items = new();
-        private readonly System.Random rand;
         private double totalWeight = 0;
         public int Count() {return items.Count;}
         public IReadOnlyList<WeightedItem<T>> GetItems() {return items;}
@@ -21,7 +20,6 @@ namespace Gameplay.Core
         public WeightedRandom(List<WeightedItem<T>> items)
         {
             this.items = items;
-            rand = new System.Random();
             if (items == null || items.Count == 0) {return;}
                 //throw new IllegalArgumentException("Items must not be null and must at least have 1 item within");
         }

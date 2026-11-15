@@ -102,7 +102,7 @@ public abstract class Wave
         spawnList.Clear();
     }
 
-    // Gets the next entity to be spawned
+    // Gets the next entity to be spawned and should handle the spawning (call the entity manager)
     public abstract EntityUnit getNextSpawn();
 
     public void Tick()
