@@ -20,8 +20,6 @@ namespace Gameplay.Core
         public WeightedRandom(List<WeightedItem<T>> items)
         {
             this.items = items;
-            if (items == null || items.Count == 0) {return;}
-                //throw new IllegalArgumentException("Items must not be null and must at least have 1 item within");
         }
 
         // Add into the weighted random
