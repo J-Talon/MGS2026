@@ -128,7 +128,11 @@ namespace Gameplay.Wave
                     if (!entity.isActiveAndEnabled)
                     {
                         activeEntities.Remove(entity);
-                        activeEntities.Add(getNextSpawn());
+                        var next = getNextSpawn();
+                        if (next != null)
+                        {
+                            activeEntities.Add(next);
+                        }
                     }
                 }
                 
