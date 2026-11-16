@@ -6,6 +6,9 @@ using JetBrains.Annotations;
 using Particle.Base;
 using UnityEngine;
 
+// Editor: Daniel
+using TMPro;
+
 /// <summary>
 /// Grid based explosion resolved in layers:                                        <br></br>
 /// 1) Cell allocator - pattern offsets to existing GridCells                       <br></br>
@@ -24,6 +27,9 @@ public class Explosion
     private readonly ExplosionPattern _pattern;
     private readonly ParticleType _vfx;
     private readonly IExplosionMutator _mutator;
+
+    // Enable to view damage in debug mode
+    private const bool debugViewDamage = true;
 
     public Vector2Int Center { get; }
     [CanBeNull] public Entity Source { get; }
@@ -103,6 +109,18 @@ public class Explosion
         {
             Vector2Int position = cell.GetCellPosition();
             _vfx.Play(position.x, position.y, VfxDepth);
+
+            // DEBUG: View damage applied to each cell
+            if (debugViewDamage)
+            {
+                GameObject debugDamage = new GameObject($"{Damage}");
+                debugDamage.transform.SetParent(cell.transform, false);
+                TextMeshPro debugDamageText = debugDamage.AddComponent<TextMeshPro>();
+                debugDamageText.text = $"{Damage}";
+                debugDamageText.GetComponent<RectTransform>().sizeDelta = new Vector2(1f, 1f);
+                debugDamageText.fontSize = 8f;
+                Object.Destroy(debugDamage, 2f);
+            }
         }
     }
 }
