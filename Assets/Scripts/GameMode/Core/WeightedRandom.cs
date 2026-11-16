@@ -12,13 +12,14 @@ namespace Gameplay.Core
     // - getNextItem
     public class WeightedRandom<T>
     {
-        private readonly List<WeightedItem<T>> items = new();
+        private readonly List<WeightedItem<T>> items;
         private double totalWeight = 0;
         public int Count() {return items.Count;}
         public IReadOnlyList<WeightedItem<T>> GetItems() {return items;}
 
-        public WeightedRandom(List<WeightedItem<T>> items)
+        public WeightedRandom(List<WeightedItem<T>> items = null)
         {
+            items ??= new();
             this.items = items;
         }
 
@@ -34,6 +35,8 @@ namespace Gameplay.Core
         // overloaded because it will get annoying.
         public void Add(T item, double weight)
         {
+            if (item == null) {return;}
+            
             WeightedItem<T> i = new WeightedItem<T>(item, weight);
             Add(i);
         }
