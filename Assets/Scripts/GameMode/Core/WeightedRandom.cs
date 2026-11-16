@@ -19,8 +19,7 @@ namespace Gameplay.Core
 
         public WeightedRandom(List<WeightedItem<T>> items = null)
         {
-            items ??= new();
-            this.items = items;
+            this.items = items ?? new();
         }
 
         // Add into the weighted random
