@@ -96,7 +96,25 @@ public class Explosion
     private void ApplyDamage()
     {
         foreach (EntityUnit unit in Units)
+        {
             unit.TakeDamage(Damage);
+
+            // DEBUG: View damage applied to each unit
+            if (debugViewDamage)
+            {
+                GameObject debugDamage = new GameObject($"{Damage}");
+                debugDamage.transform.SetParent(unit.transform, false);
+
+                TextMeshPro debugDamageText = debugDamage.AddComponent<TextMeshPro>();
+                debugDamageText.text = $"{Damage}";
+                debugDamageText.GetComponent<RectTransform>().sizeDelta = new Vector2(1f, 1f);
+                debugDamageText.fontSize = 8f;
+                debugDamageText.color = Color.black;
+                debugDamageText.sortingOrder = 99;
+
+                Object.Destroy(debugDamage, 2f);
+            }
+        }
     }
 
     /// <summary>
@@ -109,18 +127,6 @@ public class Explosion
         {
             Vector2Int position = cell.GetCellPosition();
             _vfx.Play(position.x, position.y, VfxDepth);
-
-            // DEBUG: View damage applied to each cell
-            if (debugViewDamage)
-            {
-                GameObject debugDamage = new GameObject($"{Damage}");
-                debugDamage.transform.SetParent(cell.transform, false);
-                TextMeshPro debugDamageText = debugDamage.AddComponent<TextMeshPro>();
-                debugDamageText.text = $"{Damage}";
-                debugDamageText.GetComponent<RectTransform>().sizeDelta = new Vector2(1f, 1f);
-                debugDamageText.fontSize = 8f;
-                Object.Destroy(debugDamage, 2f);
-            }
         }
     }
 }
