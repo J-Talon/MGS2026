@@ -80,12 +80,32 @@ public class TestExplosion : MonoBehaviour
             // ).Detonate();
 
             // Quad 2, 2
+            // new Explosion(
+            //     new ExplosionPatternQuad(2, 2),
+            //     selectedCell.GetCellPosition(),
+            //     Particle.Base.ParticleType.SPARK,
+            //     new MutatorDamageScale(2f),
+            //     1f,
+            //     null
+            // ).Detonate();
+
+            // Ranged Quad 2, 2; Decreases from center
+            // new Explosion(
+            //     new ExplosionPatternQuad(2, 2),
+            //     selectedCell.GetCellPosition(),
+            //     Particle.Base.ParticleType.SPARK,
+            //     new MutatorDamageRange(1f, null, -2f),
+            //     6f,
+            //     null
+            // ).Detonate();
+
+            // Ranged Quad 2, 2; Increases from center
             new Explosion(
                 new ExplosionPatternQuad(2, 2),
                 selectedCell.GetCellPosition(),
                 Particle.Base.ParticleType.SPARK,
-                new MutatorDamageScale(2f),
-                1f,
+                new MutatorDamageRange(1f, 6f, 2f),
+                2f,
                 null
             ).Detonate();
 
