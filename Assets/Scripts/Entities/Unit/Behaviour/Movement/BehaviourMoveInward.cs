@@ -13,7 +13,7 @@ namespace Entities.Unit.Behaviour.Movement
 
         public override bool Tick()
         {
-            if (!base.RollProficiency()) return false;
+            if (!RollProficiency()) return false;
             return MoveInward();
         }
 
@@ -24,39 +24,45 @@ namespace Entities.Unit.Behaviour.Movement
         /// <returns></returns>
         private bool MoveInward([CanBeNull] Vector2Int? target = null)
         {
+            // current entities' position (rounded)
             Vector2Int currentPosition = Vector2Int.RoundToInt(unit.GetPosition());
+
+            // bounds of where enemies can move
             (Vector2Int bottomLeft, Vector2Int topRight) = gridManager.GetEnemyGridBounds();
+
+            // center of enemy gridspace
             Vector2Int centerPosition = new Vector2Int((bottomLeft.x + topRight.x) / 2, (bottomLeft.y + topRight.y) / 2);
+
+            // direction from the center of enemy gridspace to the current entities position
             Vector2Int direction = new Vector2Int(centerPosition.x - currentPosition.x, centerPosition.y - currentPosition.y);
 
-            bool attempt = false;
+            bool moved = false;
             bool moveHorizontallyFirst = Random.value < 0.5f;
             if (moveHorizontallyFirst)
             {
-                if (direction.x > 0) attempt = unit.MoveRight();
-                else if (direction.x < 0) attempt = unit.MoveLeft();
+                if (direction.x > 0) moved = unit.MoveRight();
+                else if (direction.x < 0) moved = unit.MoveLeft();
 
                 // If the horizontal move was not successful, try vertical move
-                if (!attempt)
+                if (!moved)
                 {
-                    if (direction.y > 0) attempt = unit.MoveUp();
-                    else if (direction.y < 0) attempt = unit.MoveDown();
+                    if (direction.y > 0) moved = unit.MoveUp();
+                    else if (direction.y < 0) moved = unit.MoveDown();
                 }
             }
             else
             {
-                if (direction.y > 0) attempt = unit.MoveUp();
-                else if (direction.y < 0) attempt = unit.MoveDown();
+                if (direction.y > 0) moved = unit.MoveUp();
+                else if (direction.y < 0) moved = unit.MoveDown();
 
                 // If the vertical move was not successful, try horizontal move
-                if (!attempt)
+                if (!moved)
                 {
-                    if (direction.x > 0) attempt = unit.MoveRight();
-                    else if (direction.x < 0) attempt = unit.MoveLeft();
+                    if (direction.x > 0) moved = unit.MoveRight();
+                    else if (direction.x < 0) moved = unit.MoveLeft();
                 }
             }
-
-            return attempt;
+            return moved;
         }
     }
 }

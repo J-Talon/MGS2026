@@ -12,11 +12,11 @@ namespace Entities.Unit.Behaviour.Movement
         public override BehaviourType BehaviourType { get; } = BehaviourType.Neutral;
         public override BehaviourPriority BehaviourPriority { get; } = BehaviourPriority.Medium;
         private readonly IGridSystemView gridManager = GridManager.instance;
-        public int searchRange = 2;
+        public int searchRange = 2; // search range for coldest cell
 
         public override bool Tick()
         {
-            if (!base.RollProficiency()) return false;
+            if (!RollProficiency()) return false;
             return MoveSpaceOut();
         }
 
@@ -34,6 +34,8 @@ namespace Entities.Unit.Behaviour.Movement
 
         /// <summary>
         /// Create heatmap of enemy units within enemy bounds
+        /// a cell is considered cold if there is a lack of enemy presence
+        /// a cell is considered hot if there is increased enemy presence
         /// </summary>
         /// <returns></returns>
         private int[,] CreateHeatMap()
@@ -142,19 +144,20 @@ namespace Entities.Unit.Behaviour.Movement
                 cells.Clear();
                 cells.Add(index);
             }
-            else if (heat == coldest) // tie: keep both
-            {
-                cells.Add(index);
-            }
+            else if (heat == coldest) cells.Add(index); // tie: keep both 
         }
-
 
         /// <summary>
         /// Try to add to the heatmap
         /// </summary>
-        private void AddToHeatmap(int[,] heatmap, int x, int y, int val)
+        private bool AddToHeatmap(int[,] heatmap, int x, int y, int val)
         {
-            if (InHeatmap(heatmap, x, y)) heatmap[x, y] += val;
+            if (InHeatmap(heatmap, x, y)) 
+            {
+                heatmap[x, y] += val;
+                return true;
+            }
+            return false;
         }
 
         /// <summary>
@@ -188,6 +191,7 @@ namespace Entities.Unit.Behaviour.Movement
             return false;
         }
 
+        // debug purposes
         // public void Print2DArray<T>(T[,] array)
         // {
         //     StringBuilder sb = new StringBuilder();
