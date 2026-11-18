@@ -7,7 +7,7 @@ using UnityEngine;
 //beginning action
 //for shooting a pea out from the player, basically only for the basicShot
 //rename this later, i chose a trash ass name
-public class SpellBeginningShoot : SpellActionBeginning
+public class SpellActionShoot : SpellAction
 {
     public override void OnPerformAction()
     {

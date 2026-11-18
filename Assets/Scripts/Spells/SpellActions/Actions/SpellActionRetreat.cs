@@ -3,29 +3,25 @@
 using UnityEngine;
 
 //retreating back
-public class SpellEndingRetreat : SpellActionEnding
+public class SpellActionRetreat : SpellAction
 {
-    
-    public float retreatDelay; //time delay that freezes the player before they retreat
-
     //time it takes to reach the casterGrid
     //maybe better to replace with a speed, because its always the same duration no matter distance, it looks really slow for closer distance targets
     public float travelTime;
     public float travelTimer; //timer that helps the above
+    private Vector2 startPosition; //tracks the starting position
 
     //set the stuff from the settings. See RetreatSettings.cs
-    public SpellEndingRetreat(RetreatSettings retreatSettings)
+    public SpellActionRetreat(RetreatSettings retreatSettings)
     {
-        retreatDelay = retreatSettings.retreatDelay;
         travelTime = retreatSettings.travelTime;
-
-        SetStartupDelay(retreatDelay); //func from SpellAction.cs
     }
 
-    //more setting of stuff, overriden function, see SpellAction.cs and SpellActionEnding.cs
+    //more setting of stuff, overriden function, see SpellAction.cs
     public override void OnPerformAction()
     {
         travelTimer = travelTime;
+        startPosition = castingData.spellCaster.transform.position;
     }
 
     //more setting of stuff, overriden function, see SpellAction.cs
@@ -42,17 +38,18 @@ public class SpellEndingRetreat : SpellActionEnding
         }
     }
 
-    //override the IsMovementLocked() to instead check if the entire action itself is still running or not. If still going, lockMovement, if not you can move
-    public override bool IsMovementLocked()
+    //override the IsActionable() to instead check if the entire action itself is still running or not. If still going, stop player from controlling, if not you can control them
+    //does not apply to reticle movement
+    public override bool IsActionable()
     {
         if (IsActionFinished() == false)
         {
-            return true;
+            return false;
         }
 
         else
         {
-            return false;
+            return true;
         }
     }
 
@@ -62,6 +59,6 @@ public class SpellEndingRetreat : SpellActionEnding
     {
         float lerpTime = 1f - (travelTimer / travelTime);
 
-        castingData.spellCaster.transform.position = Vector2.Lerp(castingData.targetGrid - castingData.direction, castingData.casterGrid, lerpTime);
+        castingData.spellCaster.transform.position = Vector2.Lerp(startPosition, castingData.casterGrid, lerpTime);
     }
 }

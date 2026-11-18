@@ -36,6 +36,9 @@ namespace Entities.Unit.Behaviour
     public abstract class EntityBehaviour : MonoBehaviour
     {
         protected EntitySentient unit;
+
+        // Define these in your subclasses. Otherwise default to below. See movement behaviours as examples.
+        [Header("Classifications")]
         public virtual BehaviourAction BehaviourAction { get; } = BehaviourAction.None;
         public virtual BehaviourType BehaviourType { get; } = BehaviourType.Neutral;
         public virtual BehaviourPriority BehaviourPriority { get; } = BehaviourPriority.Medium;

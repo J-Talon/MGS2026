@@ -1,27 +1,21 @@
 //author - Jordan -> Nov 08, 2026
 
+using System.Collections.Generic;
 using UnityEngine;
 
 //this a helper, aka a builder that makes the spells. 
 public class SpellBuilder
 {
-    //the spellCard holding the settings for the beginning, explosion, and ending are built into a usable spell here. Also direction is set)
+    //the spellCard holds the list of settings that are then built into a usable spell here. Also direction is set)
     public static Spell CreateSpell(SpellCard spellCard, Vector2Int direction)
     {
-        //build the beginning - see ISpellBeginningSettings
-        SpellActionBeginning beginning = spellCard.beginningSettings.CreateBeginning();
+        List<SpellAction> actionList = new List<SpellAction>();
 
-
-        //build the ending, if it exists - see ISpellEndingSettings
-        SpellActionEnding ending = null;
-
-        if (spellCard.endingSettings != null)
+        for (int i = 0; i < spellCard.actionSettings.Count; i = i + 1)
         {
-            ending = spellCard.endingSettings.CreateEnding();
+            actionList.Add(spellCard.actionSettings[i].CreateAction());
         }
 
-        //set the startupDelay, and return the built Spell
-        beginning.SetStartupDelay(spellCard.startupDelay);
-        return new Spell(beginning, ending, new SpellCastingData(direction), spellCard.explosion);
+        return new Spell(actionList, new SpellCastingData(direction));
     }
 }
