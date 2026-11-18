@@ -71,13 +71,20 @@ public class TestExplosion : MonoBehaviour
 
             // Laser down 2
             // new Explosion(
-            //     new ExplosionPatternLaser(Vector2Int.down, 2),
+            //     new ExplosionPatternLazer(Vector2Int.down, 2),
             //     selectedCell.GetCellPosition(),
             //     Particle.Base.ParticleType.SPARK,
             //     new MutatorDamageScale(2f),
             //     1f,
             //     null
             // ).Detonate();
+
+            // Player Laser
+            ExplosionLaserPlayer.Create(
+                selectedCell.GetCellPosition(),
+                3f,
+                null
+            ).Detonate();
 
             // Quad 2, 2
             // new Explosion(
@@ -100,14 +107,14 @@ public class TestExplosion : MonoBehaviour
             // ).Detonate();
 
             // Ranged Quad 2, 2; Increases from center
-            new Explosion(
-                new ExplosionPatternQuad(2, 2),
-                selectedCell.GetCellPosition(),
-                Particle.Base.ParticleType.SPARK,
-                new MutatorDamageRange(1f, 6f, 2f),
-                2f,
-                null
-            ).Detonate();
+            // new Explosion(
+            //     new ExplosionPatternQuad(2, 2),
+            //     selectedCell.GetCellPosition(),
+            //     Particle.Base.ParticleType.SPARK,
+            //     new MutatorDamageRange(1f, 6f, 2f),
+            //     2f,
+            //     null
+            // ).Detonate();
 
             selectedCell = null;
         }
