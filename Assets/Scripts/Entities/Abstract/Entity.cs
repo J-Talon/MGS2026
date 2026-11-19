@@ -32,6 +32,7 @@ namespace Entities.Abstract
         [Header("Runtime Stats")]
         [field: SerializeField] protected float currentHealth; // [field: SerializeField] just to see HP in editor
         public float spawnTime;   //the timestamp when the entity was "spawned"
+        protected float movementCooldownTimer; //a timer that actually keeps track of the remaining time before the next movement
 
         #region instance variables
         // Player position variables
@@ -50,6 +51,9 @@ namespace Entities.Abstract
         public void SetSpeed(float value) { speed = value; }
         public float GetSpeed() { return speed; }
         public float GetMovementTickTimer() { return movementTickTimer; }
+        public float GetMovementCooldownTimer() { return movementCooldownTimer; }
+        public void SetMovementCooldownTimer(float value) { movementCooldownTimer = value; }
+        public void ResetMovementCooldownTimer() { movementCooldownTimer = movementTickTimer; }
         public Vector3 GetPosition() { return transform.position; }
         public int GetEntityID() { return entityID; }
 
@@ -63,7 +67,8 @@ namespace Entities.Abstract
         /// <summary>
         /// Common start up for entity
         /// </summary>
-        private void Start() {
+        private void Start()
+        {
             this.OnStart();
         }
 
@@ -76,6 +81,7 @@ namespace Entities.Abstract
             // Debug.Log(entityID);
             currentHealth = maxHealth;
             spawnTime = Time.time;
+            movementCooldownTimer = movementTickTimer;
         }
 
         /// <summary>
@@ -110,15 +116,15 @@ namespace Entities.Abstract
         /// 
         /// </summary>
         /// <param name="attackDamage">The amount of damage to take.</param>
-        public virtual bool TakeDamage(float attackDamage)  
+        public virtual bool TakeDamage(float attackDamage)
         {
             if (!isAlive || isInvulnerable || attackDamage <= 0f) return false;
             currentHealth -= attackDamage;
             if (currentHealth <= 0f) Die();
             return true;
         }
-        
-        
+
+
 
         /// <summary>
         /// Modified: Talon J

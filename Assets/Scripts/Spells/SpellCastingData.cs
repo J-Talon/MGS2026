@@ -1,17 +1,16 @@
 //author - Jordan -> Nov 08, 2026
 
 using Entities.Unit;
-using Particle.Base;
 using UnityEngine;
 
-//holds the relevant spellCasting data (like what explosion pattern, who casts, etc)
+//holds the relevant spellCasting data (who casts, the wheres, etc)
 public class SpellCastingData 
 {
-    public EntityUnit spellCaster;
+    public EntityUnit spellCaster; //the user
     public Vector2Int casterGrid; //the users grid
     public Vector2Int targetGrid; //the grid they are aiming at
-    public Vector2Int direction;
-    public CrosshairController crosshair;
+    public Vector2Int direction; //which way we shooting
+    public CrosshairController crosshair; //the reticle
 
     //holds some data, makes it easier to call and type
     public SpellCastingData(Vector2Int directionFacing)

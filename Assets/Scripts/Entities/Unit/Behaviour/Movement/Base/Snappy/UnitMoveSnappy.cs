@@ -10,8 +10,6 @@ namespace Entities.Unit.Behaviour.Movement.Base.Snappy
     [RequireComponent(typeof(EntityUnit))]
     public abstract class UnitMoveSnappy : EntityBehaviour
     {
-        
- 
         private float movementCooldown;
 
         void Start()
@@ -19,7 +17,7 @@ namespace Entities.Unit.Behaviour.Movement.Base.Snappy
             movementCooldown = unit.GetMovementTickTimer(); //before we even move, inherit the movement cooldown
         }
 
-        public override void Tick()
+        public override bool Tick()
         {
             if (movementCooldown > 0)
             {
@@ -29,7 +27,9 @@ namespace Entities.Unit.Behaviour.Movement.Base.Snappy
             {
                 movementCooldown = unit.GetMovementTickTimer();
                 unit.MoveUnitSnappy(MovementRoutine());
+                return true;
             }
+            return false;
         }
 
         /// <summary>
