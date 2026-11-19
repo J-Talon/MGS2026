@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 
 namespace Entities.Unit.Behaviour
 {
+    // Actions an enemy typically can perform
     public enum BehaviourAction
     {
         Move,
@@ -23,6 +24,7 @@ namespace Entities.Unit.Behaviour
         Neutral,
     }
 
+    // Priority for which behaviours should take precedence
     public enum BehaviourPriority
     {
         High,
@@ -34,13 +36,13 @@ namespace Entities.Unit.Behaviour
     public abstract class EntityBehaviour : MonoBehaviour
     {
         protected EntitySentient unit;
-        [Range(0f, 1f)] public float Proficiency = 1f;
 
         // Define these in your subclasses. Otherwise default to below. See movement behaviours as examples.
         [Header("Classifications")]
         public virtual BehaviourAction BehaviourAction { get; } = BehaviourAction.None;
         public virtual BehaviourType BehaviourType { get; } = BehaviourType.Neutral;
         public virtual BehaviourPriority BehaviourPriority { get; } = BehaviourPriority.Medium;
+        [Range(0f, 1f)] public float Proficiency = 1f; // High proficiency dicates a higher chance of the behaviour to take place
 
         private void Awake()
         {

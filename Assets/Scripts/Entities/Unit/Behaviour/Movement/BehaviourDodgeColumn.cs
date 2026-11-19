@@ -13,13 +13,14 @@ namespace Entities.Unit.Behaviour.Movement
 
         public override bool Tick()
         {
-            if (!base.RollProficiency()) return false;
+            if (!RollProficiency()) return false;
             return DodgeColumn();
         }
 
+        // For each player entity, check where their crosshair is aimed at and attempt to move left or right in a random order
         private bool DodgeColumn()
         {
-            Vector3 position = unit.GetPosition();
+            Vector3 currentPosition = unit.GetPosition();
             IReadOnlyCollection<Entity> players = EntityManager.GetInstance().GetPlayers();
 
             foreach (Entity player in players)
@@ -28,7 +29,7 @@ namespace Entities.Unit.Behaviour.Movement
                 Vector2Int playerPosition = player.GetComponent<PlayerController>().GetCrosshairPosition();
 
                 // Check if the player is in the same column as the unit
-                if (Mathf.Approximately(playerPosition.x, position.x))
+                if (Mathf.Approximately(playerPosition.x, currentPosition.x))
                 {
                     // Try to move left or right in a random order
                     bool moveLeftFirst = Random.value < 0.5f;

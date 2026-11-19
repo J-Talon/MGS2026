@@ -13,13 +13,15 @@ namespace Entities.Unit.Behaviour.Movement
 
         public override bool Tick()
         {
-            if (!base.RollProficiency()) return false;
+            if (!RollProficiency()) return false;
             return DodgeRow();
         }
 
+
+        // For each player entity, check where their crosshair is aimed at and attempt to move up or down in a random order
         private bool DodgeRow()
         {
-            Vector3 position = unit.GetPosition();
+            Vector3 currentPosition = unit.GetPosition();
             IReadOnlyCollection<Entity> players = EntityManager.GetInstance().GetPlayers();
 
             foreach (Entity player in players)
@@ -27,7 +29,7 @@ namespace Entities.Unit.Behaviour.Movement
                 Vector3 playerPosition = player.GetPosition();
 
                 // Check if the player is in the same row as the unit
-                if (Mathf.Approximately(playerPosition.y, position.y))
+                if (Mathf.Approximately(playerPosition.y, currentPosition.y))
                 {
                     // Try to move up or down in a random order
                     bool moveUpFirst = Random.value < 0.5f;
