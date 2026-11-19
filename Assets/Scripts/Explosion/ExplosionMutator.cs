@@ -1,4 +1,5 @@
 // Author: Jeremy
+// MutatorDamageRange added by Daniel
 
 /*
 HOW TO CREATE A NEW EXPLOSION MUTATOR
@@ -38,5 +39,29 @@ public class MutatorDamageScale : IExplosionMutator
     public void Mutate(Explosion explosion)
     {
         explosion.Damage *= _multiplier;
+    }
+}
+
+/// <summary>
+/// Adds <c>step</c> additional damage to each affected cell based on how far away the cell is from the center,
+/// while constraining the damage to <c>min</c> and <c>max</c>
+/// </summary>
+public class MutatorDamageRange : IExplosionMutator
+{
+    private readonly float? _min, _max;
+    private readonly float _step;
+
+    public MutatorDamageRange(float? min, float? max, float step)
+    {
+        _min = min;
+        _max = max;
+        _step = step;
+    }
+
+    public void Mutate(Explosion explosion)
+    {
+        if (_min != null) explosion.DamageMin = (float)_min;
+        if (_max != null) explosion.DamageMax = (float)_max;
+        explosion.DamageStep = _step;
     }
 }
