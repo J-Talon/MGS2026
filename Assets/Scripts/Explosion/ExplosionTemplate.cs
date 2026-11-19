@@ -25,8 +25,35 @@ public class ExplosionLaserPlayer : Explosion
             ParticleType.SPARK,
             null,
             damage,
-            null);
+            source);
     }
 
     private ExplosionLaserPlayer(ExplosionPattern pattern, Vector2Int center, ParticleType vfx, IExplosionMutator mutator, float damage, Entity source = null) : base(pattern, center, vfx, mutator, damage, source) { }
+}
+
+public class ExplosionLaserEnemy : Explosion
+{
+    /// <summary>
+    /// Creates a laser that spans an entire column.
+    /// </summary>
+    /// <param name="originX">The x coordinate where the laser originated from.</param>
+    /// <param name="damage">The amount of damage dealt on contact with any part of the laser.</param>
+    /// <param name="source">The source of the laser.</param>
+    /// <returns></returns>
+    public static ExplosionLaserEnemy Create(int originX, float damage, Entity source = null)
+    {
+        GridManager gm = Object.FindFirstObjectByType<GridManager>();
+        (Vector2Int min, Vector2Int max) bounds = gm.GetGridBounds();
+        int laserHeight = bounds.max.y - bounds.min.y;
+
+        return new ExplosionLaserEnemy(
+            new ExplosionPatternLazer(Vector2Int.up, laserHeight),
+            new Vector2Int(originX, bounds.min.y),
+            ParticleType.SPARK,
+            null,
+            damage,
+            source);
+    }
+
+    private ExplosionLaserEnemy(ExplosionPattern pattern, Vector2Int center, ParticleType vfx, IExplosionMutator mutator, float damage, Entity source = null) : base(pattern, center, vfx, mutator, damage, source) { }
 }

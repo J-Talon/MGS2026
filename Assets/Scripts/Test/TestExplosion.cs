@@ -80,9 +80,16 @@ public class TestExplosion : MonoBehaviour
             // ).Detonate();
 
             // Player Laser
-            ExplosionLaserPlayer.Create(
-                selectedCell.GetCellPosition(),
-                3f,
+            // ExplosionLaserPlayer.Create(
+            //     selectedCell.GetCellPosition(),
+            //     3f,
+            //     null
+            // ).Detonate();
+
+            // Enemy Laser
+            ExplosionLaserEnemy.Create(
+                selectedCell.GetCellPosition().x,
+                4f,
                 null
             ).Detonate();
 
