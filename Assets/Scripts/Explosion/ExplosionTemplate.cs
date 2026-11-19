@@ -1,5 +1,4 @@
 // Author: Daniel
-
 using UnityEngine;
 using Entities.Abstract;
 using Particle.Base;
@@ -100,4 +99,26 @@ public class ExplosionTrap : Explosion
     }
 
     private ExplosionTrap(ExplosionPattern pattern, Vector2Int center, ParticleType vfx, IExplosionMutator mutator, float damage, Entity source = null) : base(pattern, center, vfx, mutator, damage, source) { }
+}
+
+public class ExplosionWhip : Explosion
+{
+    /// <summary>
+    /// Creates a whip explosion that spreads vertically by 1 cell.
+    /// </summary>
+    /// <param name="center">The (x, y) coordinate where the explosion originated from.</param>
+    /// <param name="source">The source of the explosion.</param>
+    /// <returns></returns>
+    public static ExplosionWhip Create(Vector2Int center, Entity source = null)
+    {
+        return new ExplosionWhip(
+            new ExplosionPatternQuad(0, 1),
+            center,
+            ParticleType.SPARK,
+            null,
+            4f,
+            source);
+    }
+
+    private ExplosionWhip(ExplosionPattern pattern, Vector2Int center, ParticleType vfx, IExplosionMutator mutator, float damage, Entity source = null) : base(pattern, center, vfx, mutator, damage, source) { }
 }

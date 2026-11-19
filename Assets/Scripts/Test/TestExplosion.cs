@@ -107,7 +107,10 @@ public class TestExplosion : MonoBehaviour
             // ).Detonate();
 
             // Trap Template
-            ExplosionTrap.Create(selectedCell.GetCellPosition(), null).Detonate();
+            // ExplosionTrap.Create(selectedCell.GetCellPosition(), null).Detonate();
+
+            // Whip Template
+            ExplosionWhip.Create(selectedCell.GetCellPosition(), null).Detonate();
 
             // Ranged Quad 2, 2; Decreases from center
             // new Explosion(
