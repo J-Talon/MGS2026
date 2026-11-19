@@ -49,8 +49,8 @@ namespace Gameplay.Wave
             int? smallestCost = null;
             foreach (var entity in weightedEntities.GetItems())
             {
-                tokenedEntity tokenedEntity = (tokenedEntity)entity;
-                int cost = tokenedEntity.getToken();
+                TokenedEntity tokenedEntity = (TokenedEntity)entity;
+                int cost = tokenedEntity.GetToken();
                 if (cost < smallestCost || smallestCost == null)
                 {
                     smallestCost = cost;
@@ -68,13 +68,13 @@ namespace Gameplay.Wave
             while (remainingTokens >= smallestCost)
             {
                 // roll a random entity
-                tokenedEntity entityRolled = (tokenedEntity)weightedEntities.getNext();
+                TokenedEntity entityRolled = (TokenedEntity)weightedEntities.GetNext();
                 
                 // if somehow it returns null we gotta stop
                 if (entityRolled == null)
                     break;
 
-                var entityData = entityRolled.unwrap();
+                var entityData = entityRolled.Unwrap();
                 // entity data consists of entity (the entity type) and token (the token cost)
 
                 Debug.Log(entityData.token);
@@ -95,10 +95,10 @@ namespace Gameplay.Wave
         {
             for (int i = 0; i < maxEntities; i++)
             {
-                var next = getNextSpawn();
+                var next = GetNextSpawn();
                 if (next.type != null)
                 {
-                    activeEntities.Add(spawnEntityAt(next.pos, next.type));
+                    activeEntities.Add(SpawnEntityAt(next.pos, next.type));
                 }
             }
             isPlaying = true;
@@ -128,9 +128,9 @@ namespace Gameplay.Wave
         }
 
         // Gets the next entity to be spawned and its location
-        protected abstract (EntityType type, Vector2Int pos) getNextSpawn();
+        protected abstract (EntityType type, Vector2Int pos) GetNextSpawn();
 
-        protected Entity spawnEntityAt(Vector2Int postion, EntityType entity)
+        protected Entity SpawnEntityAt(Vector2Int postion, EntityType entity)
         {
             // may be nice to implement a spawn delay...
             Vector3 spawnPos = new Vector3(postion.x, postion.y, -1);
@@ -158,10 +158,10 @@ namespace Gameplay.Wave
                     {
                         if (enemiesToSpawn[i] <= 0f)
                         {
-                            var next = getNextSpawn();
+                            var next = GetNextSpawn();
                             if (next.type != null)
                             {
-                                activeEntities.Add(spawnEntityAt(next.pos, next.type));
+                                activeEntities.Add(SpawnEntityAt(next.pos, next.type));
                             }
                             enemiesToSpawn.RemoveAt(i);
                         }
@@ -189,24 +189,22 @@ namespace Gameplay.Wave
     // WRAPPER
     // it would be quite annoying to write out a bunch of weighted items and add the token cost on top
     // wow this looks ugly, but it works
-    public class tokenedEntity : WeightedItem<EntityType>
+    public class TokenedEntity : WeightedItem<EntityType>
     {
-        private EntityType entity;
         private int tokenCost;
 
-        public EntityType getEntity() {return entity;}
-        public int getToken() {return tokenCost;}
-        public (EntityType entity, int token) unwrap() {return (entity, tokenCost);}
+        public EntityType GetEntity() {return GetItem();}
+        public int GetToken() {return tokenCost;}
+        public (EntityType entity, int token) Unwrap() {return (GetEntity(), GetToken());}
 
-        public tokenedEntity(EntityType entity, int tokenCost, double weight) : base(entity, weight)
+        public TokenedEntity(EntityType entity, int tokenCost, double weight) : base(entity, weight)
         {
-            this.entity = entity;
             this.tokenCost = tokenCost;
         }
     }
 
     public class WeightedRandomEntity : WeightedRandom<EntityType>
     {
-        public WeightedRandomEntity(List<tokenedEntity> items = null) : base(items?.Cast<WeightedItem<EntityType>>().ToList()) {}
+        public WeightedRandomEntity(List<TokenedEntity> items = null) : base(items?.Cast<WeightedItem<EntityType>>().ToList()) {}
     }
 }

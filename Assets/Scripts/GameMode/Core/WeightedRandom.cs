@@ -28,7 +28,7 @@ namespace Gameplay.Core
             if (item == null) {return;}
 
             items.Add(item);
-            totalWeight += item.getWeight();
+            totalWeight += item.GetWeight();
 
         }
         // overloaded because it will get annoying.
@@ -40,14 +40,14 @@ namespace Gameplay.Core
             Add(i);
         }
 
-        public WeightedItem<T> getNext(){
+        public WeightedItem<T> GetNext(){
             if (items.Count == 0) {return default;}
 
             double weight = totalWeight;
 
             for (int slot=0;slot<items.Count;slot++)
             {
-                double itemWeight = items[slot].getWeight();
+                double itemWeight = items[slot].GetWeight();
                 if (itemWeight <= 0)
                     continue;
 
@@ -62,21 +62,21 @@ namespace Gameplay.Core
             return default;
         }
 
-        public T getNextItem(){
+        public T GetNextItem(){
             if (items.Count == 0) {return default;}
 
             double weight = totalWeight;
 
             for (int slot=0;slot<items.Count;slot++)
             {
-                double itemWeight = items[slot].getWeight();
+                double itemWeight = items[slot].GetWeight();
                 if (itemWeight <= 0)
                     continue;
 
                 // If the roll succeeds or this is the last item, return it
                 if (slot == items.Count - 1 || Random.Range(0f, 1f) * weight < itemWeight)
                 {
-                    return items[slot].getItem();
+                    return items[slot].GetItem();
                 }
 
                 weight -= itemWeight;
@@ -92,18 +92,18 @@ namespace Gameplay.Core
 
         public WeightedItem(T item, double weight){
             this.item = item;
-            setWeight(weight);
+            SetWeight(weight);
         }
 
-        public T getItem() {
+        public T GetItem() {
             return item;
         }
 
-        public double getWeight() {
+        public double GetWeight() {
             return weight;
         }
 
-        public void setWeight(double weight){
+        public void SetWeight(double weight){
             if (weight < 0) {weight = 0;} // if someone puts negative weight.
             this.weight = weight;
         }

@@ -48,11 +48,11 @@ public class GameManager : MonoBehaviour
         // Test waves (THIS SHOULD ALL BE MANAGED BY A LEVEL MANAGER!!!)
         WaveManager waveManager = new WaveManager();
 
-        tokenedEntity UnitTestDodgeRow = new tokenedEntity(EntityType.UnitTestDodgeRow, 1, 10);
-        tokenedEntity UnitTestDodgeCol = new tokenedEntity(EntityType.UnitTestDodgeCol, 1, 10);
-        tokenedEntity UnitTestDodgeAll = new tokenedEntity(EntityType.UnitTestDodgeAll, 1, 10);
-        tokenedEntity UnitTestMoveInward = new tokenedEntity(EntityType.UnitTestMoveInward, 1, 10);
-        tokenedEntity UnitTestBuddha = new tokenedEntity(EntityType.UnitTestBuddha, 1, 10);
+        TokenedEntity UnitTestDodgeRow = new TokenedEntity(EntityType.UnitTestDodgeRow, 1, 10);
+        TokenedEntity UnitTestDodgeCol = new TokenedEntity(EntityType.UnitTestDodgeCol, 1, 10);
+        TokenedEntity UnitTestDodgeAll = new TokenedEntity(EntityType.UnitTestDodgeAll, 1, 10);
+        TokenedEntity UnitTestMoveInward = new TokenedEntity(EntityType.UnitTestMoveInward, 1, 10);
+        TokenedEntity UnitTestBuddha = new TokenedEntity(EntityType.UnitTestBuddha, 1, 10);
 
         WeightedRandomEntity weightedEntities = new WeightedRandomEntity();
         weightedEntities.Add(UnitTestDodgeRow);
@@ -66,8 +66,8 @@ public class GameManager : MonoBehaviour
         myWave.getWaveEndedEvent().AddListener(onWaveEnded);
 
         // This is kinda pointless but itll make sense with more than one wave
-        waveManager.addWave(myWave);
-        waveManager.getNextWave().Play();
+        waveManager.AddWave(myWave);
+        waveManager.GetNextWave().Play();
     }
 
     // TESTING I will delete this when I or someone else implements levels

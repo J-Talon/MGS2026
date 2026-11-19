@@ -18,20 +18,20 @@ namespace Gameplay.Wave
             gridManager = GridManager.instance;
         }
 
-        protected override (EntityType type, Vector2Int pos) getNextSpawn()
+        protected override (EntityType type, Vector2Int pos) GetNextSpawn()
         {
             if (spawnList.Count > 0)
             {
                 EntityType lastItem = spawnList[^1];
                 spawnList.RemoveAt(spawnList.Count - 1);
 
-                return (lastItem, getUnoccupiedEnemyCell().GetCellPosition());
+                return (lastItem, GetUnoccupiedEnemyCell().GetCellPosition());
             }
 
             return (null, default);
         }
 
-        private GridCell getUnoccupiedEnemyCell()
+        private GridCell GetUnoccupiedEnemyCell()
         {
             var enemyBounds = gridManager.GetEnemyGridBounds();
             Vector2Int min = enemyBounds.min;

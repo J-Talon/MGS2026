@@ -54,18 +54,18 @@ namespace Gameplay.Wave
             this.waves = waves ?? new();
         }
 
-        public void addWave(Wave wave)
+        public void AddWave(Wave wave)
         {
             waves.Enqueue(wave);
         }
 
-        public Wave getNextWave()
+        public Wave GetNextWave()
         {
             return waves.Dequeue();
         }
 
         // just in case.
-        public void clearWaves()
+        public void ClearWaves()
         {
             waves.Clear();
         }
