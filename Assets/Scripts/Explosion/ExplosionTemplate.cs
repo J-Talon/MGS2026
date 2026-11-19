@@ -79,3 +79,25 @@ public class ExplosionBomb : Explosion
 
     private ExplosionBomb(ExplosionPattern pattern, Vector2Int center, ParticleType vfx, IExplosionMutator mutator, float damage, Entity source = null) : base(pattern, center, vfx, mutator, damage, source) { }
 }
+
+public class ExplosionTrap : Explosion
+{
+    /// <summary>
+    /// Creates a trap explosion that spreads horizontally by 1 cell.
+    /// </summary>
+    /// <param name="center">The (x, y) coordinate where the explosion originated from.</param>
+    /// <param name="source">The source of the explosion.</param>
+    /// <returns></returns>
+    public static ExplosionTrap Create(Vector2Int center, Entity source = null)
+    {
+        return new ExplosionTrap(
+            new ExplosionPatternQuad(1, 0),
+            center,
+            ParticleType.SPARK,
+            null,
+            2f,
+            source);
+    }
+
+    private ExplosionTrap(ExplosionPattern pattern, Vector2Int center, ParticleType vfx, IExplosionMutator mutator, float damage, Entity source = null) : base(pattern, center, vfx, mutator, damage, source) { }
+}

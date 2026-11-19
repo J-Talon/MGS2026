@@ -60,7 +60,7 @@ public class TestExplosion : MonoBehaviour
             // ).Detonate();
 
             // Bomb Template
-            ExplosionBomb.Create(selectedCell.GetCellPosition(), null).Detonate();
+            // ExplosionBomb.Create(selectedCell.GetCellPosition(), null).Detonate();
 
             // Diagonal 2
             // new Explosion(
@@ -105,6 +105,9 @@ public class TestExplosion : MonoBehaviour
             //     1f,
             //     null
             // ).Detonate();
+
+            // Trap Template
+            ExplosionTrap.Create(selectedCell.GetCellPosition(), null).Detonate();
 
             // Ranged Quad 2, 2; Decreases from center
             // new Explosion(
