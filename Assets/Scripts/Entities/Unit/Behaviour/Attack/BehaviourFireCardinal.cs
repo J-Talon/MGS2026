@@ -12,6 +12,9 @@ namespace Entities.Unit.Behaviour.Attack
     /// </summary>
     public class BehaviourFireCardinal : BehaviourUnitFire
     {
+        public override BehaviourAction BehaviourAction { get; } = BehaviourAction.Attack;
+        public override BehaviourType BehaviourType { get; } = BehaviourType.Offensive;
+        public override BehaviourPriority BehaviourPriority { get; } = BehaviourPriority.High;
         [field: SerializeField] private Vector2Int fireDirection;
 
         protected override Tuple<Vector2Int, EntityType, bool> FireRoutine()
@@ -30,13 +33,13 @@ namespace Entities.Unit.Behaviour.Attack
                 if (tile == null) //reached end, do not fire
                 {
                     //print("could not fire, reached end of grid");
-                    return Tuple.Create(fireDirection, EntityType.ProjectilePea, false); 
+                    return Tuple.Create(fireDirection, EntityType.ProjectilePea, false);
                 }
                 else if (tile.isOccupied == true)
-                { 
+                {
                     if (tile.occupiedUnit.GetIsFriendly() != unit.GetIsFriendly()) //if freindly status is not the same CAN fire
                     {
-                        return Tuple.Create(fireDirection, EntityType.ProjectilePea, true); 
+                        return Tuple.Create(fireDirection, EntityType.ProjectilePea, true);
                     }
                 }
 
@@ -44,6 +47,6 @@ namespace Entities.Unit.Behaviour.Attack
                 checkPos += fireDirection;
                 tile = gridSystem.GetTileAtPosition(checkPos);
             }
-        } 
+        }
     }
 }

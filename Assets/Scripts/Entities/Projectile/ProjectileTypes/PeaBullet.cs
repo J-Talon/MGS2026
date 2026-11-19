@@ -12,13 +12,13 @@ namespace Entities.Projectile.ProjectileTypes
         public float wiggleFactor;
         public float wiggleSpeed;
         private float randPhase = 0;
+        private Vector2 direction = new Vector2(1, 0);
+        public void SetDirection(Vector2 value) { direction = value; }
 
-
-        public override void OnStart() {
-            randPhase = UnityEngine.Random.Range(0, (float)Math.PI*2);
+        public override void OnStart()
+        {
+            randPhase = UnityEngine.Random.Range(0, (float)Math.PI * 2);
         }
-
-
 
         public override void Die()
         {
@@ -41,17 +41,18 @@ namespace Entities.Projectile.ProjectileTypes
             //     Math.Clamp(wiggleFactor, 0, 0.5f)
             // );
 
-            MoveProjectileSmooth(new Vector2(1, 0)*speed);
+            MoveProjectileSmooth(direction * speed);
 
             // check if enemy is at position and damage them and disappear if it is
             var entity = GridManager.instance.GetEntityAtTilePosition(new Vector2Int((int)transform.position.x, (int)transform.position.y));
-        
 
-            if (entity != null && !entity.GetIsFriendly()) {
+            if (entity != null && entity.IsHostile(this))
+            {
                 entity.TakeDamage(damage);
                 GridCell cell = entity.GetCurrentCell();
-              
-                if (cell == null) {
+
+                if (cell == null)
+                {
                     Die();
                     return;
                 }

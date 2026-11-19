@@ -28,8 +28,8 @@ namespace Entities.Projectile
             gameObject.transform.position = gameObject.transform.position + (Vector3Int)deltaMovement;
             //call validation method here or smth
         }
-        
-        
+
+
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         public override void OnStart() { }

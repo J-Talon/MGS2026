@@ -32,12 +32,17 @@ public class GameManager : MonoBehaviour
         // entityManager.GetEntity(EntityType.UnitTestMoveSpaceOut, new Vector3(9, 4, -1));
 
         // Test Unit with all behaviours
-        entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(5, 2, -1));
-        entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(5, 3, -1));
-        entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(6, 4, -1));
-        entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(6, 1, -1));
-        entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(7, 1, -1));
-        entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(8, 1, -1));
-        entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(9, 1, -1));
+        // entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(5, 2, -1));
+        // entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(5, 3, -1));
+        // entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(6, 4, -1));
+        // entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(6, 1, -1));
+        // entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(7, 1, -1));
+        // entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(8, 1, -1));
+        // entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(9, 1, -1));
+
+        // Test Bullet Enemy
+        entityManager.GetEntity(EntityType.BulletEnemy, new Vector3(5, 3, -1));
+        entityManager.GetEntity(EntityType.BulletEnemy, new Vector3(8, 1, -1));
+
     }
 }
