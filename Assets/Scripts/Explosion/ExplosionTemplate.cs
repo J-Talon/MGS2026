@@ -57,3 +57,25 @@ public class ExplosionLaserEnemy : Explosion
 
     private ExplosionLaserEnemy(ExplosionPattern pattern, Vector2Int center, ParticleType vfx, IExplosionMutator mutator, float damage, Entity source = null) : base(pattern, center, vfx, mutator, damage, source) { }
 }
+
+public class ExplosionBomb : Explosion
+{
+    /// <summary>
+    /// Creates a bomb explosion that spreads outwards in a 1x1 cross.
+    /// </summary>
+    /// <param name="center">The (x, y) coordinate where the explosion originated from.</param>
+    /// <param name="source">The source of the explosion.</param>
+    /// <returns></returns>
+    public static ExplosionBomb Create(Vector2Int center, Entity source = null)
+    {
+        return new ExplosionBomb(
+            new ExplosionPatternCross(1, 1),
+            center,
+            ParticleType.SPARK,
+            new MutatorDamageRange(2f, 6f, -4f),
+            6f,
+            source);
+    }
+
+    private ExplosionBomb(ExplosionPattern pattern, Vector2Int center, ParticleType vfx, IExplosionMutator mutator, float damage, Entity source = null) : base(pattern, center, vfx, mutator, damage, source) { }
+}

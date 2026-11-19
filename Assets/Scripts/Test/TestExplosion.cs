@@ -59,6 +59,9 @@ public class TestExplosion : MonoBehaviour
             //     null
             // ).Detonate();
 
+            // Bomb Template
+            ExplosionBomb.Create(selectedCell.GetCellPosition(), null).Detonate();
+
             // Diagonal 2
             // new Explosion(
             //     new ExplosionPatternDiagonal(2),
@@ -87,11 +90,11 @@ public class TestExplosion : MonoBehaviour
             // ).Detonate();
 
             // Enemy Laser
-            ExplosionLaserEnemy.Create(
-                selectedCell.GetCellPosition().x,
-                4f,
-                null
-            ).Detonate();
+            // ExplosionLaserEnemy.Create(
+            //     selectedCell.GetCellPosition().x,
+            //     4f,
+            //     null
+            // ).Detonate();
 
             // Quad 2, 2
             // new Explosion(
