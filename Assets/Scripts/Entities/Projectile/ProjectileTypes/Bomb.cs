@@ -1,5 +1,6 @@
 //who the fuck authored this file?
 //edited by - Jordan Nov 08, 2026
+//edited by - Jordan Nov 20, 2026
 
 using System;
 using Particle.Base;
@@ -28,8 +29,7 @@ namespace Entities.Projectile.ProjectileTypes
 
             nextHeight = h;
         }
-    
-
+       
         Vector2 CalculateTrajectory(Vector2Int start, Vector2Int end, float height, float time) {
             var startVec = new Vector2(start.x, start.y);
             var endVec = new Vector2(end.x, start.y);
@@ -58,7 +58,7 @@ namespace Entities.Projectile.ProjectileTypes
         void DamageTile(IGridSystemView gridView, Vector2Int pos) {
             var entity = gridView.GetEntityAtTilePosition(pos);
 
-            if (entity) {
+            if (entity && IsHostile(entity) == true) {
                 entity.TakeDamage(damage);
             }
         }
@@ -91,8 +91,13 @@ namespace Entities.Projectile.ProjectileTypes
         }
     }
 }
+/*
+CHANGELOG
+///
+Jordan Nov 08, 2026
+added a SetDamage() function so the bomb spells can have different direct lob hit damage
 
-//CHANGELOG
-//
-//Jordan Nov 08, 2026
-//added a SetDamage() function so the bomb spells can have different direct lob hit damage
+///
+Jordan - Nov 20, 2026
+fixed the damageTile stuff to properly damange hostile entities, instead of any entity at all
+*/

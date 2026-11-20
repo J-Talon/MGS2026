@@ -12,6 +12,9 @@ GameObject:
   - component: {fileID: 5353037503270121729}
   - component: {fileID: 8051601326255769950}
   - component: {fileID: 625528679891546255}
+  - component: {fileID: -3092821367994768488}
+  - component: {fileID: 8517071964165911669}
+  - component: {fileID: -4695239718936017463}
   m_Layer: 0
   m_Name: UnitTestDemon
   m_TagString: Untagged
@@ -108,13 +111,11 @@ MonoBehaviour:
   isFriendly: 0
   isAlive: 1
   isPlayer: 0
-  isHoldingBoomerang: 1
   maxHealth: 100
   damage: 10
   speed: 1
   maxLifeSpan: 0
   movementTickTimer: 1
-  behaviourProficiency: 1
   currentHealth: 0
   spawnTime: 0
 --- !u!114 &625528679891546255
@@ -129,5 +130,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a6a5c352209b4246a682fc792fdf726, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyRandomMovement
-  behaviourType: 1
-  behaviourPriority: 2
+  Proficiency: 1
+--- !u!114 &-3092821367994768488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8447654008913998862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e08685c5324302f42942062c74d43edd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySpellCaster
+--- !u!114 &8517071964165911669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8447654008913998862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c495929274908314db53cd2e9f967294, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyShooter
+--- !u!114 &-4695239718936017463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8447654008913998862}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd9c5dd866446894a9dbc8c168d88e40, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpellDeckInjector

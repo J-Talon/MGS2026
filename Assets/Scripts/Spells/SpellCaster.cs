@@ -1,16 +1,19 @@
 //author - Jordan -> Nov 08, 2026
+//edited by Jordan - Nov 20, 2026
 
 using Entities.Unit;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpellCaster : MonoBehaviour
+public abstract class SpellCaster : MonoBehaviour
 {
+    //an abstract class. Split between PlayerSpellCaster and EnemySpellCaster. So they can do player/enemy specific things. Like Player aim at reticle, Enemy aim wherever the hell
+    //see PlayerSpellCaster.cs and EnemySpellCaster.cs
+
     private EntityUnit spellCaster; //who used the spell
     public List<SpellDeck> decks = new List<SpellDeck>(); //list of decks
     private List<float> deckCooldowns = new List<float>(); //cooldown for each deck (which is set to diff values by each individual spellCard
     private List<Spell> activeSpells = new List<Spell>(); //a list that holds each spell that is currently in action (cause without it, the older active ones malfunction)
-    private CrosshairController crosshair; //the aim reticle
 
     private void Awake()
     {
@@ -85,7 +88,7 @@ public class SpellCaster : MonoBehaviour
         {
             direction = Vector2Int.left;
         }
-
+        
         //build the spell. See SpellBuilder.cs
         Spell spell = SpellBuilder.CreateSpell(spellCard, direction);
 
@@ -93,7 +96,7 @@ public class SpellCaster : MonoBehaviour
         decks[deckIndex].ShiftToNextSpell();
 
         //starts the spell (like actually using the spell)
-        spell.StartSpell(spellCaster, crosshair);
+        spell.StartSpell(spellCaster, GetTargetGrid);
 
         //set the deck cooldown
         deckCooldowns[deckIndex] = spellCard.cooldown;
@@ -117,12 +120,9 @@ public class SpellCaster : MonoBehaviour
         }
     }
 
-    //sets the aim reticle reference
-    public void SetCrossHair(CrosshairController crosshairController)
-    {
-        crosshair = crosshairController;
-    }
-
+    //an abstract class the Player/EnemySpellCaster will override to get the target reference
+    public abstract Vector2Int GetTargetGrid();
+    
     //checks if one of the spells has movementlocking
     public bool IsMovementLocked()
     {
@@ -160,3 +160,13 @@ public class SpellCaster : MonoBehaviour
         }
     }
 }
+
+/*
+Changelog
+
+///
+Jordan - Nov 20, 2026
+
+is now an abstract class that is split between PlayerSpellCaster and EnemySpellCaster.
+more fancy specific stuff you can do now for each, yay big fun
+*/
