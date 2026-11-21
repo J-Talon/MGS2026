@@ -1,4 +1,5 @@
 //author - Jordan -> Nov 08, 2026
+//edited by Jordan - Nov 20, 2026
 
 using Entities.Unit;
 using System.Collections.Generic;
@@ -29,11 +30,11 @@ public class Spell
         }
     }
 
-    //tells the SpellCaster to StartSpell, passing the who and the where (aka who cast the spell, and crosshair the spell aims at if applicable). See SpellCaster.cs
-    public void StartSpell(EntityUnit spellCaster, CrosshairController crosshair)
+    //tells the SpellCaster to StartSpell, passing the who and the where (aka who cast the spell, and teh target). See SpellCaster.cs and SpellCastingData.cs
+    public void StartSpell(EntityUnit spellCaster, SpellTarget spellTarget)
     {
         //set stuff
-        castingData.SetSpellCaster(spellCaster, crosshair);
+        castingData.SetSpellCaster(spellCaster, spellTarget);
 
         actionIndex = 0;
         currentAction = actionList[0]; //sets currentAction to the start of the list
@@ -85,3 +86,12 @@ public class Spell
         }
     }
 }
+
+/*
+Changelog
+
+///
+Jordan - Nov 20, 2026
+
+Swapped out the StartSpell parameter of reticle to spellTarget. THats it, nothing burger
+*/

@@ -43,7 +43,6 @@ public class SpellActionLob : SpellAction
         Entity entity = EntityManager.GetInstance().GetEntity(EntityType.ProjectileBomb, new Vector3(castingData.casterGrid.x, castingData.casterGrid.y, -1), castingData.spellCaster.GetIsFriendly());
         
         Bomb bomb = entity.GetComponent<Bomb>();
-        bomb.SetIsFriendly(castingData.spellCaster.GetIsFriendly());
         bomb.SetMaxLifeSpan(travelTime);
         bomb.SetDamage(directDamage);
         bomb.start = castingData.casterGrid;

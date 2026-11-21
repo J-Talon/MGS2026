@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: -2332521726127746915}
   - component: {fileID: 6666874912454835544}
   - component: {fileID: 4189265674046521110}
-  - component: {fileID: -3216343608113246092}
   - component: {fileID: 4731223291724301490}
+  - component: {fileID: 1193617514738337608}
   m_Layer: 0
   m_Name: TestPlayerPrefabMiku
   m_TagString: Player
@@ -224,18 +224,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &-3216343608113246092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1220599807332297726}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75e31192ff1672d4fbe959ff4aae2dfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SpellCaster
 --- !u!114 &4731223291724301490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,3 +236,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd9c5dd866446894a9dbc8c168d88e40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpellDeckInjector
+--- !u!114 &1193617514738337608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1220599807332297726}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15f1c7dded3a1224a8bac1e7057cae25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerSpellCaster
