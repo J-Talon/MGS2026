@@ -14,10 +14,8 @@ namespace Entities.Unit.Behaviour.Attack
     public abstract class BehaviourUnitFire : EntityBehaviour
     {
         [field: SerializeField] protected EntityType projectileType;
-
         [field: SerializeField] protected int fireCooldown;
 
-  
         #region projectile instance data
 
         // /// <summary>
@@ -32,13 +30,10 @@ namespace Entities.Unit.Behaviour.Attack
 
         #endregion
 
-
-        
-        protected override void Initialize() {
+        protected override void Initialize()
+        {
             this._timeLeft = fireCooldown;
         }
-
-
 
         /// <summary>
         /// Main loop, decrements timer when still on firing cooldown
@@ -46,7 +41,7 @@ namespace Entities.Unit.Behaviour.Attack
         /// 
         /// IF unit chose not to fire previous cycle, also trigger firing routine check every frame until it does fire
         /// </summary>
-        public override void Tick()
+        public override bool Tick()
         {
             if (_timeLeft > 0 && heldFire == false)
             {
@@ -62,15 +57,15 @@ namespace Entities.Unit.Behaviour.Attack
                 {
                     heldFire = false;
                     unit.FireProjectile(firedData.Item1, firedData.Item2);
+                    return true;
                 }
                 else
                 {
                     heldFire = true;
                 }
-            
             }
+            return false;
         }
-
 
         /// <summary>
         /// The actual firing behaviour to be implemented in a concrete class implementation.

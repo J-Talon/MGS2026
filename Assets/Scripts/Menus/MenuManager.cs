@@ -37,8 +37,8 @@ public class MenuManager : MonoBehaviour
     [Header("Menu Prefab References Canvas")]
     [SerializeField] private GameObject mainMenu;
 
-   // [Header("Menu Prefab References")]
-    //[SerializeField] private GameObject pauseMenu;
+     [Header("Menu Prefab References")]
+    [SerializeField] private GameObject waveMenu;
 
     private void Awake()
     {
@@ -64,11 +64,11 @@ public class MenuManager : MonoBehaviour
             InputEvents.Instance.OnDisable();
 
         // Instantiate the menus for any new ones that are made!!! ------------------
-      //  pauseMenu = Instantiate(pauseMenu);
+        waveMenu = Instantiate(waveMenu);
 
-        //DontDestroyOnLoad(pauseMenu);
+        DontDestroyOnLoad(waveMenu);
 
-       // pauseMenu.GetComponent<BaseMenu>().Close();
+        waveMenu.GetComponent<BaseMenu>().Close();
       
     }
 
@@ -106,7 +106,7 @@ public class MenuManager : MonoBehaviour
         m_UIManager.UI.Submit.performed -= HandleSubmit;
         m_UIManager.UI.Cancel.performed -= HandleCancel;
 
-        InputEvents.Instance.OnEnable();
+//        InputEvents.Instance.OnEnable();
       //  m_UIManager.Disable();
     }
 
@@ -129,7 +129,7 @@ public class MenuManager : MonoBehaviour
     public void OpenCredits()
     {
         Debug.Log("Opening credits menu... [none currently]");
-       // OpenMenu(creditsMenu);
+        OpenMenu(waveMenu);
     }
 
 

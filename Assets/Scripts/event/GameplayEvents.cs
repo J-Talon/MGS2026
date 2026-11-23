@@ -18,9 +18,7 @@ namespace Event
 
             public static readonly EventDispatcher<ValueTuple> interactPressed = new EventDispatcher<ValueTuple>();
 
-            public static readonly EventDispatcher<ValueTuple> spell1Pressed = new EventDispatcher<ValueTuple>();
-            public static readonly EventDispatcher<ValueTuple> spell2Pressed = new EventDispatcher<ValueTuple>();
-            public static readonly EventDispatcher<ValueTuple> spell3Pressed = new EventDispatcher<ValueTuple>();
+            public static readonly EventDispatcher<int> spellPressed = new EventDispatcher<int>();
 
             public static readonly EventDispatcher<ValueTuple> spawnTurretPressed = new EventDispatcher<ValueTuple>();
         }
@@ -42,7 +40,7 @@ namespace Event
 
 
 /*
-@author Talon J         edited by Jordan (see below for changelog)
+@author Talon J    (see below for changelog)
 How to use the event system:
 
 1: Declare a listener function where you need it.
@@ -104,4 +102,7 @@ For more details about this stuff, go to InputEvents.cs and PlayerController.cs
 
 Edited by Wilson - October 25 2025
 Added crosshair left and right pressed events
+
+Edited by Jordan - Nov 08, 2026
+simplified the spell event stuff so its easier if we need more spellDeck and buttons. Aka, the same thing i did for the Oct 14 2026 movement stuff, but for spells
  */
