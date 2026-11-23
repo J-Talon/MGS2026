@@ -1,5 +1,6 @@
 //author - Jordan -> Nov 08, 2026
 //edited by Jordan - Nov 20, 2026
+//edited by Jordan - Nov 22, 2026
 
 using Entities.Unit;
 using System.Collections.Generic;
@@ -55,6 +56,35 @@ public abstract class SpellCaster : MonoBehaviour
         return deckCooldowns[deckIndex];
     }
 
+    //sets the cooldowns -> put the current used deck on normal cooldown, and the other decks on globalCooldowns
+    public void SetDeckCooldowns(SpellCard spellCard, int deckIndex)
+    {
+        deckCooldowns[deckIndex] = spellCard.cooldowns.deckCooldown;
+
+        //start at i = 2 to ignore the basicShot and turrets
+        for (int i = 2; i < deckCooldowns.Count; i = i + 1)
+        {
+            if (deckCooldowns[i] < spellCard.cooldowns.deckCooldown && i != deckIndex)
+            {
+                deckCooldowns[i] = spellCard.cooldowns.globalCooldown;
+            }
+        }
+    }
+
+    //return the direction the spell should be going
+    public Vector2Int GetSpellDirection()
+    {
+        if (spellCaster.GetIsFriendly() == true)
+        {
+            return Vector2Int.right;
+        }
+
+        else
+        {
+            return Vector2Int.left;
+        }
+    }
+
     //cast a spell from a deck
     public void CastDeckSpell(int deckIndex)
     {
@@ -77,17 +107,7 @@ public abstract class SpellCaster : MonoBehaviour
         SpellCard spellCard = decks[deckIndex].GetCurrentSpell();
 
         //set direction, depending on team alignment
-        Vector2Int direction; 
-
-        if (spellCaster.GetIsFriendly() == true)
-        {
-            direction = Vector2Int.right;
-        }
-
-        else
-        {
-            direction = Vector2Int.left;
-        }
+        Vector2Int direction = GetSpellDirection();
         
         //build the spell. See SpellBuilder.cs
         Spell spell = SpellBuilder.CreateSpell(spellCard, direction);
@@ -99,7 +119,7 @@ public abstract class SpellCaster : MonoBehaviour
         spell.StartSpell(spellCaster, GetTargetGrid);
 
         //set the deck cooldown
-        deckCooldowns[deckIndex] = spellCard.cooldown;
+        SetDeckCooldowns(spellCard, deckIndex);
 
         //add to the activeSpells list for tracking
         if (spell.IsSpellFinished() == false)
@@ -169,4 +189,15 @@ Jordan - Nov 20, 2026
 
 is now an abstract class that is split between PlayerSpellCaster and EnemySpellCaster.
 more fancy specific stuff you can do now for each, yay big fun
+
+///
+Jordan - Nov 22, 2026
+
+added support for GlobalCooldowns (aka GCDs). Basically, when a spell is used, it will set its own deck on a normal cooldwon, but also set all the other decks on a globalCooldown. 
+this prevents mashing of all spells at once (and posssibly breaking the game). 
+the globalCooldown applied to the other decks are the same value, so they can all be available at the same time for your selection
+if an existing cooldown is already in progress, take the higher of the 2 cooldowns
+(ex - deck 1 already has a 6 seconds cooldown, but the GCD applied from using deck 2 is 1.4 seconds. The higher cooldown takes priority, so in this case, its the normal 6 seconds)
+
+also turned some existing code into functions to make it easier to read/call and a bit less bloated (aka, GetSpellDirection() and SetDeckCooldowns())
 */

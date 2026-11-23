@@ -1,5 +1,6 @@
 // Authors: [Jacky, Jeremy, Mark]
 // Added collectable entity occupation - Wilson October 26 2026
+//edited by Jordan - Nov 22, 2026 -> chagned enemy colours cause im colour blind
 
 using Effect.Abstract;
 using Entities.Collectable;
@@ -26,8 +27,10 @@ public class GridCell : MonoBehaviour
     // Plain colors for different states of the cell. Mainly for testing purposes. Can be removed later when we have proper textures.
     private Color friendlyColor = Color.green;
     private Color friendlyOffsetColor = new Color(0f, 0.5f, 0f, 1f);
-    private Color enemyColor = Color.brown;
-    private Color enemyOffsetColor = new Color(0.36f, 0.18f, 0.07f, 1f);
+    private Color enemyColor = new Color(0.41f, 0.31f, 0.39f, 1f);
+    private Color enemyOffsetColor = new Color(0.28f, 0.20f, 0.25f, 1f);
+    //private Color enemyOffsetColor = new Color(0.75f, 0.63f, 0.72f, 1f);
+    
     public Color GetFriendlyColor() { return friendlyColor; }
     public void SetFriendlyColor(Color value) { friendlyColor = value; }
     public Color GetEnemyColor() { return enemyColor; }
