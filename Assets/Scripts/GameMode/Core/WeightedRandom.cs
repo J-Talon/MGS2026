@@ -10,20 +10,20 @@ namespace Gameplay.Core
     // Added:
     // - Add
     // - getNextItem
-    public class WeightedRandom<T>
+    public class WeightedRandom<T,R> where R : WeightedItem<T>
     {
-        private readonly List<WeightedItem<T>> items;
+        private readonly List<R> items;
         private double totalWeight = 0;
         public int Count() {return items.Count;}
-        public IReadOnlyList<WeightedItem<T>> GetItems() {return items;}
+        public IReadOnlyList<R> GetItems() {return items;}
 
-        public WeightedRandom(List<WeightedItem<T>> items = null)
+        public WeightedRandom(List<R> items = null)
         {
             this.items = items ?? new();
         }
 
         // Add into the weighted random
-        public void Add(WeightedItem<T> item)
+        public void Add(R item)
         {
             if (item == null) {return;}
 
@@ -31,16 +31,8 @@ namespace Gameplay.Core
             totalWeight += item.GetWeight();
 
         }
-        // overloaded because it will get annoying.
-        public void Add(T item, double weight)
-        {
-            if (item == null) {return;}
-            
-            WeightedItem<T> i = new WeightedItem<T>(item, weight);
-            Add(i);
-        }
 
-        public WeightedItem<T> GetNext(){
+        public R GetNext(){
             if (items.Count == 0) {return default;}
 
             double weight = totalWeight;

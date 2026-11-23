@@ -47,7 +47,7 @@ namespace Gameplay.Wave
             int? smallestCost = null;
             foreach (var entity in weightedEntities.GetItems())
             {
-                TokenedEntity tokenedEntity = (TokenedEntity)entity;
+                TokenedEntity tokenedEntity = entity;
                 int cost = tokenedEntity.GetToken();
                 if (cost < smallestCost || smallestCost == null)
                 {
@@ -66,7 +66,7 @@ namespace Gameplay.Wave
             while (remainingTokens >= smallestCost)
             {
                 // roll a random entity
-                TokenedEntity entityRolled = (TokenedEntity)weightedEntities.GetNext();
+                TokenedEntity entityRolled = weightedEntities.GetNext();
                 
                 // if somehow it returns null we gotta stop
                 if (entityRolled == null)
@@ -207,12 +207,16 @@ namespace Gameplay.Wave
 
         public TokenedEntity(EntityType entity, int tokenCost, double weight) : base(entity, weight)
         {
+            if (tokenCost <= 0)
+            {
+                throw new Exception("Attempted to create a TokenedEntity with tokenCost <= 0 (Please rethink the token cost if you need it to be 0)");
+            }
             this.tokenCost = tokenCost;
         }
     }
     // This one makes sure you dont mix and match types. thats a big no no
-    public class WeightedRandomEntity : WeightedRandom<EntityType>
+    public class WeightedRandomEntity : WeightedRandom<EntityType, TokenedEntity>
     {
-        public WeightedRandomEntity(List<TokenedEntity> items = null) : base(items?.Cast<WeightedItem<EntityType>>().ToList()) {}
+        public WeightedRandomEntity(List<TokenedEntity> items = null) : base(items) {}
     }
 }
