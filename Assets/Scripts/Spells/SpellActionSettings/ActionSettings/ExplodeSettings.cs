@@ -6,10 +6,14 @@ using UnityEngine;
 public class ExplodeSettings : ISpellActionSettings
 {
     public SpellExplosion explosion; //kaboom
+    
+    // Capture the crosshair position when exploding
+    public bool useCurrentTarget;
 
-    public ExplodeSettings(SpellExplosion spellExplosion)
+    public ExplodeSettings(SpellExplosion spellExplosion, bool useCurrentTarget = false)
     {
         explosion = spellExplosion;
+        this.useCurrentTarget = useCurrentTarget;
     }
 
     public SpellAction CreateAction()

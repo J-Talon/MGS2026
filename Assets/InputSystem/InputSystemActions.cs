@@ -165,6 +165,15 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Spell4"",
+                    ""type"": ""Button"",
+                    ""id"": ""96321798-dd3f-421a-acf8-af0c7158aff4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""SpawnTurret"",
                     ""type"": ""Button"",
                     ""id"": ""102c1570-3c79-4434-b1a0-2aa834f86cdc"",
@@ -808,6 +817,28 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""MoveCrosshairRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bb9da4cd-2805-4ae6-b8d1-a8ad0def0bc8"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spell4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2d96a9ab-d781-431a-a2b7-82e528ca2432"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spell4"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -2639,6 +2670,7 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
         m_Player_Spell1 = m_Player.FindAction("Spell1", throwIfNotFound: true);
         m_Player_Spell2 = m_Player.FindAction("Spell2", throwIfNotFound: true);
         m_Player_Spell3 = m_Player.FindAction("Spell3", throwIfNotFound: true);
+        m_Player_Spell4 = m_Player.FindAction("Spell4", throwIfNotFound: true);
         m_Player_SpawnTurret = m_Player.FindAction("SpawnTurret", throwIfNotFound: true);
         m_Player_MoveCrosshairLeft = m_Player.FindAction("MoveCrosshairLeft", throwIfNotFound: true);
         m_Player_MoveCrosshairRight = m_Player.FindAction("MoveCrosshairRight", throwIfNotFound: true);
@@ -2787,6 +2819,7 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Spell1;
     private readonly InputAction m_Player_Spell2;
     private readonly InputAction m_Player_Spell3;
+    private readonly InputAction m_Player_Spell4;
     private readonly InputAction m_Player_SpawnTurret;
     private readonly InputAction m_Player_MoveCrosshairLeft;
     private readonly InputAction m_Player_MoveCrosshairRight;
@@ -2843,6 +2876,10 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Spell3".
         /// </summary>
         public InputAction @Spell3 => m_Wrapper.m_Player_Spell3;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Spell4".
+        /// </summary>
+        public InputAction @Spell4 => m_Wrapper.m_Player_Spell4;
         /// <summary>
         /// Provides access to the underlying input action "Player/SpawnTurret".
         /// </summary>
@@ -2945,6 +2982,9 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
             @Spell3.started += instance.OnSpell3;
             @Spell3.performed += instance.OnSpell3;
             @Spell3.canceled += instance.OnSpell3;
+            @Spell4.started += instance.OnSpell4;
+            @Spell4.performed += instance.OnSpell4;
+            @Spell4.canceled += instance.OnSpell4;
             @SpawnTurret.started += instance.OnSpawnTurret;
             @SpawnTurret.performed += instance.OnSpawnTurret;
             @SpawnTurret.canceled += instance.OnSpawnTurret;
@@ -3019,6 +3059,9 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
             @Spell3.started -= instance.OnSpell3;
             @Spell3.performed -= instance.OnSpell3;
             @Spell3.canceled -= instance.OnSpell3;
+            @Spell4.started -= instance.OnSpell4;
+            @Spell4.performed -= instance.OnSpell4;
+            @Spell4.canceled -= instance.OnSpell4;
             @SpawnTurret.started -= instance.OnSpawnTurret;
             @SpawnTurret.performed -= instance.OnSpawnTurret;
             @SpawnTurret.canceled -= instance.OnSpawnTurret;
@@ -3892,6 +3935,13 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSpell3(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Spell4" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSpell4(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "SpawnTurret" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

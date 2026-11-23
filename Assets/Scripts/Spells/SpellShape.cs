@@ -25,6 +25,11 @@ public static class SpellShapes
         return new ExplosionPatternQuad(size, size);
     }
 
+    public static ExplosionPattern Horizontal(Vector2Int direction, int size)
+    {
+        return new ExplosionPatternQuad(size, 0);
+    }
+
     public static ExplosionPattern Lazer(Vector2Int direction, int size)
     {
         return new ExplosionPatternLazer(direction, 10);

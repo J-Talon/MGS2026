@@ -79,6 +79,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Spell4",
+                    "type": "Button",
+                    "id": "96321798-dd3f-421a-acf8-af0c7158aff4",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "SpawnTurret",
                     "type": "Button",
                     "id": "102c1570-3c79-4434-b1a0-2aa834f86cdc",
@@ -722,6 +731,28 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "MoveCrosshairRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bb9da4cd-2805-4ae6-b8d1-a8ad0def0bc8",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Spell4",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2d96a9ab-d781-431a-a2b7-82e528ca2432",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Spell4",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

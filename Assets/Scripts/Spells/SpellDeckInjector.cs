@@ -78,7 +78,7 @@ public class SpellDeckInjector : MonoBehaviour
                 }
             )
         }),
-
+        
         //melee deck
         new SpellDeck(SpellClass.Wisteria, new List<SpellCard>
         {
@@ -109,7 +109,21 @@ public class SpellDeckInjector : MonoBehaviour
                     new RetreatSettings(0.25f)
                 }
             )
-        })
+        }),
+        
+        // Root deck
+        new SpellDeck(SpellClass.Ficus, new List<SpellCard>
+            {
+                new SpellCard("RootSnare", SpellClass.Ficus, 3f, 
+                    new List<ISpellActionSettings>
+                    {
+                        new ExplodeSettings(new SpellExplosion(SpellShapes.Horizontal, 1, 0f,
+                            new MutatorEnsnare()), 
+                            useCurrentTarget: true)
+                    }
+            )
+        }),
+        
 
         //extra decks (that we obviously cant fit under 3 decks). Swap the commenting in or out for the decks to test what you want
 

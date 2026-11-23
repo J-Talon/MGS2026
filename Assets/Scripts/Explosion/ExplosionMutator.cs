@@ -16,6 +16,8 @@ Cells and Units are not kept in sync, so if you remove a cell, also remove its u
 See Explosion.cs
 */
 
+using Effect.EntityEffect;
+
 /// <summary>
 /// Modifies an explosion after its cells and units are allocated and before damage is applied
 /// </summary>
@@ -65,3 +67,17 @@ public class MutatorDamageRange : IExplosionMutator
         explosion.DamageStep = _step;
     }
 }
+
+/// <summary>
+/// Applies a three-second ensnare to all units selected by the explosion.
+/// </summary>
+public class MutatorEnsnare : IExplosionMutator
+{
+    public void Mutate(Explosion explosion)
+    {
+        foreach (var unit in explosion.Units)
+        {
+            unit.AddEffect(new EffectEnsnared(unit, 3));
+        }
+    }
+} 
