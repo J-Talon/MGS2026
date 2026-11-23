@@ -7,7 +7,7 @@ Wave creating tutorial!!
 How to create a wave:
 1. Create your tokened entities!
     ex:
-    tokenedEntity myTokenedEntity = new tokenedEntity(EntityType type, int tokenCost, double weight);
+    TokenedEntity myTokenedEntity = new TokenedEntity(EntityType type, int tokenCost, double weight);
     - type is the type of entity you will be spawning
     - tokenCost is the token cost of the entity (you can read about tokens in the GDD or in Wave.cs)
     - weight is the chance the entity will be picked into the list of entities to spawn (chance is weight/TOTAL WEIGHT - the total weight is calculated from the sum of all weights added to a wave)
@@ -25,7 +25,7 @@ How to create a wave:
         WaveQueue myWave = new WaveQueue(WeightedRandomEntity weightedEntities, int maxTokens, int maxEntities, double spawnDelay);
         - weightedEntities is the randomizer we created in the last step
         - maxTokens is the maximum amount of tokens the wave can "spend" (you can read about tokens in the GDD or in Wave.cs)
-        - maxEntities is the maximum entities that can be in the grid at once (default is 4)
+        - maxEntities is the maximum entities that can be on the grid at once (default is 4)
         - spawnDelay is the time it takes for a new entity to spawn after an entity is despawned
 4. Play the wave!
     ex:

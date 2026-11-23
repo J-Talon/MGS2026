@@ -32,6 +32,15 @@ namespace Event
 
         }
 
+        /// <summary>
+        /// Group the event relating to levels (waves and modifiers) ||
+        /// Flow Rule: Called From (LevelManager.cs OR Wave.cs) -> Listened from anywhere
+        /// </summary>
+        public static class Level
+        {
+            public static readonly EventDispatcher<ValueTuple> waveEnded = new EventDispatcher<ValueTuple>();  
+        }
+
         public static readonly EventDispatcher<bool> gridColUpdateEvent = new EventDispatcher<bool>();  //< int, float param
     }
 
@@ -100,9 +109,12 @@ Basically means that during the movement cooldown, if i am holding down another 
 And to account for someone changing their buffered input to a different one, the moveReleased deals with it (hence the name)
 For more details about this stuff, go to InputEvents.cs and PlayerController.cs
 
-Edited by Wilson - October 25 2025
+Edited by Wilson - October 25 2026
 Added crosshair left and right pressed events
 
 Edited by Jordan - Nov 08, 2026
 simplified the spell event stuff so its easier if we need more spellDeck and buttons. Aka, the same thing i did for the Oct 14 2026 movement stuff, but for spells
+
+Edited by Wilson - November 23 2026
+added level events (wave ended)
  */

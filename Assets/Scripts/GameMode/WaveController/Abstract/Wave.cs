@@ -8,10 +8,11 @@
 using UnityEngine;
 using Entities.Unit;
 using Gameplay.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine.Events;
 using Entities.Abstract;
+using Event;
 
 namespace Gameplay.Wave
 {
@@ -25,23 +26,20 @@ namespace Gameplay.Wave
         protected bool isPlaying = false; 
         protected List<double> enemiesToSpawn = new();
         protected double spawnDelay;
-        // Tells any listener that the wave has ended.
-        private UnityEvent waveEnded;
-        public UnityEvent getWaveEndedEvent() {return waveEnded;}
-
         protected EntityManager entityManager;
     
-        public Wave(WeightedRandomEntity weightedEntities, int tokens, int newMaxEntities = 4, double spawnDelay = 0.5)
+        public Wave(WeightedRandomEntity weightedEntities, int tokens, int maxEntities = 4, double spawnDelay = 0.5)
         {
             // set up!
-            maxEntities = newMaxEntities;
+            if (maxEntities < 1) {maxEntities = 1;}
+            if (spawnDelay < 0) {spawnDelay = 0;}
+            if (tokens < 0) {tokens = 0;}
+
+            this.maxEntities = maxEntities;
             this.spawnDelay = spawnDelay; 
             activeEntities = new();
             spawnList = new();
-            waveEnded = new UnityEvent();
             entityManager = EntityManager.GetInstance();
-
-            if (tokens < 0) {tokens = 0;}
 
             // Build the wave (build the spawn list)
 
@@ -58,7 +56,7 @@ namespace Gameplay.Wave
             }
 
             // Make sure we dont screw this up.
-            if (smallestCost == null || smallestCost < 0)
+            if (smallestCost == null || smallestCost <= 0)
             {
                 throw new System.Exception($"Failed to build wave");
             }
@@ -77,8 +75,6 @@ namespace Gameplay.Wave
                 var entityData = entityRolled.Unwrap();
                 // entity data consists of entity (the entity type) and token (the token cost)
 
-                Debug.Log(entityData.token);
-
                 if (entityData.token <= remainingTokens)
                 {
                     // Add to the spawn list and remove the token cost from the remaining tokens
@@ -86,17 +82,17 @@ namespace Gameplay.Wave
                     remainingTokens -= entityData.token;
                 }
             }
-            Debug.Log(spawnList.Count);
-            // We can shuffle the spawnQueue if we wanted to.
+            // We can shuffle the spawnList if we wanted to.
         }
 
         // Plays the wave
         public void Play()
         {
+            // initial spawns
             for (int i = 0; i < maxEntities; i++)
             {
                 var next = GetNextSpawn();
-                if (next.type != null)
+                if (next.type != null && next.pos != null)
                 {
                     activeEntities.Add(SpawnEntityAt(next.pos, next.type));
                 }
@@ -108,8 +104,8 @@ namespace Gameplay.Wave
         private void End()
         {
             isPlaying = false;
-            waveEnded.Invoke();
-            waveEnded.RemoveAllListeners();
+            // Call the wave ended event
+            GameplayEvents.Level.waveEnded.CallEvent(ValueTuple.Create());
         }
 
         // Clears the wave
@@ -120,7 +116,7 @@ namespace Gameplay.Wave
 
             foreach (EntityUnit entity in activeEntities)
             {
-                entity.Despawn();
+                entity.Despawn(); // despawn or kill? change if the enemies need to die instead (grim...)
             }
 
             activeEntities.Clear();
@@ -132,17 +128,27 @@ namespace Gameplay.Wave
 
         protected Entity SpawnEntityAt(Vector2Int postion, EntityType entity)
         {
-            // may be nice to implement a spawn delay...
+            // TODO: Add modifiers to the entity here
+            // ...GetEntity().AddModifier(); <- probably not going to look like this
             Vector3 spawnPos = new Vector3(postion.x, postion.y, -1);
             return entityManager.GetEntity(entity, spawnPos);
+        }
+
+        protected void OnEntityDeath(Entity entity)
+        {
+            activeEntities.Remove(entity);
+
+            enemiesToSpawn.Add(spawnDelay);
         }
 
         public void Tick()
         {
             if (isPlaying){
                 // Will change if I find a better way of knowing if an entity has perished or not.
-                foreach (Entity entity in activeEntities)
+                for (int i = activeEntities.Count - 1; i >= 0; i--)
                 {
+                    Entity entity = activeEntities[i];
+
                     if (!entity.isActiveAndEnabled)
                     {
                         activeEntities.Remove(entity);
@@ -159,7 +165,7 @@ namespace Gameplay.Wave
                         if (enemiesToSpawn[i] <= 0f)
                         {
                             var next = GetNextSpawn();
-                            if (next.type != null)
+                            if (next.type != null && next.pos != null)
                             {
                                 activeEntities.Add(SpawnEntityAt(next.pos, next.type));
                             }
@@ -172,6 +178,7 @@ namespace Gameplay.Wave
                     }
                 }
                 
+                // end if there are no entities left to spawn and no active entities
                 if (activeEntities.Count == 0 && spawnList.Count == 0)
                 {
                     End();
@@ -180,6 +187,7 @@ namespace Gameplay.Wave
             }
         }
 
+        // Have something call this every tick please
         public void FixedUpdate()
         {
             this.Tick();
@@ -202,7 +210,7 @@ namespace Gameplay.Wave
             this.tokenCost = tokenCost;
         }
     }
-
+    // This one makes sure you dont mix and match types. thats a big no no
     public class WeightedRandomEntity : WeightedRandom<EntityType>
     {
         public WeightedRandomEntity(List<TokenedEntity> items = null) : base(items?.Cast<WeightedItem<EntityType>>().ToList()) {}

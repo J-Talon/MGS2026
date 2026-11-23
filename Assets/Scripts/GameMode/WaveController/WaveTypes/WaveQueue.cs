@@ -13,7 +13,7 @@ namespace Gameplay.Wave
     {
         protected IGridSystemView gridManager;
 
-        public WaveQueue (WeightedRandomEntity weightedEntities, int tokens, int newMaxEntities = 4, double spawnDelay = 0.5) : base(weightedEntities, tokens, newMaxEntities, spawnDelay)
+        public WaveQueue (WeightedRandomEntity weightedEntities, int tokens, int maxEntities = 4, double spawnDelay = 0.5) : base(weightedEntities, tokens, maxEntities, spawnDelay)
         {
             gridManager = GridManager.instance;
         }
@@ -31,6 +31,7 @@ namespace Gameplay.Wave
             return (null, default);
         }
 
+        // This could be moved to the Grid Manager, however only this class needs it as of now so maybe not.
         private GridCell GetUnoccupiedEnemyCell()
         {
             var enemyBounds = gridManager.GetEnemyGridBounds();

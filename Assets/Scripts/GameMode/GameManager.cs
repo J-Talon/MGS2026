@@ -2,7 +2,7 @@
 
 using Entities.Abstract;
 using UnityEngine;
-using Gameplay.Core;
+using Event;
 using Gameplay.Wave; // remove this when level are implemented.
 
 public class GameManager : MonoBehaviour
@@ -63,7 +63,7 @@ public class GameManager : MonoBehaviour
 
         myWave = new WaveQueue(weightedEntities, 5);
 
-        myWave.getWaveEndedEvent().AddListener(onWaveEnded);
+        GameplayEvents.Level.waveEnded.AddEventListener(OnWaveEnded);
 
         // This is kinda pointless but itll make sense with more than one wave
         waveManager.AddWave(myWave);
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
     }
 
     // TESTING I will delete this when I or someone else implements levels
-    private void onWaveEnded()
+    private void OnWaveEnded(System.ValueTuple _)
     {
         Debug.Log("Wave is over");
     }
