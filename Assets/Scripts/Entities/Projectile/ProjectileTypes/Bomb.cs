@@ -22,11 +22,6 @@ namespace Entities.Projectile.ProjectileTypes
 
         public override void OnStart() {
             var h = UnityEngine.Random.Range(height, height/2);
-
-            if (UnityEngine.Random.Range(0, 1) > 0.5) {
-                h *= -1;
-            }
-
             nextHeight = h;
         }
        
@@ -41,7 +36,7 @@ namespace Entities.Projectile.ProjectileTypes
             var normalizedEndY = deltaY / height;
 
             // get a value perpendicular to direct path from start to end in order to create the illusion of fligh
-            var tangent = Vector2.Perpendicular(delta.normalized);
+            var tangent = (delta.x >= 0) ? Vector2.Perpendicular(delta.normalized) : -Vector2.Perpendicular(delta.normalized);
 
             //default arc that basically just has a vertex at y = 1
             float arc = 4.0f * time * (1.0f - time);
