@@ -30,8 +30,5 @@ public class SpellActionShoot : SpellAction
         // Setting this direction only with the assumption that player is using this function
         // Will need updating when monsters start using this
         pea.SetDirection(new Vector2(1, 0));
-
-        // TEMP BUG FIX - Setting friendly here stops the player from hitting themself
-        pea.SetIsFriendly(true);
     }
 }
