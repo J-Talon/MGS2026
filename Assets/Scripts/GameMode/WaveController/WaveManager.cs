@@ -34,8 +34,7 @@ How to create a wave:
     myWave.fixedUpdate() must be called every tick, handle it in a manager.
 
     you can get an event that tells you when the wave has ended using:
-    myWave.getWaveEndedEvent();
-    just add a listener to it.
+    GameplayEvents.Level.waveEnded.AddEventListener(MY_FUNCTION);
 */
 
 using UnityEngine;
