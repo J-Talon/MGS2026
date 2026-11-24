@@ -2,11 +2,16 @@
 
 using Entities.Abstract;
 using UnityEngine;
+using Event;
+using Gameplay.Wave; // remove this when level are implemented.
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     private EntityManager entityManager;
+
+    // delete when level is implemented
+    WaveQueue myWave;
 
     void Start()
     {
@@ -32,12 +37,48 @@ public class GameManager : MonoBehaviour
         // entityManager.GetEntity(EntityType.UnitTestMoveSpaceOut, new Vector3(9, 4, -1));
 
         // Test Unit with all behaviours
-        entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(5, 2, -1));
-        entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(5, 3, -1));
-        entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(6, 4, -1));
-        entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(6, 1, -1));
-        entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(7, 1, -1));
-        entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(8, 1, -1));
-        entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(9, 1, -1));
+        // entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(5, 2, -1));
+        // entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(5, 3, -1));
+        // entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(6, 4, -1));
+        // entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(6, 1, -1));
+        // entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(7, 1, -1));
+        // entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(8, 1, -1));
+        // entityManager.GetEntity(EntityType.UnitTestBuddha, new Vector3(9, 1, -1));
+
+        // Test waves (THIS SHOULD ALL BE MANAGED BY A LEVEL MANAGER!!!)
+        WaveManager waveManager = new WaveManager();
+
+        TokenedEntity UnitTestDodgeRow = new TokenedEntity(EntityType.UnitTestDodgeRow, 1, 10);
+        TokenedEntity UnitTestDodgeCol = new TokenedEntity(EntityType.UnitTestDodgeCol, 1, 10);
+        TokenedEntity UnitTestDodgeAll = new TokenedEntity(EntityType.UnitTestDodgeAll, 1, 10);
+        TokenedEntity UnitTestMoveInward = new TokenedEntity(EntityType.UnitTestMoveInward, 1, 10);
+        TokenedEntity UnitTestBuddha = new TokenedEntity(EntityType.UnitTestBuddha, 1, 10);
+
+        WeightedRandomEntity weightedEntities = new WeightedRandomEntity();
+        weightedEntities.Add(UnitTestDodgeRow);
+        weightedEntities.Add(UnitTestDodgeCol);
+        weightedEntities.Add(UnitTestDodgeAll);
+        weightedEntities.Add(UnitTestMoveInward);
+        weightedEntities.Add(UnitTestBuddha);
+
+        myWave = new WaveQueue(weightedEntities, 5);
+
+        GameplayEvents.Level.waveEnded.AddEventListener(OnWaveEnded);
+
+        // This is kinda pointless but itll make sense with more than one wave
+        waveManager.AddWave(myWave);
+        waveManager.GetNextWave().Play();
+    }
+
+    // TESTING I will delete this when I or someone else implements levels
+    private void OnWaveEnded(System.ValueTuple _)
+    {
+        Debug.Log("Wave is over");
+    }
+
+    // TESTING I will delete this when I or someone else implements levels
+    private void Update()
+    {
+        myWave.FixedUpdate();
     }
 }
