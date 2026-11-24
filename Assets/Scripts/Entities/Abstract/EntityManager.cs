@@ -1,3 +1,6 @@
+//who the fuck authored this file?
+//edited by Jordan - November 20, 2026
+
 using System.Collections.Generic;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -109,6 +112,7 @@ namespace Entities.Abstract
             { //can remove from pool, reset to original state and return it
                 entity = _reservePool[type].Dequeue();
                 entity.ResetToOriginal();
+                entity.SetIsFriendly(isFriendly);
                 entity.gameObject.SetActive(true);
 
                 //resets entity in new position
@@ -165,3 +169,12 @@ namespace Entities.Abstract
         #endregion Pooling
     }
 }
+
+/*
+Changelog
+
+///
+Jordan - Nov 20, 2026
+when reusing pooled entities, allegiance wasnt touched, now it is changed to what it should be with a SetIsFriendly
+
+*/

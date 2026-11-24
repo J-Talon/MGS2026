@@ -1,3 +1,6 @@
+//who the fuck authored this file?
+//edits made by Jordan - Nov 20, 2026
+
 using System;
 using Particle.Base;
 using UnityEngine;
@@ -13,12 +16,9 @@ namespace Entities.Projectile.ProjectileTypes
         public float wiggleSpeed;
         private float randPhase = 0;
 
-
         public override void OnStart() {
             randPhase = UnityEngine.Random.Range(0, (float)Math.PI*2);
         }
-
-
 
         public override void Die()
         {
@@ -41,13 +41,20 @@ namespace Entities.Projectile.ProjectileTypes
             //     Math.Clamp(wiggleFactor, 0, 0.5f)
             // );
 
-            MoveProjectileSmooth(new Vector2(1, 0)*speed);
+            if (isFriendly == true)
+            {
+                MoveProjectileSmooth(new Vector2(1, 0) * speed);
+            }
+
+            else
+            {
+                MoveProjectileSmooth(new Vector2(-1, 0) * speed);
+            }
 
             // check if enemy is at position and damage them and disappear if it is
-            var entity = GridManager.instance.GetEntityAtTilePosition(new Vector2Int((int)transform.position.x, (int)transform.position.y));
-        
+            var entity = GridManager.instance.GetEntityAtTilePosition(Vector2Int.RoundToInt(transform.position));
 
-            if (entity != null && !entity.GetIsFriendly()) {
+            if (entity != null && IsHostile(entity) == true) {
                 entity.TakeDamage(damage);
                 GridCell cell = entity.GetCurrentCell();
               
@@ -63,3 +70,13 @@ namespace Entities.Projectile.ProjectileTypes
         }
     }
 }
+
+/*
+ Changelog
+
+Jordan - Nov 20, 2026
+
+changed the hardcoded right direction of the MoveProjectileSmooth to check team allegiance, and return a left or right travelling pea depending. 
+also fixed the team allegiance of the pea to use IsHostile() instead of GetIsFriendly(). Enemies can use peas too, so its a hostility check, not if its an enemy check
+ 
+*/
