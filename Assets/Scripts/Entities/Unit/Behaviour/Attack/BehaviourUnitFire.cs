@@ -13,6 +13,10 @@ namespace Entities.Unit.Behaviour.Attack
     /// </summary>
     public abstract class BehaviourUnitFire : EntityBehaviour
     {
+        public override BehaviourAction BehaviourAction { get; } = BehaviourAction.Attack;
+        public override BehaviourType BehaviourType { get; } = BehaviourType.Offensive;
+        public override BehaviourPriority BehaviourPriority { get; } = BehaviourPriority.Low;
+
         [field: SerializeField] protected EntityType projectileType;
         [field: SerializeField] protected int fireCooldown;
 

@@ -6,6 +6,9 @@ using JetBrains.Annotations;
 using Particle.Base;
 using UnityEngine;
 
+// Range-based damage and debug visualization added by Daniel
+using TMPro;
+
 /// <summary>
 /// Grid based explosion resolved in layers:                                        <br></br>
 /// 1) Cell allocator - pattern offsets to existing GridCells                       <br></br>
@@ -25,6 +28,9 @@ public class Explosion
     private readonly ParticleType _vfx;
     private readonly IExplosionMutator _mutator;
 
+    // Enable to view damage in debug mode
+    private const bool debugViewDamage = true;
+
     public Vector2Int Center { get; }
     [CanBeNull] public Entity Source { get; }
 
@@ -32,6 +38,9 @@ public class Explosion
     public List<GridCell> Cells { get; } = new();
     public List<EntityUnit> Units { get; } = new();
     public float Damage { get; set; }
+    public float DamageStep { get; set; } = 0f;
+    public float DamageMin { get; set; } = float.MinValue;
+    public float DamageMax { get; set; } = float.MaxValue;
 
     public Explosion(ExplosionPattern pattern, Vector2Int center, ParticleType vfx, IExplosionMutator mutator, float damage, [CanBeNull] Entity source = null)
     {
@@ -90,7 +99,30 @@ public class Explosion
     private void ApplyDamage()
     {
         foreach (EntityUnit unit in Units)
-            unit.TakeDamage(Damage);
+        {
+            // Calculate range-based damage
+            Vector2Int unitPos = unit.GetCurrentCell().GetCellPosition();
+            float baseDmg = Damage + DamageStep * (Mathf.Abs(Center.x - unitPos.x) + Mathf.Abs(Center.y - unitPos.y));
+            float clampedDmg = Mathf.Clamp(baseDmg, DamageMin, DamageMax);
+
+            unit.TakeDamage(clampedDmg);
+
+            // DEBUG: View damage applied to each unit
+            if (debugViewDamage)
+            {
+                GameObject debugDamage = new GameObject($"{clampedDmg}");
+                debugDamage.transform.SetParent(unit.transform, false);
+
+                TextMeshPro debugDamageText = debugDamage.AddComponent<TextMeshPro>();
+                debugDamageText.text = $"{clampedDmg}";
+                debugDamageText.GetComponent<RectTransform>().sizeDelta = new Vector2(1f, 1f);
+                debugDamageText.fontSize = 8f;
+                debugDamageText.color = Color.black;
+                debugDamageText.sortingOrder = 99;
+
+                Object.Destroy(debugDamage, 2f);
+            }
+        }
     }
 
     /// <summary>

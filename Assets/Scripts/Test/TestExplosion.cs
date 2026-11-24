@@ -59,6 +59,9 @@ public class TestExplosion : MonoBehaviour
             //     null
             // ).Detonate();
 
+            // Bomb Template
+            // ExplosionBomb.Create(selectedCell.GetCellPosition(), null).Detonate();
+
             // Diagonal 2
             // new Explosion(
             //     new ExplosionPatternDiagonal(2),
@@ -71,7 +74,7 @@ public class TestExplosion : MonoBehaviour
 
             // Laser down 2
             // new Explosion(
-            //     new ExplosionPatternLaser(Vector2Int.down, 2),
+            //     new ExplosionPatternLazer(Vector2Int.down, 2),
             //     selectedCell.GetCellPosition(),
             //     Particle.Base.ParticleType.SPARK,
             //     new MutatorDamageScale(2f),
@@ -79,15 +82,55 @@ public class TestExplosion : MonoBehaviour
             //     null
             // ).Detonate();
 
+            // Player Laser
+            // ExplosionLaserPlayer.Create(
+            //     selectedCell.GetCellPosition(),
+            //     3f,
+            //     null
+            // ).Detonate();
+
+            // Enemy Laser
+            // ExplosionLaserEnemy.Create(
+            //     selectedCell.GetCellPosition().x,
+            //     4f,
+            //     null
+            // ).Detonate();
+
             // Quad 2, 2
-            new Explosion(
-                new ExplosionPatternQuad(2, 2),
-                selectedCell.GetCellPosition(),
-                Particle.Base.ParticleType.SPARK,
-                new MutatorDamageScale(2f),
-                1f,
-                null
-            ).Detonate();
+            // new Explosion(
+            //     new ExplosionPatternQuad(2, 2),
+            //     selectedCell.GetCellPosition(),
+            //     Particle.Base.ParticleType.SPARK,
+            //     new MutatorDamageScale(2f),
+            //     1f,
+            //     null
+            // ).Detonate();
+
+            // Trap Template
+            // ExplosionTrap.Create(selectedCell.GetCellPosition(), null).Detonate();
+
+            // Whip Template
+            ExplosionWhip.Create(selectedCell.GetCellPosition(), null).Detonate();
+
+            // Ranged Quad 2, 2; Decreases from center
+            // new Explosion(
+            //     new ExplosionPatternQuad(2, 2),
+            //     selectedCell.GetCellPosition(),
+            //     Particle.Base.ParticleType.SPARK,
+            //     new MutatorDamageRange(1f, null, -2f),
+            //     6f,
+            //     null
+            // ).Detonate();
+
+            // Ranged Quad 2, 2; Increases from center
+            // new Explosion(
+            //     new ExplosionPatternQuad(2, 2),
+            //     selectedCell.GetCellPosition(),
+            //     Particle.Base.ParticleType.SPARK,
+            //     new MutatorDamageRange(1f, 6f, 2f),
+            //     2f,
+            //     null
+            // ).Detonate();
 
             selectedCell = null;
         }

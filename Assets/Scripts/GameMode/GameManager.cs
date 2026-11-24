@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
         entityManager.GetEntity(EntityType.Player, new Vector3(0, 0, -1), true);
 
         // entityManager.GetEntity(EntityType.UnitTest, new Vector3(5, 2, -1), false, 0f);
-        // entityManager.GetEntity(EntityType.UnitTestDemon, new Vector3(4, 0, -1), false, 0f);
+        entityManager.GetEntity(EntityType.UnitTestDemon, new Vector3(5, 0, -1), false, 0f);
         // entityManager.GetEntity(EntityType.CollectableTest, new Vector3(3, 3, -1), true, 0f);
 
         // AI moveset test

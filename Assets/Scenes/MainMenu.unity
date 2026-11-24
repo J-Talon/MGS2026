@@ -287,6 +287,7 @@ MonoBehaviour:
   debugMovement: 0
   debugActions: 0
   mainMenu: {fileID: 669803855447574178}
+  waveMenu: {fileID: 6920739881298442781, guid: 239265b938331f848a841c7c48590bc1, type: 3}
 --- !u!4 &858468279
 Transform:
   m_ObjectHideFlags: 0

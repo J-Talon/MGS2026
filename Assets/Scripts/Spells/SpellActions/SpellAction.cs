@@ -1,4 +1,5 @@
 //author - Jordan -> Nov 08, 2026
+//edited by Jordan - Nov 20, 2026
 
 using Entities.Unit;
 using UnityEngine;
@@ -26,10 +27,10 @@ public abstract class SpellAction
         OnPerformAction();
     }
 
-    //get the grid, can be override if you want it to not aim directly at the reticle
+    //get the grid, can be override if you want to do other things with it
     public virtual void SetTargetGrid()
     {
-        castingData.targetGrid = castingData.crosshair.GetPosition();
+        castingData.targetGrid = castingData.target();
     }
 
     //this func is override in the files from the folder SpellActions. These spell action styles implement their own versions of this to do fancy spell stuff
@@ -82,3 +83,12 @@ public abstract class SpellAction
         return false;
     }
 }
+
+/*
+Changelog
+
+///
+Jordan - Nov 20, 2026
+
+changed what castingData.targetGrid set to in SetTargetGrid(). Nothing burger
+*/

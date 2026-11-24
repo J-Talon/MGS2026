@@ -1,7 +1,6 @@
 // Authors: [Jacky, Jeremy, Mark]
 // Added collectable entity check - Wilson October 26 2026
 
-
 using Effect.Abstract;
 using Entities.Abstract;
 using Entities.Collectable;
@@ -16,7 +15,6 @@ namespace Entities.Unit
     /// </summary>
     public class EntityUnit : Abstract.Entity, IUnitMoveSnappy, IUnitMoveSmooth, IUnitFire
     {
-        
         //(Talon J) effect system
         protected LocalizedEffectManager<EntityEffect> effectManager;
         
@@ -28,8 +26,6 @@ namespace Entities.Unit
             GridCell cell = gridManager.GetTileAtPosition(Vector2Int.RoundToInt(gameObject.transform.position));
             cell.EntityUnitOccupy(this); //register self to new cell
         }
-
-        
         
         /// <summary>
         /// Validates passed in firing data then creates projectile from factory
@@ -46,12 +42,9 @@ namespace Entities.Unit
         
         }
 
-
         public bool AddEffect(EntityEffect effect) {
             return this.effectManager.AddEffect(effect);
         }
-
-
 
         /// <summary>
         /// Implementation of continuous movement
@@ -62,7 +55,6 @@ namespace Entities.Unit
             gameObject.transform.position = gameObject.transform.position + (Vector3)deltaMovement;
         }
 
-
         [CanBeNull]
         public GridCell GetCurrentCell()
         {
@@ -71,12 +63,9 @@ namespace Entities.Unit
             return GridManager.instance.GetTileAtPosition(rounded);
         }
         
-        
-        
         public sealed override bool TakeDamage(float attackDamage) {
             return this.TakeDamage(attackDamage, null);
         }
-
 
         public virtual bool TakeDamage(float attackDamage, [CanBeNull] Entity source)
         {
@@ -91,7 +80,6 @@ namespace Entities.Unit
             if (currentHealth <= 0f) Die();
             return true;
         }
-
 
         /// <summary>
         /// Implementation of snappy based movement (int)
@@ -134,8 +122,6 @@ namespace Entities.Unit
                 
         }
         
-    
-
         public override void Die()
         {
             IGridSystemView gridManager = GridManager.instance;
@@ -144,21 +130,17 @@ namespace Entities.Unit
             base.Die();
         }
 
-
         public override void Tick()
         {
-            if (!this.isAlive) return;
+            if (!isAlive) return;
             
             effectManager.Tick(Time.deltaTime);
             
-            if (!this.isInvulnerable && this.currentHealth <= 0) {
-                this.Die();
+            if (!isInvulnerable && currentHealth <= 0) {
+                Die();
             }
         }
         
-
-
-
         public bool MoveUp()
         {
             return TryMoving(Vector2Int.up);

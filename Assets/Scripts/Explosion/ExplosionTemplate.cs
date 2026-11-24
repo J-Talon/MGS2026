@@ -1,0 +1,124 @@
+// Author: Daniel
+using UnityEngine;
+using Entities.Abstract;
+using Particle.Base;
+
+public class ExplosionLaserPlayer : Explosion
+{
+    /// <summary>
+    /// Creates a laser that fires from the origin to the right of the grid.
+    /// </summary>
+    /// <param name="origin">The (x, y) coordinate where the laser originated from.</param>
+    /// <param name="damage">The amount of damage dealt on contact with any part of the laser.</param>
+    /// <param name="source">The source of the laser.</param>
+    /// <returns></returns>
+    public static ExplosionLaserPlayer Create(Vector2Int origin, float damage, Entity source = null)
+    {
+        GridManager gm = Object.FindFirstObjectByType<GridManager>();
+        int maxX = gm.GetGridBounds().max.x;
+        int laserWidth = maxX - origin.x;
+
+        return new ExplosionLaserPlayer(
+            new ExplosionPatternLazer(Vector2Int.right, laserWidth),
+            origin,
+            ParticleType.SPARK,
+            null,
+            damage,
+            source);
+    }
+
+    private ExplosionLaserPlayer(ExplosionPattern pattern, Vector2Int center, ParticleType vfx, IExplosionMutator mutator, float damage, Entity source = null) : base(pattern, center, vfx, mutator, damage, source) { }
+}
+
+public class ExplosionLaserEnemy : Explosion
+{
+    /// <summary>
+    /// Creates a laser that spans an entire column.
+    /// </summary>
+    /// <param name="originX">The x coordinate where the laser originated from.</param>
+    /// <param name="damage">The amount of damage dealt on contact with any part of the laser.</param>
+    /// <param name="source">The source of the laser.</param>
+    /// <returns></returns>
+    public static ExplosionLaserEnemy Create(int originX, float damage, Entity source = null)
+    {
+        GridManager gm = Object.FindFirstObjectByType<GridManager>();
+        (Vector2Int min, Vector2Int max) bounds = gm.GetGridBounds();
+        int laserHeight = bounds.max.y - bounds.min.y;
+
+        return new ExplosionLaserEnemy(
+            new ExplosionPatternLazer(Vector2Int.up, laserHeight),
+            new Vector2Int(originX, bounds.min.y),
+            ParticleType.SPARK,
+            null,
+            damage,
+            source);
+    }
+
+    private ExplosionLaserEnemy(ExplosionPattern pattern, Vector2Int center, ParticleType vfx, IExplosionMutator mutator, float damage, Entity source = null) : base(pattern, center, vfx, mutator, damage, source) { }
+}
+
+public class ExplosionBomb : Explosion
+{
+    /// <summary>
+    /// Creates a bomb explosion that spreads outwards in a 1x1 cross.
+    /// </summary>
+    /// <param name="center">The (x, y) coordinate where the explosion originated from.</param>
+    /// <param name="source">The source of the explosion.</param>
+    /// <returns></returns>
+    public static ExplosionBomb Create(Vector2Int center, Entity source = null)
+    {
+        return new ExplosionBomb(
+            new ExplosionPatternCross(1, 1),
+            center,
+            ParticleType.SPARK,
+            new MutatorDamageRange(2f, 6f, -4f),
+            6f,
+            source);
+    }
+
+    private ExplosionBomb(ExplosionPattern pattern, Vector2Int center, ParticleType vfx, IExplosionMutator mutator, float damage, Entity source = null) : base(pattern, center, vfx, mutator, damage, source) { }
+}
+
+public class ExplosionTrap : Explosion
+{
+    /// <summary>
+    /// Creates a trap explosion that spreads horizontally by 1 cell.
+    /// </summary>
+    /// <param name="center">The (x, y) coordinate where the explosion originated from.</param>
+    /// <param name="source">The source of the explosion.</param>
+    /// <returns></returns>
+    public static ExplosionTrap Create(Vector2Int center, Entity source = null)
+    {
+        return new ExplosionTrap(
+            new ExplosionPatternQuad(1, 0),
+            center,
+            ParticleType.SPARK,
+            null,
+            2f,
+            source);
+    }
+
+    private ExplosionTrap(ExplosionPattern pattern, Vector2Int center, ParticleType vfx, IExplosionMutator mutator, float damage, Entity source = null) : base(pattern, center, vfx, mutator, damage, source) { }
+}
+
+public class ExplosionWhip : Explosion
+{
+    /// <summary>
+    /// Creates a whip explosion that spreads vertically by 1 cell.
+    /// </summary>
+    /// <param name="center">The (x, y) coordinate where the explosion originated from.</param>
+    /// <param name="source">The source of the explosion.</param>
+    /// <returns></returns>
+    public static ExplosionWhip Create(Vector2Int center, Entity source = null)
+    {
+        return new ExplosionWhip(
+            new ExplosionPatternQuad(0, 1),
+            center,
+            ParticleType.SPARK,
+            null,
+            4f,
+            source);
+    }
+
+    private ExplosionWhip(ExplosionPattern pattern, Vector2Int center, ParticleType vfx, IExplosionMutator mutator, float damage, Entity source = null) : base(pattern, center, vfx, mutator, damage, source) { }
+}

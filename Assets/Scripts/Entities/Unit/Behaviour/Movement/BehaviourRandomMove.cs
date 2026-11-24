@@ -1,8 +1,6 @@
 /// Author: Angad 
-
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using Random = UnityEngine.Random;
 
 // Random enemy movement, attatch to 
@@ -14,10 +12,10 @@ namespace Entities.Unit.Behaviour.Movement
         public override BehaviourType BehaviourType { get; } = BehaviourType.Neutral;
         public override BehaviourPriority BehaviourPriority { get; } = BehaviourPriority.Low;
 
-        // ovverided tick function
+        // overrided tick function
         public override bool Tick()
         {
-            if (!base.RollProficiency()) return false;
+            if (!RollProficiency()) return false;
             return RandomlyMove(unit);
         }
 

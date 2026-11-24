@@ -18,7 +18,7 @@ public class SpellDeckInjector : MonoBehaviour
         //basicShot deck
         new SpellDeck(SpellClass.Lathyrus, new List<SpellCard>
         {
-            new SpellCard("Pea", SpellClass.Lathyrus, 0.15f,
+            new SpellCard("Pea", SpellClass.Lathyrus, new SpellCooldown(0.15f, 3f),
                 new List<ISpellActionSettings>{
                     new ShootSettings()
                 }
@@ -28,7 +28,7 @@ public class SpellDeckInjector : MonoBehaviour
         //turret deck
         new SpellDeck(SpellClass.Amorphophallus, new List<SpellCard>
         {
-            new SpellCard("PeaShooterTurret", SpellClass.Amorphophallus, 2f,
+            new SpellCard("PeaShooterTurret", SpellClass.Amorphophallus, new SpellCooldown(2f, 3f),
                 new List<ISpellActionSettings> {
                     new PlaceTurretSettings(),
                     new WaitSettings(1.5f),
@@ -39,7 +39,7 @@ public class SpellDeckInjector : MonoBehaviour
         //lazer deck
         new SpellDeck(SpellClass.Helianthus, new List<SpellCard>
         {
-            new SpellCard("Lazer", SpellClass.Helianthus, 2f,
+            new SpellCard("Lazer", SpellClass.Helianthus, new SpellCooldown(2f, 3f),
                 new List<ISpellActionSettings>
                 {
                     new WaitSettings(1f),
@@ -52,7 +52,7 @@ public class SpellDeckInjector : MonoBehaviour
         //bomb deck
         new SpellDeck(SpellClass.Impatiens, new List<SpellCard>
         {
-            new SpellCard("PlusBomb", SpellClass.Impatiens, 1f,
+            new SpellCard("PlusBomb", SpellClass.Impatiens, new SpellCooldown(1f, 5f),
                 new List<ISpellActionSettings>
                 {
                     new WaitSettings(1f),
@@ -61,7 +61,7 @@ public class SpellDeckInjector : MonoBehaviour
                 }
             ),
 
-            new SpellCard("DiagonalBomb", SpellClass.Impatiens, 1f,
+            new SpellCard("DiagonalBomb", SpellClass.Impatiens, new SpellCooldown(1f, 3f),
                 new List<ISpellActionSettings>
                 {
                     new LobSettings(0.5f, 2f),
@@ -69,7 +69,7 @@ public class SpellDeckInjector : MonoBehaviour
                 }
             ),
 
-            new SpellCard("QuadBomb", SpellClass.Impatiens, 1f,
+            new SpellCard("QuadBomb", SpellClass.Impatiens, new SpellCooldown(1f, 3f),
                 new List<ISpellActionSettings>
                 {
                     new WaitSettings(2f),
@@ -82,7 +82,7 @@ public class SpellDeckInjector : MonoBehaviour
         //melee deck
         new SpellDeck(SpellClass.Wisteria, new List<SpellCard>
         {
-            new SpellCard("MeleeDiagonalSlash", SpellClass.Wisteria, 2f,
+            new SpellCard("MeleeDiagonalSlash", SpellClass.Wisteria, new SpellCooldown(2f, 3f),
                 new List<ISpellActionSettings>
                 {
                     new DashSettings(0.15f),
@@ -93,7 +93,7 @@ public class SpellDeckInjector : MonoBehaviour
                 }
             ),
 
-            new SpellCard("MeleeMultiCrossSlash", SpellClass.Wisteria, 3f,
+            new SpellCard("MeleeMultiCrossSlash", SpellClass.Wisteria, new SpellCooldown(3f, 3f),
                 new List<ISpellActionSettings>
                 {
                     new DashSettings(0.15f),
@@ -117,7 +117,7 @@ public class SpellDeckInjector : MonoBehaviour
         //shootingStar deck
         new SpellDeck(SpellClass.Dodecatheon, new List<SpellCard>
         {
-            new SpellCard("ShootingStar", SpellClass.Dodecatheon, 4f,
+            new SpellCard("ShootingStar", SpellClass.Dodecatheon, new SpellCooldown(4f, 3f),
                 new List<ISpellActionSettings>
                 {
                     new WaitSettings(1f),
@@ -131,7 +131,7 @@ public class SpellDeckInjector : MonoBehaviour
         //crazy Spell for testing purposes of chaining a shitload of actions
         new SpellDeck(SpellClass.Ficus, new List<SpellCard>
         {
-            new SpellCard("TetoInFortnite", SpellClass.Ficus, 3f,
+            new SpellCard("TetoInFortnite", SpellClass.Ficus, new SpellCooldown(3f, 10f),
                 new List<ISpellActionSettings>
                 {
                     new LobSettings(1f, 5f),
