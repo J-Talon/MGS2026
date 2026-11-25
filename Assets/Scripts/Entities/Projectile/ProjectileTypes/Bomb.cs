@@ -67,7 +67,6 @@ namespace Entities.Projectile.ProjectileTypes
             DamageTile(gridView, target + new Vector2Int(0, -1));
             DamageTile(gridView, target + new Vector2Int(1, 0));
             DamageTile(gridView, target + new Vector2Int(-1, 0));
-
             base.Die();
         }
 

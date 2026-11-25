@@ -48,6 +48,8 @@ public class MutatorDamageScale : IExplosionMutator
 /// Adds <c>step</c> additional damage to each affected cell based on how far away the cell is from the center,
 /// while constraining the damage to <c>min</c> and <c>max</c>
 /// </summary>
+
+//Author: Daniel
 public class MutatorDamageRange : IExplosionMutator
 {
     private readonly float? _min, _max;
@@ -71,6 +73,8 @@ public class MutatorDamageRange : IExplosionMutator
 /// <summary>
 /// Applies a three-second ensnare to all units selected by the explosion.
 /// </summary>
+
+//Author: Sayeed
 public class MutatorEnsnare : IExplosionMutator
 {
     public void Mutate(Explosion explosion)

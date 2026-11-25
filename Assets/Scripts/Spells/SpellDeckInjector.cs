@@ -114,7 +114,7 @@ public class SpellDeckInjector : MonoBehaviour
         // Root deck
         new SpellDeck(SpellClass.Ficus, new List<SpellCard>
             {
-                new SpellCard("RootSnare", SpellClass.Ficus, 3f, 
+                new SpellCard("RootSnare", SpellClass.Ficus, new SpellCooldown(3f,3f), 
                     new List<ISpellActionSettings>
                     {
                         new ExplodeSettings(new SpellExplosion(SpellShapes.Horizontal, 1, 0f,

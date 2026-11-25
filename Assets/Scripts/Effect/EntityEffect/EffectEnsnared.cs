@@ -2,6 +2,11 @@ using Effect.Abstract;
 using Entities.Unit;
 using UnityEngine;
 
+
+/*
+ * Authors Sayeed, Talon
+ *
+ */
 namespace Effect.EntityEffect
 {
     public class EffectEnsnared: Abstract.EntityEffect

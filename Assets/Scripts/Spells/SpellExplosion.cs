@@ -18,6 +18,7 @@ public class SpellExplosion
         size = sizeIncrement;
         damage = explosionDamage;
         mutator = explosionMutator;
+        
     }
 
     //Detonate the explosion after setting the pattern
