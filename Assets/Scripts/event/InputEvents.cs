@@ -55,7 +55,10 @@ public class InputEvents : MonoBehaviour
             {m_InputManager.Player.SpawnTurret, 1},
             {m_InputManager.Player.Spell1, 2},
             {m_InputManager.Player.Spell2, 3},
-            {m_InputManager.Player.Spell3, 4}
+            {m_InputManager.Player.Spell3, 4},
+            
+            // Temp Ficus binding for testing (1 key)
+            {m_InputManager.Player.Spell4, 5}
         };
     }
 

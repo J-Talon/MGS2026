@@ -12,11 +12,13 @@ public class SpellExplosion
     private IExplosionMutator mutator;
 
     //the settings for the explosion
-    public SpellExplosion(SpellShape explosionShape, int sizeIncrement, float explosionDamage)
+    public SpellExplosion(SpellShape explosionShape, int sizeIncrement, float explosionDamage, IExplosionMutator explosionMutator= null)
     {
         shape = explosionShape;
         size = sizeIncrement;
         damage = explosionDamage;
+        mutator = explosionMutator;
+        
     }
 
     //Detonate the explosion after setting the pattern
