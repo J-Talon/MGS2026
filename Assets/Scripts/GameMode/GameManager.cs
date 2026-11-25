@@ -43,6 +43,8 @@ public class GameManager : MonoBehaviour
         // Test Bullet Enemy
         entityManager.GetEntity(EntityType.BulletEnemy, new Vector3(5, 3, -1));
         entityManager.GetEntity(EntityType.BulletEnemy, new Vector3(8, 1, -1));
+        entityManager.GetEntity(EntityType.BulletEnemy, new Vector3(8, 2, -1));
+        entityManager.GetEntity(EntityType.BulletEnemy, new Vector3(8, 3, -1));
 
     }
 }
