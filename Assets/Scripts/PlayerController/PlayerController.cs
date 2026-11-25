@@ -3,6 +3,7 @@
 // Edit by Jeremy October 15, 2026
 // edited by - Wilson October 25, 2026
 //edited by - Jordan Nov 08, 2026
+//edited by - Jordan Nov 20, 2026
 
 using System;
 using System.Runtime.CompilerServices;
@@ -24,11 +25,11 @@ public class PlayerController : MonoBehaviour
     protected CrosshairController crosshairController;
     public Vector2Int GetCrosshairPosition() { return crosshairController.GetPosition(); }
     private float movementCooldownTimer = 0f; //a timer that actually keeps track of the remaining time before the next movement
-    private SpellCaster spellCaster;
+    private PlayerSpellCaster spellCaster;
 
     public void Awake()
     {
-        spellCaster = GetComponent<SpellCaster>();
+        spellCaster = GetComponent<PlayerSpellCaster>();
         crosshairController = new CrosshairController(new Vector2(5, 0));
     }
 
@@ -173,10 +174,15 @@ public class PlayerController : MonoBehaviour
     }
 }
 
-//CHANGELOG
-//
-//Jordan October 14, 2026
-//added movement buffering stuff and fixed situations with multiple inputs pressed and held
-//
-//Jordan Nov 08, 2026
-//added the spellCast stuff, removed the temp SpellManager stuff
+/*
+CHANGELOG
+///
+Jordan October 14, 2026
+added movement buffering stuff and fixed situations with multiple inputs pressed and held
+///
+Jordan Nov 08, 2026
+added the spellCast stuff, removed the temp SpellManager stuff
+///
+Jordan Nov 08, 2026
+now has PlayerSpellCaster instead of SpellCaster. Nothing burger change
+*/

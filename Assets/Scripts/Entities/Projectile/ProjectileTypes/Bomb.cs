@@ -1,5 +1,6 @@
 //who the fuck authored this file?
 //edited by - Jordan Nov 08, 2026
+//edited by - Jordan Nov 20, 2026
 
 using System;
 using Particle.Base;
@@ -21,15 +22,9 @@ namespace Entities.Projectile.ProjectileTypes
 
         public override void OnStart() {
             var h = UnityEngine.Random.Range(height, height/2);
-
-            if (UnityEngine.Random.Range(0, 1) > 0.5) {
-                h *= -1;
-            }
-
             nextHeight = h;
         }
-    
-
+       
         Vector2 CalculateTrajectory(Vector2Int start, Vector2Int end, float height, float time) {
             var startVec = new Vector2(start.x, start.y);
             var endVec = new Vector2(end.x, start.y);
@@ -41,7 +36,7 @@ namespace Entities.Projectile.ProjectileTypes
             var normalizedEndY = deltaY / height;
 
             // get a value perpendicular to direct path from start to end in order to create the illusion of fligh
-            var tangent = Vector2.Perpendicular(delta.normalized);
+            var tangent = (delta.x >= 0) ? Vector2.Perpendicular(delta.normalized) : -Vector2.Perpendicular(delta.normalized);
 
             //default arc that basically just has a vertex at y = 1
             float arc = 4.0f * time * (1.0f - time);
@@ -58,7 +53,7 @@ namespace Entities.Projectile.ProjectileTypes
         void DamageTile(IGridSystemView gridView, Vector2Int pos) {
             var entity = gridView.GetEntityAtTilePosition(pos);
 
-            if (entity) {
+            if (entity && IsHostile(entity) == true) {
                 entity.TakeDamage(damage);
             }
         }
@@ -91,8 +86,13 @@ namespace Entities.Projectile.ProjectileTypes
         }
     }
 }
+/*
+CHANGELOG
+///
+Jordan Nov 08, 2026
+added a SetDamage() function so the bomb spells can have different direct lob hit damage
 
-//CHANGELOG
-//
-//Jordan Nov 08, 2026
-//added a SetDamage() function so the bomb spells can have different direct lob hit damage
+///
+Jordan - Nov 20, 2026
+fixed the damageTile stuff to properly damange hostile entities, instead of any entity at all
+*/
