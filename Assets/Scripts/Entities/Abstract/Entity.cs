@@ -1,6 +1,7 @@
 // Authors: [Jacky, Jeremy, Mark]
 //edited by Jordan - Nov 08, 2026
 
+using System;
 using UnityEngine;
 
 namespace Entities.Abstract
@@ -15,8 +16,11 @@ namespace Entities.Abstract
         [field: SerializeField] protected bool isInvulnerable = false;
         [field: SerializeField] protected bool isFriendly = false;
         [field: SerializeField] protected bool isAlive = true;
+        
+        
         // SG:
         // properties for figuringing out the player and whether its holding the boomerang respectively
+        [field: Obsolete("Do not use this to check if something is a player. Check the entity type instead. - Talon")]
         [field: SerializeField] protected bool isPlayer = false;
 
         static protected int globalStaticIDCounter = 0;
@@ -46,8 +50,14 @@ namespace Entities.Abstract
         public EntityType GetEntityType() { return entityType; }
         public bool GetIsFriendly() { return isFriendly; }
         public void SetMaxLifeSpan(float value) { maxLifeSpan = value; }
+        
+        [Obsolete("Do not use this to check if something is a player. Check the entity type instead. - Talon")]
         public bool GetIsPlayer() { return isPlayer; }
+        
+        [Obsolete("Do not use this to check if something is a player. Check the entity type instead. - Talon")]
         public void SetIsPlayer(bool value) { isPlayer = value; }
+        
+        
         public void SetSpeed(float value) { speed = value; }
         public float GetSpeed() { return speed; }
         public float GetMovementTickTimer() { return movementTickTimer; }

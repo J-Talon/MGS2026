@@ -116,6 +116,9 @@ namespace Entities.Abstract
         public static readonly EntityType ProjectilePea =
             new EntityType("Entity/Spells/Pea", EntityClassification.Projectile);
 
+        public static readonly EntityType BulletEnemy =
+            new EntityType("Entity/Unit/Prefabs/BulletEnemy", EntityClassification.Unit);
+
         public static readonly EntityType ProjectileBomb =
             new EntityType("Entity/Spells/Bomb", EntityClassification.Projectile);
         //public static readonly EntityType ProjectileBoomerang = new EntityType("Entity/Spells/Boomerang", EntityClassification.Projectile);

@@ -18,9 +18,17 @@ public class SpellActionShoot : SpellAction
     //make Pea
     private void MakePea()
     {
-        Entity entity = EntityManager.GetInstance().GetEntity(EntityType.ProjectilePea, new Vector3(castingData.casterGrid.x, castingData.casterGrid.y, -1), castingData.spellCaster.GetIsFriendly());
+        Entity entity = EntityManager.GetInstance().GetEntity(
+            EntityType.ProjectilePea,
+            new Vector3(castingData.casterGrid.x, castingData.casterGrid.y, -1),
+            castingData.spellCaster.GetIsFriendly() // Jeremy - BUG - I believe this is improperly getting allegiance
+        );
 
         PeaBullet pea = entity.GetComponent<PeaBullet>();
         pea.SetMaxLifeSpan(2f);
+
+        // Setting this direction only with the assumption that player is using this function
+        // Will need updating when monsters start using this
+        pea.SetDirection(new Vector2(1, 0));
     }
 }
