@@ -2,9 +2,11 @@
 // Added viewing the grid boundaries: -Wilson Nov 1 2026
 // Basic OnDrawGizmos implementation: -Jophiel Nov 8th 2026
 //edited by Jordan - Nov 22, 2026 -> chagned enemy colours cause im colour blind
+//Talon Nov 25th - for terraform system
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using Entities.Unit;
 using JetBrains.Annotations;
 using UnityEngine;
@@ -41,15 +43,9 @@ namespace Grid
         /// </summary>
         public bool debuggerEnable;
 
-        // /// <summary>
-        // /// Grid manipulation methods (territory control, adding/removing columns and rows)
-        // /// </summary>
-        // public IGridSystemControl Controls => _manipulator;
-
         // Runtime state
         private GridState _state;
         private GridManipulator _manipulator;
-        private GridEventHandler _eventHandler;
 
         /// <summary>
         /// Function to get a grid cell at a specific position. Returns null if the position is out of bounds.
@@ -63,14 +59,14 @@ namespace Grid
         }
 
 
-        public GridManipulator GetManipulator() {
+        public IGridSystemControl GetManipulator() {
             return _manipulator;
         }
 
 
-        //todo replace with a call to entity manager instead
-        public List<(Vector2Int, EntityUnit)> FindAllEntities(Func<EntityUnit, bool> criteria)
-        {
+        //todo replace with a call to entity manager instead as that is probably more robust than grid
+        public List<(Vector2Int, EntityUnit)> FindAllEntities(Func<EntityUnit, bool> criteria) {
+            
             var unitsWith = new List<(Vector2Int, EntityUnit)>();
         
             for (int x = _state.xMin; x < _state.xMax+1; x++) {
@@ -194,12 +190,11 @@ namespace Grid
         /// </summary>
         void Awake()
         {
-            if (instance != null && instance != this)
-            {
-                Debug.LogWarning("more than one GridManager in the scene; destroying the extra one");
+            if (instance != null && instance != this) {
                 Destroy(gameObject);
-                return;
+                throw new DuplicateNameException("More than 1 grid manager in the scene!");
             }
+            
             instance = this;
 
             // Initialize grid cell container
@@ -207,13 +202,9 @@ namespace Grid
 
             _state = new GridState();
             _manipulator = new GridManipulator(_state, gridCellPrefab, gridCellContainer.transform);
-            //   manipulator.Changed += Redraw;
             _manipulator.Build(gridLevelData);
 
-            _eventHandler = new GridEventHandler(_manipulator);
-
-            if (debuggerEnable == true)
-            {
+            if (debuggerEnable == true) {
                 gameObject.AddComponent<GridManagerDebugger>();
             }
         
@@ -227,8 +218,7 @@ namespace Grid
         {
             if (instance != this)
                 return;
-
-            _eventHandler?.Unsubscribe();
+            
             instance = null;
         }
     

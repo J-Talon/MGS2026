@@ -40,6 +40,6 @@ namespace Grid
         /// </summary>
         public readonly Dictionary<Vector2Int, GridCell> Cells = new Dictionary<Vector2Int, GridCell>();
    
-        public readonly Dictionary<int, GridColumn> cellColumns = new Dictionary<int, GridColumn>();
+        public readonly Dictionary<int, GridColumnDecorator> cellColumns = new Dictionary<int, GridColumnDecorator>();
     }
 }
