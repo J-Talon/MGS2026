@@ -48,6 +48,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2154023868808182573, guid: dc2101158f78434f3ad17dda3fe517db, type: 3}
+      propertyPath: m_SortingOrder
+      value: 99
+      objectReference: {fileID: 0}
     - target: {fileID: 2772762615171163739, guid: dc2101158f78434f3ad17dda3fe517db, type: 3}
       propertyPath: m_Name
       value: ParticleDebugSquare

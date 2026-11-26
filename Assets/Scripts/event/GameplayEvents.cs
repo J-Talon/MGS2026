@@ -1,4 +1,5 @@
 using System;
+using Grid;
 using UnityEngine;
 namespace Event
 {
@@ -29,10 +30,16 @@ namespace Event
         /// </summary>
         public static class Grid
         {
-
+            //called when the number of rows in the grid changes
+            public static readonly EventDispatcher<(GridRowSide, GridState)> GridRowDimensionUpdateEvent = new EventDispatcher<(GridRowSide, GridState)>(); 
+            
+            //called when the number of columns in the grid changes
+            public static readonly EventDispatcher<(GridSide, GridState)> GridColumnDimensionUpdateEvent = new EventDispatcher<(GridSide,  GridState)>();
+            
+            //params int numColsAffected, int newMeridian, bool friendlyTakeover
+            public static readonly EventDispatcher<(int, int, bool)> GridTerraformEvent = new EventDispatcher<(int, int, bool)>(); 
         }
-
-        public static readonly EventDispatcher<bool> gridColUpdateEvent = new EventDispatcher<bool>();  //< int, float param
+        
     }
 
 }

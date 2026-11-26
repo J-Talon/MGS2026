@@ -1,5 +1,6 @@
 // Authors: [Jacky, Jeremy, Mark]
 
+using Grid;
 using UnityEngine;
 
 namespace Entities.Unit.Behaviour.Movement.Base.Snappy

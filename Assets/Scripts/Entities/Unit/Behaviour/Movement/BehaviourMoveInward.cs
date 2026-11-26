@@ -1,4 +1,6 @@
 // Author: Jeremy
+
+using Grid;
 using UnityEngine;
 using JetBrains.Annotations;
 

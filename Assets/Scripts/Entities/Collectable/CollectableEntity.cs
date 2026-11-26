@@ -2,6 +2,7 @@ using Entities.Abstract;
 using Entities.Collectable.Behaviour;
 using Entities.Collectable.Interfaces;
 using Entities.Unit;
+using Grid;
 using UnityEngine;
 
 // A collectable entity.

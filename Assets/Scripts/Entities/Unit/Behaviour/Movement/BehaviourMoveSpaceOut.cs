@@ -2,6 +2,8 @@
 using UnityEngine;
 using Entities.Abstract;
 using System.Collections.Generic;
+using Grid;
+
 // using System.Text;
 
 namespace Entities.Unit.Behaviour.Movement

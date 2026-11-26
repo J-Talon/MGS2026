@@ -2,6 +2,7 @@
 
 using System;
 using Entities.Abstract;
+using Grid;
 using UnityEngine;
 
 namespace Entities.Unit.Behaviour.Attack

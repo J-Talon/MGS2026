@@ -1,4 +1,6 @@
 // Authors: [Jacky, Jeremy, Mark]
+
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -8,7 +10,7 @@ using UnityEngine;
 public enum GridSide
 {
     Left,
-    Right
+    Right,
 }
 
 /// <summary>
@@ -20,9 +22,10 @@ public enum GridRowSide
     Bottom
 }
 
+
 public interface IGridSystemControl
 {
-    void SingleColControlUpdate(bool friendly = true);
+    bool AdvanceTerritory(bool friendly, int columns);
 
     /// <summary>
     /// Add a new column to the grid.
@@ -34,7 +37,7 @@ public interface IGridSystemControl
     /// Remove a column from the grid.
     /// </summary>
     /// <param name="side">The side of the grid to remove the column from.</param>
-    void RemoveGridColumn(GridSide side);
+    bool RemoveGridColumn(GridSide side);
 
     /// <summary>
     /// Add a new row to the grid.
@@ -46,5 +49,5 @@ public interface IGridSystemControl
     /// Remove a row from the grid.
     /// </summary>
     /// <param name="side">The side of the grid to remove the row from.</param>
-    void RemoveGridRow(GridRowSide side);
+    bool RemoveGridRow(GridRowSide side);
 }

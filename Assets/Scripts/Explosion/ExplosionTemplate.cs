@@ -1,6 +1,7 @@
 // Author: Daniel
 using UnityEngine;
 using Entities.Abstract;
+using Grid;
 using Particle.Base;
 
 public class ExplosionLaserPlayer : Explosion
