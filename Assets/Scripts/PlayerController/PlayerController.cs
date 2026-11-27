@@ -179,9 +179,11 @@ CHANGELOG
 ///
 Jordan October 14, 2026
 added movement buffering stuff and fixed situations with multiple inputs pressed and held
+
 ///
 Jordan Nov 08, 2026
 added the spellCast stuff, removed the temp SpellManager stuff
+
 ///
 Jordan Nov 08, 2026
 now has PlayerSpellCaster instead of SpellCaster. Nothing burger change

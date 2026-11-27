@@ -2,6 +2,7 @@
 // Added viewing the grid boundaries: -Wilson Nov 1 2026
 // Basic OnDrawGizmos implementation: -Jophiel Nov 8th 2026
 //edited by Jordan - Nov 22, 2026 -> chagned enemy colours cause im colour blind
+//edited by Jordan - Nov 27, 2026 -> more colour changes. Player starting tile this time
 
 using UnityEngine;
 using System.Collections.Generic;
@@ -192,7 +193,7 @@ public class GridManager : MonoBehaviour, IGridSystemView
                 Vector3 positionCell = new Vector3(x, y, 0); // localized position vector
 
                 if (x == 0 && y == 0) { // check for player tile (usually first tile created)
-                    Gizmos.color = new Color(0.28f, 0.98f, 0.85f, 1f);
+                    Gizmos.color = new Color(0.03f, 0.95f, 1.0f, 1f);
                     Gizmos.DrawIcon(new Vector3(x, y, -1), "TestPlayerModel.png"); // function currently can't pull image
                 } else if (x < gridLevelData.startingFriendlyColumns) {    
                     // crafts player area; needs modification depending on 'Game' actions

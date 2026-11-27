@@ -167,7 +167,16 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Spell4"",
                     ""type"": ""Button"",
-                    ""id"": ""96321798-dd3f-421a-acf8-af0c7158aff4"",
+                    ""id"": ""e62a3a6f-6aee-4f82-a9c3-344ce7c12ddc"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Spell5"",
+                    ""type"": ""Button"",
+                    ""id"": ""cf822bc5-978a-4dbf-963f-610fe27d55df"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -443,6 +452,50 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
                     ""action"": ""Spell3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a123bd83-980d-4793-8309-f76f1d8b6a44"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spell4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e1cee5fa-1c6b-4098-b4a8-ad503d658d42"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Spell4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7a34ee31-23f5-43a9-9917-3e440d13c173"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spell5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fea6d486-e258-456a-b694-122e506d4867"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Spell5"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -2671,6 +2724,7 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
         m_Player_Spell2 = m_Player.FindAction("Spell2", throwIfNotFound: true);
         m_Player_Spell3 = m_Player.FindAction("Spell3", throwIfNotFound: true);
         m_Player_Spell4 = m_Player.FindAction("Spell4", throwIfNotFound: true);
+        m_Player_Spell5 = m_Player.FindAction("Spell5", throwIfNotFound: true);
         m_Player_SpawnTurret = m_Player.FindAction("SpawnTurret", throwIfNotFound: true);
         m_Player_MoveCrosshairLeft = m_Player.FindAction("MoveCrosshairLeft", throwIfNotFound: true);
         m_Player_MoveCrosshairRight = m_Player.FindAction("MoveCrosshairRight", throwIfNotFound: true);
@@ -2820,6 +2874,7 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Spell2;
     private readonly InputAction m_Player_Spell3;
     private readonly InputAction m_Player_Spell4;
+    private readonly InputAction m_Player_Spell5;
     private readonly InputAction m_Player_SpawnTurret;
     private readonly InputAction m_Player_MoveCrosshairLeft;
     private readonly InputAction m_Player_MoveCrosshairRight;
@@ -2880,6 +2935,10 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Spell4".
         /// </summary>
         public InputAction @Spell4 => m_Wrapper.m_Player_Spell4;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Spell5".
+        /// </summary>
+        public InputAction @Spell5 => m_Wrapper.m_Player_Spell5;
         /// <summary>
         /// Provides access to the underlying input action "Player/SpawnTurret".
         /// </summary>
@@ -2985,6 +3044,9 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
             @Spell4.started += instance.OnSpell4;
             @Spell4.performed += instance.OnSpell4;
             @Spell4.canceled += instance.OnSpell4;
+            @Spell5.started += instance.OnSpell5;
+            @Spell5.performed += instance.OnSpell5;
+            @Spell5.canceled += instance.OnSpell5;
             @SpawnTurret.started += instance.OnSpawnTurret;
             @SpawnTurret.performed += instance.OnSpawnTurret;
             @SpawnTurret.canceled += instance.OnSpawnTurret;
@@ -3062,6 +3124,9 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
             @Spell4.started -= instance.OnSpell4;
             @Spell4.performed -= instance.OnSpell4;
             @Spell4.canceled -= instance.OnSpell4;
+            @Spell5.started -= instance.OnSpell5;
+            @Spell5.performed -= instance.OnSpell5;
+            @Spell5.canceled -= instance.OnSpell5;
             @SpawnTurret.started -= instance.OnSpawnTurret;
             @SpawnTurret.performed -= instance.OnSpawnTurret;
             @SpawnTurret.canceled -= instance.OnSpawnTurret;
@@ -3942,6 +4007,13 @@ public partial class @InputSystemActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSpell4(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Spell5" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSpell5(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "SpawnTurret" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
