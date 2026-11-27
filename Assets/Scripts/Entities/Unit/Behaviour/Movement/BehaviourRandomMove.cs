@@ -1,4 +1,5 @@
 /// Author: Angad 
+//edited - Jordan -> Nov 27, 2026
 using System;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
@@ -22,6 +23,15 @@ namespace Entities.Unit.Behaviour.Movement
         // Function for the enemy to make a single random valid move
         private bool RandomlyMove(EntitySentient enemy)
         {
+            //if the enemy can cast spells, and they are currently inactionable, aka they are in the middle of a spell, dont move
+            if (enemy.TryGetComponent<EnemySpellCaster>(out EnemySpellCaster enemySpellCaster) == true)
+            {
+                if (enemySpellCaster.IsActionable() == false)
+                {
+                    return false;
+                }
+            }
+
             // list of all possible movements, not all may be valid ones
             List<Func<bool>> movements = new List<Func<bool>>
             {
@@ -50,3 +60,11 @@ namespace Entities.Unit.Behaviour.Movement
         }
     }
 }
+
+/*
+CHANGELOG
+///
+Jordan - November 27, 2026
+
+checks for EnemySpellCaster now to see if they can cast a spell or not because they are inactionable or not
+*/

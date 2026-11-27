@@ -104,6 +104,9 @@ namespace Entities.Abstract
         public static readonly EntityType UnitTestTurret =
             new EntityType("Entity/Unit/Prefabs/TurretTest", EntityClassification.Unit);
 
+        public static readonly EntityType UnitTestCloneTurret =
+            new EntityType("Entity/Unit/Prefabs/CloneTurretTest", EntityClassification.Unit);
+
         // Example of a predefined projectile type. You can add more as needed.
         public static readonly EntityType ProjectileTestLinearGrid =
             new EntityType("Entity/Projectile/Prefabs/ProjectileTestLinearGrid", EntityClassification.Projectile);

@@ -32,6 +32,11 @@ namespace Event
 
         }
 
+        public static class Spells
+        {
+            public static readonly EventDispatcher<(SpellCaster caster, SpellCard spellCard)> spellCasted = new EventDispatcher<(SpellCaster caster, SpellCard spellCard)>();
+        }
+
         public static readonly EventDispatcher<bool> gridColUpdateEvent = new EventDispatcher<bool>();  //< int, float param
     }
 
@@ -103,6 +108,12 @@ For more details about this stuff, go to InputEvents.cs and PlayerController.cs
 Edited by Wilson - October 25 2025
 Added crosshair left and right pressed events
 
+///
 Edited by Jordan - Nov 08, 2026
 simplified the spell event stuff so its easier if we need more spellDeck and buttons. Aka, the same thing i did for the Oct 14 2026 movement stuff, but for spells
+
+///
+Edited by Jordan - Nov 27, 2026
+added an event that spell that flags when a spell is cast. Useful for the cloneTurret so it knows to copy the spell when its owner casts a spell.
+See CastSpellCard() in SpellCaster.cs
  */

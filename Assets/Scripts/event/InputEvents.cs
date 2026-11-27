@@ -2,6 +2,7 @@
 //edited by - Jordan October 14, 2026
 // edited by - Wilson October 25, 2026
 //edited by - Jordan Nov 08 2026
+//edited by - Jordan Nov 27 2026
 
 using System;
 using System.Collections.Generic;
@@ -56,9 +57,8 @@ public class InputEvents : MonoBehaviour
             {m_InputManager.Player.Spell1, 2},
             {m_InputManager.Player.Spell2, 3},
             {m_InputManager.Player.Spell3, 4},
-            
-            // Temp Ficus binding for testing (1 key)
-            {m_InputManager.Player.Spell4, 5}
+            {m_InputManager.Player.Spell4, 5}, //temp SpellDeck slot for testing (so we dont have to keep switching out decks)
+            {m_InputManager.Player.Spell5, 6} //same reason as above (damn thats crazy)
         };
     }
 
@@ -176,11 +176,20 @@ public class InputEvents : MonoBehaviour
         GameplayEvents.Input.spawnTurretPressed.CallEvent(ValueTuple.Create());
     }
 }
-
+/*
 //CHANGELOG
-//
-//Jordan - Nov 08, 2026
-//simplified the movement event stuff so its easier to do stuff here with. Aka the list
-//
-//Jordan - Nov 08, 2026
-//simplified the spell event stuff so its easier if we need more spellDeck and buttons. Aka, the same thing i did for the Oct 14 2026 movement stuff, but for spells. Aka the list
+///
+Jordan - Oct 14, 2026
+
+simplified the movement event stuff so its easier to do stuff here with. Aka the list
+
+///
+Jordan - Nov 08, 2026
+
+simplified the spell event stuff so its easier if we need more spellDeck and buttons. Aka, the same thing i did for the Oct 14 2026 movement stuff, but for spells. Aka the list
+
+///
+Jordan - Nov 27, 2026
+
+added 2 more spell buttons so i dont have to keep swapping out decks to test them
+*/

@@ -19,7 +19,7 @@ namespace Entities.Abstract
         
         
         // SG:
-        // properties for figuringing out the player and whether its holding the boomerang respectively
+        // properties for figuringing out the player
         [field: Obsolete("Do not use this to check if something is a player. Check the entity type instead. - Talon")]
         [field: SerializeField] protected bool isPlayer = false;
 
@@ -117,7 +117,6 @@ namespace Entities.Abstract
             isAlive = true;
             currentHealth = original.maxHealth;
             spawnTime = Time.time;
-            isPlayer = false;
         }
 
         /// <summary>

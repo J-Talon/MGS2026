@@ -18,7 +18,7 @@ public class SpellDeckInjector : MonoBehaviour
         //basicShot deck
         new SpellDeck(SpellClass.Lathyrus, new List<SpellCard>
         {
-            new SpellCard("Pea", SpellClass.Lathyrus, new SpellCooldown(0.15f, 3f),
+            new SpellCard("Pea", SpellClass.Lathyrus, new SpellCooldown(0.15f, 0.1f),
                 new List<ISpellActionSettings>{
                     new ShootSettings()
                 }
@@ -28,12 +28,20 @@ public class SpellDeckInjector : MonoBehaviour
         //turret deck
         new SpellDeck(SpellClass.Amorphophallus, new List<SpellCard>
         {
+            /*
             new SpellCard("PeaShooterTurret", SpellClass.Amorphophallus, new SpellCooldown(2f, 3f),
                 new List<ISpellActionSettings> {
                     new PlaceTurretSettings(),
                     new WaitSettings(1.5f),
                 }
-            )
+            ),
+            */
+            new SpellCard("CloneTurret", SpellClass.Amorphophallus, new SpellCooldown(2f, 3f),
+                new List<ISpellActionSettings> {
+                    new PlaceCloneTurretSettings(),
+                    new WaitSettings(1.5f),
+                }
+            )   
         }),
         
         //lazer deck
@@ -43,12 +51,12 @@ public class SpellDeckInjector : MonoBehaviour
                 new List<ISpellActionSettings>
                 {
                     new WaitSettings(1f),
-                    new BeamSettings(new SpellExplosion(SpellShapes.Lazer, 1, 10f)),
+                    new BeamSettings(new SpellExplosion(SpellShapes.Lazer, 1, 100f)),
                     new WaitSettings(0.5f)
                 }
             )
         }),
-
+        
         //bomb deck
         new SpellDeck(SpellClass.Impatiens, new List<SpellCard>
         {
@@ -110,24 +118,10 @@ public class SpellDeckInjector : MonoBehaviour
                 }
             )
         }),
-        
-        // Root deck
-        new SpellDeck(SpellClass.Ficus, new List<SpellCard>
-            {
-                new SpellCard("RootSnare", SpellClass.Ficus, new SpellCooldown(3f,3f), 
-                    new List<ISpellActionSettings>
-                    {
-                        new ExplodeSettings(new SpellExplosion(SpellShapes.Horizontal, 1, 0f,
-                            new MutatorEnsnare()), 
-                            useCurrentTarget: true)
-                    }
-            )
-        }),
-        
 
         //extra decks (that we obviously cant fit under 3 decks). Swap the commenting in or out for the decks to test what you want
 
-        /*
+        
         //shootingStar deck
         new SpellDeck(SpellClass.Dodecatheon, new List<SpellCard>
         {
@@ -139,12 +133,21 @@ public class SpellDeckInjector : MonoBehaviour
                 }
             )
         }),
-        */
-
-        /*
-        //crazy Spell for testing purposes of chaining a shitload of actions
+        
+        // Root deck
         new SpellDeck(SpellClass.Ficus, new List<SpellCard>
-        {
+            {
+                new SpellCard("RootSnare", SpellClass.Ficus, new SpellCooldown(3f, 3f),
+                    new List<ISpellActionSettings>
+                    {
+                        new ExplodeSettings(new SpellExplosion(SpellShapes.Horizontal, 1, 0f,
+                            new MutatorEnsnare()),
+                            useCurrentTarget: true)
+                    }
+            )
+            
+            /*
+            //crazy Spell for testing purposes of chaining a shitload of actions
             new SpellCard("TetoInFortnite", SpellClass.Ficus, new SpellCooldown(3f, 10f),
                 new List<ISpellActionSettings>
                 {
@@ -193,8 +196,8 @@ public class SpellDeckInjector : MonoBehaviour
                     new BeamSettings(new SpellExplosion(SpellShapes.Lazer, 3, 10f)),
                 }
             )
+            */
         }),
-        */
     };
 
     //set the decks

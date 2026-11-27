@@ -20,11 +20,11 @@ public class GridManagerDebugger : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Keyboard.current.hKey.wasReleasedThisFrame) //increase player control
+        if (Keyboard.current.jKey.wasReleasedThisFrame) //increase player control
         {
             managerControls.SingleColControlUpdate();
         }
-        if (Keyboard.current.gKey.wasReleasedThisFrame) //decrease player control
+        if (Keyboard.current.hKey.wasReleasedThisFrame) //decrease player control
         {
             managerControls.SingleColControlUpdate(false);
         }

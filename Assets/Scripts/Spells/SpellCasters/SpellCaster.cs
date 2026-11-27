@@ -1,8 +1,10 @@
 //author - Jordan -> Nov 08, 2026
 //edited by Jordan - Nov 20, 2026
 //edited by Jordan - Nov 22, 2026
+//edited by Jordan - Nov 27, 2026
 
 using Entities.Unit;
+using Event;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +13,7 @@ public abstract class SpellCaster : MonoBehaviour
     //an abstract class. Split between PlayerSpellCaster and EnemySpellCaster. So they can do player/enemy specific things. Like Player aim at reticle, Enemy aim wherever the hell
     //see PlayerSpellCaster.cs and EnemySpellCaster.cs
 
-    private EntityUnit spellCaster; //who used the spell
+    public EntityUnit spellCaster; //who used the spell
     public List<SpellDeck> decks = new List<SpellDeck>(); //list of decks
     private List<float> deckCooldowns = new List<float>(); //cooldown for each deck (which is set to diff values by each individual spellCard
     private List<Spell> activeSpells = new List<Spell>(); //a list that holds each spell that is currently in action (cause without it, the older active ones malfunction)
@@ -64,7 +66,7 @@ public abstract class SpellCaster : MonoBehaviour
         //start at i = 2 to ignore the basicShot and turrets
         for (int i = 2; i < deckCooldowns.Count; i = i + 1)
         {
-            if (deckCooldowns[i] < spellCard.cooldowns.deckCooldown && i != deckIndex)
+            if (deckCooldowns[i] < spellCard.cooldowns.globalCooldown && i != deckIndex)
             {
                 deckCooldowns[i] = spellCard.cooldowns.globalCooldown;
             }
@@ -100,32 +102,45 @@ public abstract class SpellCaster : MonoBehaviour
             return;
         }
 
-        //cancel any active spells that are of the endless variant
-        CancelEndlessSpells(); 
-
         //grab the spell we gonna use
         SpellCard spellCard = decks[deckIndex].GetCurrentSpell();
-
-        //set direction, depending on team alignment
-        Vector2Int direction = GetSpellDirection();
-        
-        //build the spell. See SpellBuilder.cs
-        Spell spell = SpellBuilder.CreateSpell(spellCard, direction);
 
         //shift to the next spell in the deck as we built the current one and are about to use it
         decks[deckIndex].ShiftToNextSpell();
 
-        //starts the spell (like actually using the spell)
-        spell.StartSpell(spellCaster, GetTargetGrid);
-
         //set the deck cooldown
         SetDeckCooldowns(spellCard, deckIndex);
+
+        CastSpellCard(spellCard);
+    }
+
+    public void CastSpellCard(SpellCard spellCard)
+    {
+        //if player is not allowed to control their character at the moment, then no spell cast
+        if (IsActionable() == false)
+        {
+            return;
+        }
+
+        //cancel any active spells that are of the endless variant
+        CancelEndlessSpells();
+
+        //set direction, depending on team alignment
+        Vector2Int direction = GetSpellDirection();
+
+        //build the spell. See SpellBuilder.cs
+        Spell spell = SpellBuilder.CreateSpell(spellCard, direction);
+
+        //starts the spell (like actually using the spell)
+        spell.StartSpell(spellCaster, GetTargetGrid);
 
         //add to the activeSpells list for tracking
         if (spell.IsSpellFinished() == false)
         {
             activeSpells.Add(spell);
         }
+
+        GameplayEvents.Spells.spellCasted.CallEvent((this, spellCard));
     }
 
     //sets the decks (used in the temporary SpellDeckInjector.cs)
@@ -200,4 +215,11 @@ if an existing cooldown is already in progress, take the higher of the 2 cooldow
 (ex - deck 1 already has a 6 seconds cooldown, but the GCD applied from using deck 2 is 1.4 seconds. The higher cooldown takes priority, so in this case, its the normal 6 seconds)
 
 also turned some existing code into functions to make it easier to read/call and a bit less bloated (aka, GetSpellDirection() and SetDeckCooldowns())
+
+///
+Jordan - Nov 27, 2026
+
+further broke the functions down. Now we got CastDeckSpell() and CastSpellCard(). 
+CastDeckSpell() does the deck stuff, like cooldowns and shifting the deck. CastSpellCard() does the actual attack related stuff/
+this was so the function can be less chunky, and to further support the cloneTurret, as they need to CastSpellCard(), but they dont have decks)
 */
